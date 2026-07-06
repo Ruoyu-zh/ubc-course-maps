@@ -8,6 +8,8 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 |------------|---------|----------|
 | 🎓 [PHYS (Physics)](ubc_phys_combined.html) | 116 courses | 31 flowcharts |
 | 💻 [CPSC (Computer Science)](ubc_cpsc_combined.html) | 112 courses | 18 flowcharts |
+| 🔌 [ELEC (Electrical Engineering)](ubc_elec_combined.html) | 57 courses | 8 flowcharts |
+| 🖥️ [CPEN (Computer Engineering)](ubc_cpen_combined.html) | 29 courses | 6 flowcharts |
 
 ## ✨ Features
 
@@ -18,7 +20,7 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 
 ## 🚀 Live Demo
 
-Visit **[index.html](https://username.github.io/ubc-course-maps/)** for the navigation page.
+Visit **[https://ruoyu-zh.github.io/ubc-course-maps/](https://ruoyu-zh.github.io/ubc-course-maps/)** for the navigation page.
 
 ## 📊 Data Source
 
@@ -26,4 +28,4 @@ Visit **[index.html](https://username.github.io/ubc-course-maps/)** for the navi
 
 ---
 
-Generated 2026-07-06
+**314 courses across 4 departments**, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
