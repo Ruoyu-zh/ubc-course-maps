@@ -1,477 +1,274 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UBC ELEC Course Map | UBC电子工程课程关系图</title>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UBC ELEC Course Map</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
   :root {
     --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
     --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
-    --ckt: #ffab70; --em: #79c0ff; --sig: #c297ff; --ctrl: #7ee787;
-    --pwr: #f2cc60; --bio: #56d4dd; --nano: #f97583; --gen: #8b949e;
-    --hw: #ffab70; --sys: #79c0ff; --sw: #7ee787; --ai: #c297ff; --sec: #f97583;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
   .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
   h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
-  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-  .mode-btn { flex: 1; text-align: center; padding: 10px 18px; cursor: pointer; font-size: 0.92rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
-  .mode-btn:first-child { border-right: 1px solid var(--border); }
-  .mode-btn.active { background: var(--accent); color: #fff; }
-  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
-  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; position: sticky; top: 0; background: var(--bg); padding: 8px 0; z-index: 100; border-bottom: 1px solid var(--border); }
-  .tab { padding: 7px 15px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.84rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
-  .tab:hover { color: var(--text); }
-  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .tab-track .tab.active { background: #7c3aed !important; border-color: #7c3aed !important; }
-  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; padding: 12px 16px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.8rem; }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
-  .flow-box { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 18px; border: 1px solid var(--border); overflow-x: auto; }
-  .flow-box h3 { color: #333; font-size: 0.92rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
-  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 18px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
   .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
   .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
   .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
   .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
   .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
   .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
   .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
   .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
   .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
   .prereq strong { color: #ff7b72; }
   .coreq { font-size: 0.76rem; color: #d2a8ff; }
-  .sec-desc { color: var(--text2); margin-bottom: 18px; font-size: 0.88rem; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
   .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
   .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
   .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
-  .tab-deps { font-size: 0.8rem; }
-  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
-  h2 { margin-bottom: 6px; font-size: 1.3rem; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
-  @media (max-width: 768px) { .course-grid { grid-template-columns: 1fr; } }
-</style>
-</head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#f97316,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🔌 UBC 电子工程系课程完整依赖关系图</h1>
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#f97316,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC 电子工程系课程完整依赖关系图</h1>
 <p class="subtitle">UBC Electrical Engineering Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/elecv" style="color:var(--accent)">UBC Academic Calendar</a></p>
 <div class="legend"><span style="color:var(--text2);font-weight:600;">图例:</span>
-
 <div class="legend-item"><div class="legend-dot" style="background:var(--ckt)"></div>电路/电子</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--em)"></div>电磁/光子</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--sig)"></div>信号/通信</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--ctrl)"></div>控制/机器人</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--pwr)"></div>电力/能源</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--bio)"></div>生物医学</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--nano)"></div>纳米/微系统</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--gen)"></div>其他</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--nano)"></div>纳米/微系统</div></div>
+<div class="mode-bar"><div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div><div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div></div>
+<div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s100">📘 100/200级</div>
+<div class="tab" data-tab="s300">📙 300级</div>
+<div class="tab" data-tab="s400">📕 400级</div>
+<div class="tab" data-tab="s500">📓 500+</div>
+<div class="tab" data-tab="sall">🗺️ 总览</div>
 </div>
-<div class="mode-bar">
-  <div class="mode-btn active" data-mode="year">📘 按年级查看课程</div>
-  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系</div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="ckt">⚡ 电路/电子</div>
+<div class="tab tab-deps" data-tab="em">📡 电磁/光子</div>
+<div class="tab tab-deps" data-tab="sig">📶 信号/通信</div>
+<div class="tab tab-deps" data-tab="ctrl">🎛️ 控制/机器人</div>
+<div class="tab tab-deps" data-tab="pwr">🔌 电力/能源</div>
+<div class="tab tab-deps" data-tab="bio">🧬 生物医学</div>
+<div class="tab tab-deps" data-tab="nano">🔬 纳米/微系统</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
 </div>
-<div class="tabs tab-year" id="tabYear"><div class="tab active" data-tab="s100">📘 100/200级</div><div class="tab " data-tab="s300">📙 300级</div><div class="tab " data-tab="s400">📕 400级</div><div class="tab " data-tab="s500">📓 500+</div><div class="tab " data-tab="sall">🗺️ 总览</div></div>
-<div class="tabs tab-track" id="tabTrack" style="display:none;"><div class="tab tab-deps active" data-tab="ckt">⚡ 电路/电子</div><div class="tab tab-deps " data-tab="em">📡 电磁/光子</div><div class="tab tab-deps " data-tab="sig">📶 信号/通信</div><div class="tab tab-deps " data-tab="ctrl">🎛️ 控制/机器人</div><div class="tab tab-deps " data-tab="pwr">🔌 电力/能源</div><div class="tab tab-deps " data-tab="bio">🧬 生物医学工程</div><div class="tab tab-deps " data-tab="nano">🔬 纳米/微系统</div><div class="tab tab-deps " data-tab="full">🗺️ 全图</div></div>
-<div class="year-section visible" id="s100"><h2>📘 100/200级</h2><p class="sec-desc">10 courses</p><div class="course-grid"><div class="course-card ckt">
-  <div class="course-code">ELEC 201</div>
-  <div class="course-title-en">Circuit Analysis I</div><div class="course-title-zh">电路分析I</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Fundamentals of lumped linear time-invariant circuits; network theorems; op-amps; first order circuits; DC analysis of diodes, BJT, FET.</div><div class="desc-zh">集总线性时不变电路基础；网络定理；运算放大器；一阶电路；二极管/BJT/FET的直流分析。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 101 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 202</div>
-  <div class="course-title-en">Circuit Analysis II</div><div class="course-title-zh">电路分析II</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Phasor analysis, AC three phase power; transfer functions; Bode plots; filters; resonance; Laplace transforms; transformers; two-port networks.</div><div class="desc-zh">相量分析、交流三相功率；传递函数；Bode图；滤波器；谐振；拉普拉斯变换；变压器；二端口网络。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 101 + PHYS 118/158 + MATH 255/256 + ELEC 201/203</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 203</div>
-  <div class="course-title-en">Basic Circuit Analysis</div><div class="course-title-zh">基础电路分析</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Ideal passive elements and sources; Kirchhoff's Laws; DC circuits; first order circuits; op-amps; impedance; phasors; complex power. Not open to ECE students.</div><div class="desc-zh">理想无源元件和源；基尔霍夫定律；直流电路；一阶电路；运放；阻抗；相量；复功率。非ECE学生。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 101 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 204</div>
-  <div class="course-title-en">Linear Circuits</div><div class="course-title-zh">线性电路</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Basic concepts and analysis techniques for electric and electronic circuits including Bode plots and Laplace transform. RLC circuits, phasors, op-amps, nonlinear elements.</div><div class="desc-zh">电路与电子电路基本概念与分析技术：Bode图、拉普拉斯变换、RLC电路、相量、运放、非线性元件。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 152 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 205</div>
-  <div class="course-title-en">Electronics Laboratory</div><div class="course-title-zh">电子学实验</div>
-  <span class="course-credits">1 学分</span>
-  <div class="desc-en">Experiments involving electronic devices and circuits.</div><div class="desc-zh">电子器件与电路实验。</div>
-  <div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 204</div></div>
-<div class="course-card em">
-  <div class="course-code">ELEC 211</div>
-  <div class="course-title-en">Engineering Electromagnetics</div><div class="course-title-zh">工程电磁学</div>
-  <span class="course-credits">2 学分</span>
-  <div class="desc-en">Electrostatics, electric currents, dielectrics, capacitance, electrostatic potential, magnetostatics.</div><div class="desc-zh">静电场、电流、电介质、电容、静电势、静磁场。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 253 + APSC 178/PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 264</div></div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 221</div>
-  <div class="course-title-en">Signals and Systems</div><div class="course-title-zh">信号与系统</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Complex numbers, LTI systems, convolution, discrete-time Fourier series/transforms, z-transform, sampling, filtering, modulation, feedback, stability.</div><div class="desc-zh">复数、LTI系统、卷积、离散时间傅里叶级数/变换、z变换、采样、滤波、调制、反馈、稳定性。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 255/256</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 281</div>
-  <div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Written and oral communication in engineering. Technical description, report preparation, business correspondence, oral presentation.</div><div class="desc-zh">工程中的书面和口头沟通：技术描述、报告撰写、商务信函、口头报告。</div>
-  <div class="prereq"><strong>前置:</strong> APSC 176/ENGL 110/111/112/120/121/WRDS 150</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 291</div>
-  <div class="course-title-en">EE Design Studio I</div><div class="course-title-zh">电子工程设计工作室I</div>
-  <span class="course-credits">6 学分</span>
-  <div class="desc-en">Design projects involving electronic devices and circuits, electromagnetics, signals/systems, microcomputers.</div><div class="desc-zh">涉及电子器件电路、电磁学、信号系统、微机的设计项目。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201 + CPEN 211</div></div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 292</div>
-  <div class="course-title-en">BME Design Studio</div><div class="course-title-zh">生物医学工程设计工作室</div>
-  <span class="course-credits">6 学分</span>
-  <div class="desc-en">Design projects involving electronic devices/circuits, electromagnetics, signals/systems, microcomputers with biomedical applications.</div><div class="desc-zh">涉及电子器件电路、电磁学、信号系统、微机及生物医学应用的设计项目。</div>
-  <div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 201 + CPEN 211 + ELEC 221</div></div></div></div>
-<div class="year-section " id="s300"><h2>📙 300级</h2><p class="sec-desc">14 courses</p><div class="course-grid"><div class="course-card ckt">
-  <div class="course-code">ELEC 301</div>
-  <div class="course-title-en">Electronic Circuits</div><div class="course-title-zh">电子电路</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Analysis and design of electronic circuits; biasing, small-signal models, frequency response of amplifiers, feedback, stability, op-amps, active filters, oscillators.</div><div class="desc-zh">电子电路分析与设计：偏置、小信号模型、放大器频率响应、反馈、稳定性、运放、有源滤波器、振荡器。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201/203 + ELEC 202 或 ELEC 204</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 302</div>
-  <div class="course-title-en">Electronic Circuits for Electromechanical Design</div><div class="course-title-zh">机电设计电子电路</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Semiconductor fundamentals; modelling of diodes and transistors; power supplies; waveform generators; logic circuits; op-amps; filters; oscillators.</div><div class="desc-zh">半导体基础；二极管和晶体管建模；电源设计；波形发生器；逻辑电路；运放；滤波器；振荡器。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201/203/204 或 MECH 221</div></div>
-<div class="course-card em">
-  <div class="course-code">ELEC 311</div>
-  <div class="course-title-en">Electromagnetic Fields and Waves</div><div class="course-title-zh">电磁场与波</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Waves and propagation; Maxwell's equations; transmission lines; impedance matching/Smith charts; reflection/refraction; waveguides; antennas.</div><div class="desc-zh">波与传播；麦克斯韦方程组；传输线；阻抗匹配/Smith圆图；反射/折射；波导；天线。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 211 + MATH 253 + MATH 264 + MATH 255/256</div></div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 315</div>
-  <div class="course-title-en">Electronic Materials and Devices</div><div class="course-title-zh">电子材料与器件</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Fundamental aspects of semiconductors, metals, dielectrics, piezoelectrics, magnetic materials and device applications.</div><div class="desc-zh">半导体、金属、电介质、压电材料、磁性材料基础及器件应用。</div>
-  </div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 321</div>
-  <div class="course-title-en">Stochastic Signals and Systems</div><div class="course-title-zh">随机信号与系统</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Stochastic behaviour of signals and systems; discrete/continuous probability; random processes; LTI system modelling; binary hypothesis testing.</div><div class="desc-zh">信号与系统的随机行为；离散/连续概率；随机过程；LTI系统建模；二元假设检验。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 221 或 STAT 305</div></div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 331</div>
-  <div class="course-title-en">Computer Communications</div><div class="course-title-zh">计算机通信</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Analysis, design and implementation of computer networks and protocols. Application layer, TCP, IP, routing, reliable data transfer, multiple access, Ethernet.</div><div class="desc-zh">计算机网络与协议的分析、设计与实现：应用层、TCP、IP、路由、可靠数据传输、多址接入、以太网。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 221/CPEN 212/CPEN 331</div></div>
-<div class="course-card ctrl">
-  <div class="course-code">ELEC 341</div>
-  <div class="course-title-en">Systems and Control</div><div class="course-title-zh">系统与控制</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Continuous time system analysis by Laplace transforms; transfer function/state space modelling; feedback, stability, sensitivity; control design; frequency domain.</div><div class="desc-zh">连续时间系统拉普拉斯分析；传递函数/状态空间建模；反馈、稳定性、灵敏度；控制设计；频域分析。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 202 或 ELEC 204</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 342</div>
-  <div class="course-title-en">Electro-Mechanical Energy Conversion</div><div class="course-title-zh">机电能量转换</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Three phase power; transformers; magnetic circuits; electromechanical energy conversion; DC machines; AC machines; variable frequency operation.</div><div class="desc-zh">三相电力；变压器；磁路；机电能量转换；直流电机；交流电机；变频运行。</div>
-  <div class="prereq"><strong>前置:</strong> PHYS 170 + ELEC 202</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 343</div>
-  <div class="course-title-en">Electromechanics</div><div class="course-title-zh">机电学</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Electromechanical energy conversion; linear actuators; torque/speed; reluctance, stepper, PM, induction, brushless-DC motors; drive circuits.</div><div class="desc-zh">机电能量转换；线性执行器；转矩/速度；磁阻/步进/永磁/感应/无刷直流电机；驱动电路。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 202 或 ELEC 302</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 344</div>
-  <div class="course-title-en">Applied Electronics and Electromechanics</div><div class="course-title-zh">应用电子与机电学</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Semiconductor devices; analog circuits; force/torque production; motor principles; power electronics. Not open to ECE.</div><div class="desc-zh">半导体器件；模拟电路；力/转矩产生；电机原理；电力电子。非ECE学生。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201/203/204 或 MECH 221</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 352</div>
-  <div class="course-title-en">Electric Energy Systems</div><div class="course-title-zh">电能系统</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Three-phase energy systems; high-voltage transmission; low-voltage distribution; renewable electricity generation; grid integration.</div><div class="desc-zh">三相能源系统；高压输电；低压配电；可再生发电；电网整合。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 202 + ELEC 342</div></div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 361</div>
-  <div class="course-title-en">Molecules to Mechanisms</div><div class="course-title-zh">从分子到机械</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Forces, scaling, thermal, fluidic, and mechanical properties for design of emerging devices/systems at micro/nano scales.</div><div class="desc-zh">微纳尺度新兴器件与系统设计中的力、缩放、热、流体和机械特性。</div>
-  </div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 371</div>
-  <div class="course-title-en">Biomedical Engineering Instrumentation</div><div class="course-title-zh">生物医学工程仪器</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Theory and experiments involving instruments for surgery and sensors for physiological measurements.</div><div class="desc-zh">涉及外科手术仪器和生理测量传感器的理论与实验。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 255/256 + (ELEC 202+292 或 BMEG 220+257)</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 391</div>
-  <div class="course-title-en">EE Design Studio II</div><div class="course-title-zh">电子工程设计工作室II</div>
-  <span class="course-credits">6 学分</span>
-  <div class="desc-en">Introduction to project management; problem definition; design principles; circuit/software design; solid modelling; PCBs; assembly; testing; presentations.</div><div class="desc-zh">项目管理导论；问题定义；设计原理；电路/软件设计；实体建模；PCB；装配；测试；演示。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 291/ELEC 291/292 + 两门 ELEC 301/341/311/342</div></div></div></div>
-<div class="year-section " id="s400"><h2>📕 400级</h2><p class="sec-desc">33 courses</p><div class="course-grid"><div class="course-card ckt">
-  <div class="course-code">ELEC 401</div>
-  <div class="course-title-en">Analog CMOS Integrated Circuit Design</div><div class="course-title-zh">模拟CMOS集成电路设计</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Design and analysis of analog ICs: gain stages, op-amp design, frequency compensation, oscillators, A/D, D/A, PLLs, DLLs, RF intro.</div><div class="desc-zh">模拟IC设计与分析：增益级、运放设计、频率补偿、振荡器、A/D、D/A、PLL、DLL、RF简介。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 202 或 ELEC 204</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 402</div>
-  <div class="course-title-en">Introduction to VLSI Systems</div><div class="course-title-zh">VLSI系统导论</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Static CMOS combinational logic; standard cell design/layout; memory element design; dynamic logic; synchronous logic; timing; power; scaling; VHDL/Verilog CAD project.</div><div class="desc-zh">静态CMOS组合逻辑；标准单元设计/版图；存储元件设计；动态逻辑；同步逻辑；时序；功耗；缩放；VHDL/Verilog CAD项目。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 311</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 403</div>
-  <div class="course-title-en">Advanced Digital VLSI Systems</div><div class="course-title-zh">高级数字VLSI系统</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Logical effort; noise; low power techniques; power distribution; SRAM/DRAM design; non-volatile memory; high-speed arithmetic; clock trees; synchronization.</div><div class="desc-zh">逻辑努力；噪声；低功耗技术；电源分配；SRAM/DRAM设计；非易失存储；高速算术；时钟树；同步。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 402</div></div>
-<div class="course-card ckt">
-  <div class="course-code">ELEC 404</div>
-  <div class="course-title-en">RF Integrated Circuits</div><div class="course-title-zh">射频集成电路</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">RF communication systems; matching networks; transceiver architectures; low noise amplifiers; mixers; oscillators.</div><div class="desc-zh">射频通信系统；匹配网络；收发器架构；低噪声放大器；混频器；振荡器。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 221</div><div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 401</div></div>
-<div class="course-card em">
-  <div class="course-code">ELEC 411</div>
-  <div class="course-title-en">Antennas and Propagation</div><div class="course-title-zh">天线与传播</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Basic antenna concepts; antennas for various frequencies; terrestrial/satellite propagation; environmental effects on EM radiation.</div><div class="desc-zh">基本天线概念；各频段天线；地面/卫星传播；环境对电磁辐射的影响。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 311/PHYS 301/PHYS 354</div></div>
-<div class="course-card em">
-  <div class="course-code">ELEC 412</div>
-  <div class="course-title-en">Optical Waveguides and Photonics</div><div class="course-title-zh">光波导与光子学</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Planar dielectric waveguides; single mode optical fibers; integrated optics; resonators; transfer matrix methods; optical communications links.</div><div class="desc-zh">平面介质波导；单模光纤；集成光学；谐振器；传输矩阵法；光通信链路。</div>
-  </div>
-<div class="course-card em">
-  <div class="course-code">ELEC 413</div>
-  <div class="course-title-en">Semiconductor Lasers</div><div class="course-title-zh">半导体激光器</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Introduction to lasers and applications; theory, modelling, fabrication and performance of semiconductor lasers; optical communications links.</div><div class="desc-zh">激光器与应用导论；半导体激光器理论、建模、制造和性能；光通信链路。</div>
-  </div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 415</div>
-  <div class="course-title-en">Semiconductor Devices: Physics, Design and Analysis</div><div class="course-title-zh">半导体器件：物理、设计与分析</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Physics, design and analysis of semiconductor devices: solar cells, LEDs, high-speed MOSFETs, high-frequency HBTs, low-noise HEMTs.</div><div class="desc-zh">半导体器件物理、设计与分析：太阳能电池、LED、高速MOSFET、高频HBT、低噪声HEMT。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 315 或 PHYS 304</div></div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 421</div>
-  <div class="course-title-en">Digital Signal and Image Processing</div><div class="course-title-zh">数字信号与图像处理</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Digital signal processing fundamentals; image processing; signal representation; filtering; statistical estimation; biomedical applications.</div><div class="desc-zh">数字信号处理基础；图像处理；信号表示；滤波；统计估计；生物医学应用。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 221 + CPEN 221/223/CPSC 259</div></div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 422</div>
-  <div class="course-title-en">Biosignals and Systems</div><div class="course-title-zh">生物信号与系统</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Data acquisition; time/frequency domain analysis; analog/discrete filter design; sampling; time-dependent processing; linear prediction; random signals; biomedical modelling.</div><div class="desc-zh">数据采集；时频域分析；模拟/离散滤波器设计；采样；时变处理；线性预测；随机信号；生物医学建模。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 371+341+221 + CPSC 259/260 + STAT 251/MATH 302/318/STAT 302</div></div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 431</div>
-  <div class="course-title-en">Communication Systems I</div><div class="course-title-zh">通信系统I</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Review of probability, signals/noise; digital communication over Gaussian noise channels; optimal receiver design; modulation; error performance; info/coding theory; wireless.</div><div class="desc-zh">概率论复习、信号/噪声；高斯噪声信道数字通信；最优接收机设计；调制；误码性能；信息/编码论；无线通信。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 221 + MATH 302/318/STAT 251/302</div></div>
-<div class="course-card sig">
-  <div class="course-code">ELEC 432</div>
-  <div class="course-title-en">Communication Systems II</div><div class="course-title-zh">通信系统II</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Communication over bandlimited AWGN channels; power spectra; intersymbol interference; coding schemes; spread spectrum; security; wireless standards.</div><div class="desc-zh">带限AWGN信道通信；功率谱；码间干扰；编码方案；扩频；安全；无线标准。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 431</div></div>
-<div class="course-card ctrl">
-  <div class="course-code">ELEC 441</div>
-  <div class="course-title-en">Control Systems</div><div class="course-title-zh">控制系统</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Linear control systems: system parameters vs responses; design specifications for dynamic/steady-state performance; robust PID; multivariable controller design.</div><div class="desc-zh">线性控制系统：系统参数与响应关系；动态/稳态性能设计规格；鲁棒PID；多变量控制器设计。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 341</div></div>
-<div class="course-card ctrl">
-  <div class="course-code">ELEC 442</div>
-  <div class="course-title-en">Introduction to Robotics</div><div class="course-title-zh">机器人学导论</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Rigid motions; homogeneous transformations; forward/inverse kinematics; velocity kinematics; motion planning; trajectory generation; sensing; vision; control.</div><div class="desc-zh">刚体运动；齐次变换；正/逆运动学；速度运动学；运动规划；轨迹生成；传感；视觉；控制。</div>
-  <div class="prereq"><strong>前置:</strong> PHYS 170 + MATH 152/221</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 451</div>
-  <div class="course-title-en">Power Electronics</div><div class="course-title-zh">电力电子</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Power diodes, thyristors, transistors, FETs; AC-DC, DC-DC, DC-AC, AC-AC converters; modulation techniques; gating circuits; practical design.</div><div class="desc-zh">功率二极管、晶闸管、晶体管、FET；AC-DC/DC-DC/DC-AC/AC-AC变换器；调制技术；门极电路；实践设计。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 301/344/342</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 452</div>
-  <div class="course-title-en">Industrial Drives</div><div class="course-title-zh">工业驱动</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Mechanical loads; dynamic/static characteristics of DC and AC drives; microprocessor-based controllers; commercial drive selection.</div><div class="desc-zh">机械负载；交直流驱动动态/静态特性；微处理器控制器；商用驱动选型。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 342 或 ELEC 343</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 453</div>
-  <div class="course-title-en">Power System Analysis</div><div class="course-title-zh">电力系统分析</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Transmission/distribution; phasors; complex power; balanced/unbalanced three-phase; symmetrical components; sequence networks; voltage regulation; short circuit capacity.</div><div class="desc-zh">输配电；相量；复功率；平衡/不平衡三相；对称分量；序网络；电压调整；短路容量。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 342</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 454</div>
-  <div class="course-title-en">Power System Analysis II</div><div class="course-title-zh">电力系统分析II</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Power system monitoring/control; large networks; automatic generation control; optimum power flow; traveling wave transmission lines; EMTP/MATLAB for transients/stability.</div><div class="desc-zh">电力系统监控；大网络；自动发电控制；最优潮流；行波传输线；EMTP/MATLAB暂态/稳定分析。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 453</div></div>
-<div class="course-card pwr">
-  <div class="course-code">ELEC 455</div>
-  <div class="course-title-en">Power Systems Protection</div><div class="course-title-zh">电力系统保护</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Analysis of disturbances; security; cascading/blackouts; protection role/impact; transducers; measuring elements; transmission/distribution protection.</div><div class="desc-zh">扰动分析；安全；级联/停电；保护作用与影响；传感器；测量元件；输配电保护。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 453 + ELEC 342</div></div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 461</div>
-  <div class="course-title-en">Nanotechnology in Electronics</div><div class="course-title-zh">电子学中的纳米技术</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Topics of special importance to understanding and designing electronic devices where quantum effects and discrete nature of matter become important.</div><div class="desc-zh">理解与设计量子效应和物质离散性变得重要的电子器件的专题。</div>
-  <div class="prereq"><strong>前置:</strong> CHEM 312/ELEC 315/PHYS 250/PHYS 304</div><div class="coreq"><strong>并修/注意:</strong> 并修: APSC 201/MTRL 478</div></div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 462</div>
-  <div class="course-title-en">Sensors and Actuators in Microsystems</div><div class="course-title-zh">微系统传感器与执行器</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Mechanisms, design, fabrication, and testing of microsensors, actuators, and MEMS.</div><div class="desc-zh">微传感器、执行器和MEMS的机理、设计、制造和测试。</div>
-  </div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 463</div>
-  <div class="course-title-en">Micro/Nanofabrication and Instrumentation Lab</div><div class="course-title-zh">微纳制造与仪器实验室</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Microfabrication methods and nanofabrication techniques. Imaging and characterization of micro/nanostructures.</div><div class="desc-zh">微制造方法和纳米制造技术。微纳结构的成像与表征。</div>
-  <div class="prereq"><strong>前置:</strong> 推荐: ELEC 315</div></div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 464</div>
-  <div class="course-title-en">Nanotechnology and Nature</div><div class="course-title-zh">纳米技术与自然</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Nature's fabrication methods, sensors, actuators, energy harvesting, signaling and information processing; comparisons with artificial methods.</div><div class="desc-zh">自然的制造方法、传感器、执行器、能量采集、信号与信息处理；与人工方法的比较。</div>
-  </div>
-<div class="course-card nano">
-  <div class="course-code">ELEC 465</div>
-  <div class="course-title-en">Microsystems Design</div><div class="course-title-zh">微系统设计</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Structured modelling and design; multiphysics at microscales; physical limitations in MEMS; interface with electronics; behavioural modelling for mixed analog-digital design.</div><div class="desc-zh">结构化建模与设计；微尺度多物理场；MEMS物理限制；电子接口；混合模数设计行为建模。</div>
-  </div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 471</div>
-  <div class="course-title-en">Medical Imaging</div><div class="course-title-zh">医学成像</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Physical principles of ultrasound, MRI, CT, X-ray projection imaging and molecular imaging for diagnostics/therapeutics/interventions.</div><div class="desc-zh">超声、磁共振、CT、X射线投影成像和分子成像的物理原理，用于诊断/治疗/介入。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 371+341+311+221</div></div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 472</div>
-  <div class="course-title-en">Biomechatronics</div><div class="course-title-zh">生物机电一体化</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Design of mechatronic systems for biological materials/processes; compliant structures; bioelectronic circuits; biomedical embedded systems; BioMEMS.</div><div class="desc-zh">用于生物材料/过程的机电系统设计；柔性结构；生物电子电路；生物医学嵌入式系统；BioMEMS。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201+202 + CPEN 211 + ELEC 341</div></div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 473</div>
-  <div class="course-title-en">Biological MEMS</div><div class="course-title-zh">生物MEMS</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Principles of sensors, actuators, microfluidics, biotech and nanotech for probing, detection, assaying and drug delivery.</div><div class="desc-zh">用于探测、检测、分析和药物输送的传感器、执行器、微流体、生物技术和纳米技术原理。</div>
-  </div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 474</div>
-  <div class="course-title-en">Biophotonics</div><div class="course-title-zh">生物光子学</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Optical imaging and spectroscopy for biomedical applications: confocal/multiphoton microscopy, OCT, photoacoustic tomography, spectroscopy.</div><div class="desc-zh">生物医学应用的光学成像与光谱学：共聚焦/多光子显微、OCT、光声层析、光谱学。</div>
-  </div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 481</div>
-  <div class="course-title-en">Economic Analysis of Engineering Projects</div><div class="course-title-zh">工程项目经济分析</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Time-money relationships; economic analysis of alternatives including interest, inflation, depreciation, taxation, uncertainty; cost estimation/budgeting.</div><div class="desc-zh">时间-金钱关系；方案经济分析：利率、通胀、折旧、税收、不确定性；成本估算/预算。</div>
-  </div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 491</div>
-  <div class="course-title-en">EE Capstone Design Project</div><div class="course-title-zh">电子工程顶点设计项目</div>
-  <span class="course-credits">5-10 学分</span>
-  <div class="desc-en">Design, analysis, implementation of solutions for real-world EE problems from industry/research labs. Includes project management.</div><div class="desc-zh">应对来自工业/研究实验室的真实电子工程问题的设计、分析与实现。含项目管理。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 391</div></div>
-<div class="course-card bio">
-  <div class="course-code">ELEC 494</div>
-  <div class="course-title-en">BME Capstone Design Project</div><div class="course-title-zh">生物医学工程顶点设计</div>
-  <span class="course-credits">10 学分</span>
-  <div class="desc-en">Design, analysis, implementation of solutions for real-world BME problems from industry/research labs.</div><div class="desc-zh">应对真实生物医学工程问题的设计、分析与实现。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 391</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 497</div>
-  <div class="course-title-en">Research Experience in EE</div><div class="course-title-zh">电子工程研究经历</div>
-  <span class="course-credits">1-3 学分</span>
-  <div class="desc-en">Directed research experience. Communication of research ideas. Pass/Fail.</div><div class="desc-zh">指导研究经历。研究思路沟通。通过/不通过。</div>
-  <div class="prereq"><strong>前置:</strong> 三年级以上</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 499</div>
-  <div class="course-title-en">Undergraduate Thesis</div><div class="course-title-zh">本科论文</div>
-  <span class="course-credits">3-6 学分</span>
-  <div class="desc-en">Project in EE or CE involving design, experimental and/or computer simulation work. Individual thesis.</div><div class="desc-zh">涉及设计、实验和/或计算机仿真的电子工程或计算机工程项目。个人论文。</div>
-  </div></div></div>
-<div class="year-section " id="s500"><h2>📓 500+</h2><p class="sec-desc">0 courses</p><div class="course-grid"></div></div>
-<div class="year-section " id="sall"><h2>🗺️ 总览</h2><p class="sec-desc">0 courses</p><div class="course-grid"></div></div>
-<div class="track-section" id="ckt"><h2>⚡ 电路/电子</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 201/204 电路"] --> B["301 电子电路"] --> C["401 CMOS模拟IC"]
-  B --> D["402 VLSI系统"] --> E["403 高级VLSI"]
-  A --> F["302 机电电子"]
-  C --> G["404 RF IC"]</div></div></div>
-<div class="track-section" id="em"><h2>📡 电磁/光子</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 211 工程电磁学"] --> B["311 电磁场与波"] --> C["411 天线与传播"]
-  B --> D["412 光波导"]; B --> E["413 半导体激光器"]</div></div></div>
-<div class="track-section" id="sig"><h2>📶 信号/通信</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 221 信号与系统"] --> B["321 随机信号"] --> C["421 数字信号/图像处理"]
-  A --> D["331 计算机通信"]
-  A --> E["431 通信系统I"] --> F["432 通信系统II"]</div></div></div>
-<div class="track-section" id="ctrl"><h2>🎛️ 控制/机器人</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 341 系统与控制"] --> B["441 控制系统"]
-  A --> C["442 机器人学导论"]</div></div></div>
-<div class="track-section" id="pwr"><h2>🔌 电力/能源</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 342 机电能量转换"] --> B["352 电能系统"]
-  A --> C["451 电力电子"] --> D["452 工业驱动"]
-  A --> E["453 电力系统分析"] --> F["454 电力系统II"]
-  E --> G["455 电力系统保护"]</div></div></div>
-<div class="track-section" id="bio"><h2>🧬 生物医学工程</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 371 生物医学仪器"] --> B["422 生物信号与系统"]
-  B --> C["471 医学成像"]
-  A --> D["472 生物机电一体化"]
-  C --> E["473 生物MEMS"]
-  C --> F["474 生物光子学"]</div></div></div>
-<div class="track-section" id="nano"><h2>🔬 纳米/微系统</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["ELEC 315 电子材料与器件"] --> B["415 半导体器件"]
-  A --> C["461 纳米电子技术"] --> D["462 MEMS传感器"]
-  C --> E["463 微纳制造实验"]
-  B --> F["465 微系统设计"]</div></div></div>
-<div class="track-section" id="full"><h2>🗺️ 全图</h2><div class="flow-box"><div class="mermaid">flowchart TD
-  subgraph Y1["100/200级"]
-    A["201→202 电路分析"]; B["211 电磁学"]; C["221 信号与系统"]
-    D["281 技术沟通"]; E["291/292 设计工作室"]
+
+<div class="year-section visible" id="s100">
+<h2>📘 100/200级</h2>
+<div class="course-grid">
+<div class="course-card ckt"><div class="course-code">ELEC 201</div><div class="course-title-en">Circuit Analysis I</div><div class="course-title-zh">电路分析I</div><span class="course-credits">4 学分</span><div class="desc-en">Fundamentals of lumped linear time-invariant circuits; network theorems; op-amps; first order circuits.</div><div class="desc-zh">集总线性时不变电路基础；网络定理；运放；一阶电路。</div><div class="prereq"><strong>前置:</strong> MATH 101 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
+<div class="course-card ckt"><div class="course-code">ELEC 202</div><div class="course-title-en">Circuit Analysis II</div><div class="course-title-zh">电路分析II</div><span class="course-credits">4 学分</span><div class="desc-en">Phasor analysis, AC three phase power; transfer functions; Bode plots; filters; Laplace transforms.</div><div class="desc-zh">相量分析、交流三相功率；传递函数；Bode图；滤波器；拉普拉斯变换。</div><div class="prereq"><strong>前置:</strong> MATH 101+PHYS+MATH 255/256+ELEC 201/203</div></div>
+<div class="course-card ckt"><div class="course-code">ELEC 204</div><div class="course-title-en">Linear Circuits</div><div class="course-title-zh">线性电路</div><span class="course-credits">4 学分</span><div class="desc-en">Basic concepts: Bode plots, Laplace transform, RLC circuits, phasors, op-amps, nonlinear elements.</div><div class="desc-zh">基本概念：Bode图、拉普拉斯变换、RLC电路、相量、运放、非线性元件。</div><div class="prereq"><strong>前置:</strong> MATH 152 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
+<div class="course-card em"><div class="course-code">ELEC 211</div><div class="course-title-en">Engineering Electromagnetics</div><div class="course-title-zh">工程电磁学</div><span class="course-credits">2 学分</span><div class="desc-en">Electrostatics, electric currents, dielectrics, capacitance, electrostatic potential, magnetostatics.</div><div class="desc-zh">静电场、电流、电介质、电容、静电势、静磁场。</div><div class="prereq"><strong>前置:</strong> MATH 253 + PHYS</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 264</div></div>
+<div class="course-card sig"><div class="course-code">ELEC 221</div><div class="course-title-en">Signals and Systems</div><div class="course-title-zh">信号与系统</div><span class="course-credits">4 学分</span><div class="desc-en">Complex numbers, LTI systems, convolution, discrete-time Fourier series/transforms, z-transform, sampling.</div><div class="desc-zh">复数、LTI系统、卷积、离散时间傅里叶级数/变换、z变换、采样。</div><div class="prereq"><strong>前置:</strong> MATH 255/256</div></div>
+<div class="course-card gen"><div class="course-code">ELEC 281</div><div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div><span class="course-credits">3 学分</span><div class="desc-en">Written and oral communication in engineering.</div><div class="desc-zh">工程书面与口头沟通。</div><div class="prereq"><strong>前置:</strong> APSC 176/ENGL/WRDS 150</div></div>
+<div class="course-card gen"><div class="course-code">ELEC 291</div><div class="course-title-en">EE Design Studio I</div><div class="course-title-zh">EE设计工作室I</div><span class="course-credits">6 学分</span><div class="desc-en">Design projects: electronic devices/circuits, electromagnetics, signals/systems, microcomputers.</div><div class="desc-zh">设计项目：电子器件/电路、电磁学、信号/系统、微机。</div><div class="prereq"><strong>前置:</strong> ELEC 201 + CPEN 211</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>📙 300级</h2>
+<div class="course-grid">
+<div class="course-card ckt"><div class="course-code">ELEC 301</div><div class="course-title-en">Electronic Circuits</div><div class="course-title-zh">电子电路</div><span class="course-credits">4 学分</span><div class="desc-en">Analysis/design: biasing, small-signal models, frequency response, feedback, op-amps, oscillators.</div><div class="desc-zh">分析与设计：偏置、小信号模型、频率响应、反馈、运放、振荡器。</div><div class="prereq"><strong>前置:</strong> ELEC 201/203+202 or ELEC 204</div></div>
+<div class="course-card em"><div class="course-code">ELEC 311</div><div class="course-title-en">Electromagnetic Fields and Waves</div><div class="course-title-zh">电磁场与波</div><span class="course-credits">4 学分</span><div class="desc-en">Maxwell equations; transmission lines; impedance matching; waveguides; antennas.</div><div class="desc-zh">麦克斯韦方程组；传输线；阻抗匹配；波导；天线。</div><div class="prereq"><strong>前置:</strong> ELEC 211 + MATH 253 + MATH 264</div></div>
+<div class="course-card nano"><div class="course-code">ELEC 315</div><div class="course-title-en">Electronic Materials and Devices</div><div class="course-title-zh">电子材料与器件</div><span class="course-credits">4 学分</span><div class="desc-en">Semiconductors, metals, dielectrics, piezoelectrics, magnetic materials and device applications.</div><div class="desc-zh">半导体、金属、电介质、压电材料、磁性材料及器件应用。</div></div>
+<div class="course-card sig"><div class="course-code">ELEC 321</div><div class="course-title-en">Stochastic Signals and Systems</div><div class="course-title-zh">随机信号与系统</div><span class="course-credits">4 学分</span><div class="desc-en">Stochastic behaviour; discrete/continuous probability; random processes; LTI modelling.</div><div class="desc-zh">随机行为；离散/连续概率；随机过程；LTI建模。</div><div class="prereq"><strong>前置:</strong> ELEC 221 or STAT 305</div></div>
+<div class="course-card sig"><div class="course-code">ELEC 331</div><div class="course-title-en">Computer Communications</div><div class="course-title-zh">计算机通信</div><span class="course-credits">4 学分</span><div class="desc-en">Computer networks: TCP, IP, routing, reliable data transfer, multiple access, Ethernet.</div><div class="desc-zh">计算机网络：TCP、IP、路由、可靠数据传输、多址接入、以太网。</div><div class="prereq"><strong>前置:</strong> ELEC 221/CPEN 212/CPEN 331</div></div>
+<div class="course-card ctrl"><div class="course-code">ELEC 341</div><div class="course-title-en">Systems and Control</div><div class="course-title-zh">系统与控制</div><span class="course-credits">4 学分</span><div class="desc-en">Laplace transforms; transfer function/state space; feedback, stability, sensitivity; control design.</div><div class="desc-zh">拉普拉斯变换；传递函数/状态空间；反馈、稳定性、灵敏度；控制设计。</div><div class="prereq"><strong>前置:</strong> ELEC 202 or ELEC 204</div></div>
+<div class="course-card pwr"><div class="course-code">ELEC 342</div><div class="course-title-en">Electro-Mechanical Energy Conversion</div><div class="course-title-zh">机电能量转换</div><span class="course-credits">4 学分</span><div class="desc-en">Three phase power; transformers; magnetic circuits; DC/AC machines; variable frequency operation.</div><div class="desc-zh">三相电力；变压器；磁路；交直流电机；变频运行。</div><div class="prereq"><strong>前置:</strong> PHYS 170 + ELEC 202</div></div>
+<div class="course-card pwr"><div class="course-code">ELEC 352</div><div class="course-title-en">Electric Energy Systems</div><div class="course-title-zh">电能系统</div><span class="course-credits">4 学分</span><div class="desc-en">Three-phase energy systems; HV transmission; LV distribution; renewable generation; grid integration.</div><div class="desc-zh">三相能源系统；高压输电；低压配电；可再生发电；电网整合。</div><div class="prereq"><strong>前置:</strong> ELEC 202 + ELEC 342</div></div>
+<div class="course-card bio"><div class="course-code">ELEC 371</div><div class="course-title-en">Biomedical Engineering Instrumentation</div><div class="course-title-zh">生物医学工程仪器</div><span class="course-credits">3 学分</span><div class="desc-en">Instruments for surgery and sensors for physiological measurements.</div><div class="desc-zh">外科手术仪器和生理测量传感器。</div><div class="prereq"><strong>前置:</strong> MATH 255/256 + ELEC 202+292 or BMEG</div></div>
+<div class="course-card gen"><div class="course-code">ELEC 391</div><div class="course-title-en">EE Design Studio II</div><div class="course-title-zh">EE设计工作室II</div><span class="course-credits">6 学分</span><div class="desc-en">Project management; design principles; circuit/software design; PCBs; assembly; testing.</div><div class="desc-zh">项目管理；设计原理；电路/软件设计；PCB；装配；测试。</div><div class="prereq"><strong>前置:</strong> ELEC 291/292 + 2 of ELEC 301/341/311/342</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级</h2>
+<div class="course-grid">
+<div class="course-card ckt"><div class="course-code">ELEC 401</div><div class="course-title-en">Analog CMOS Integrated Circuit Design</div><div class="course-title-zh">模拟CMOS IC设计</div><span class="course-credits">4 学分</span><div class="desc-en">Analog ICs: gain stages, op-amp design, frequency compensation, oscillators, A/D, D/A, PLLs, DLLs.</div><div class="desc-zh">模拟IC：增益级、运放设计、频率补偿、振荡器、A/D、D/A、PLL、DLL。</div><div class="prereq"><strong>前置:</strong> ELEC 202/204</div></div>
+<div class="course-card ckt"><div class="course-code">ELEC 402</div><div class="course-title-en">Introduction to VLSI Systems</div><div class="course-title-zh">VLSI系统导论</div><span class="course-credits">4 学分</span><div class="desc-en">Static CMOS logic; standard cell design; memory elements; dynamic logic; timing; power; VHDL/Verilog.</div><div class="desc-zh">静态CMOS逻辑；标准单元设计；存储元件；动态逻辑；时序；功耗；VHDL/Verilog。</div><div class="prereq"><strong>前置:</strong> CPEN 311</div></div>
+<div class="course-card ckt"><div class="course-code">ELEC 403</div><div class="course-title-en">Advanced Digital VLSI Systems</div><div class="course-title-zh">高级数字VLSI</div><span class="course-credits">3 学分</span><div class="desc-en">Logical effort; noise; low power; SRAM/DRAM; non-volatile memory; high-speed arithmetic; clock trees.</div><div class="desc-zh">逻辑努力；噪声；低功耗；SRAM/DRAM；非易失存储；高速算术；时钟树。</div><div class="prereq"><strong>前置:</strong> ELEC 402</div></div>
+<div class="course-card ckt"><div class="course-code">ELEC 404</div><div class="course-title-en">RF Integrated Circuits</div><div class="course-title-zh">射频IC</div><span class="course-credits">3 学分</span><div class="desc-en">RF communication systems; matching networks; transceiver architectures; LNA; mixers; oscillators.</div><div class="desc-zh">射频通信系统；匹配网络；收发器架构；LNA；混频器；振荡器。</div><div class="prereq"><strong>前置:</strong> ELEC 221</div><div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 401</div></div>
+<div class="course-card em"><div class="course-code">ELEC 411</div><div class="course-title-en">Antennas and Propagation</div><div class="course-title-zh">天线与传播</div><span class="course-credits">3 学分</span><div class="desc-en">Basic antenna concepts; terrestrial/satellite propagation; environmental effects.</div><div class="desc-zh">基本天线概念；地面/卫星传播；环境影响。</div><div class="prereq"><strong>前置:</strong> ELEC 311/PHYS 301/PHYS 354</div></div>
+<div class="course-card em"><div class="course-code">ELEC 412</div><div class="course-title-en">Optical Waveguides and Photonics</div><div class="course-title-zh">光波导与光子学</div><span class="course-credits">3 学分</span><div class="desc-en">Planar waveguides; single mode fibers; integrated optics; resonators; optical communications.</div><div class="desc-zh">平面波导；单模光纤；集成光学；谐振器；光通信。</div></div>
+<div class="course-card sig"><div class="course-code">ELEC 421</div><div class="course-title-en">Digital Signal and Image Processing</div><div class="course-title-zh">数字信号与图像处理</div><span class="course-credits">4 学分</span><div class="desc-en">DSP fundamentals; image processing; signal representation; filtering; statistical estimation.</div><div class="desc-zh">数字信号处理基础；图像处理；信号表示；滤波；统计估计。</div><div class="prereq"><strong>前置:</strong> ELEC 221 + CPEN/CPSC programming</div></div>
+<div class="course-card sig"><div class="course-code">ELEC 431</div><div class="course-title-en">Communication Systems I</div><div class="course-title-zh">通信系统I</div><span class="course-credits">4 学分</span><div class="desc-en">Digital communication over Gaussian noise; optimal receiver; modulation; error performance.</div><div class="desc-zh">高斯噪声数字通信；最优接收机；调制；误码性能。</div><div class="prereq"><strong>前置:</strong> ELEC 221 + MATH/STAT</div></div>
+<div class="course-card ctrl"><div class="course-code">ELEC 441</div><div class="course-title-en">Control Systems</div><div class="course-title-zh">控制系统</div><span class="course-credits">3 学分</span><div class="desc-en">Linear control: system parameters vs responses; robust PID; multivariable controller design.</div><div class="desc-zh">线性控制：参数与响应关系；鲁棒PID；多变量控制器设计。</div><div class="prereq"><strong>前置:</strong> ELEC 341</div></div>
+<div class="course-card ctrl"><div class="course-code">ELEC 442</div><div class="course-title-en">Introduction to Robotics</div><div class="course-title-zh">机器人学导论</div><span class="course-credits">4 学分</span><div class="desc-en">Rigid motions; homogeneous transformations; forward/inverse kinematics; motion planning; vision.</div><div class="desc-zh">刚体运动；齐次变换；正/逆运动学；运动规划；视觉。</div><div class="prereq"><strong>前置:</strong> PHYS 170 + MATH 152/221</div></div>
+<div class="course-card pwr"><div class="course-code">ELEC 451</div><div class="course-title-en">Power Electronics</div><div class="course-title-zh">电力电子</div><span class="course-credits">4 学分</span><div class="desc-en">Power diodes/thyristors/transistors; AC-DC, DC-DC, DC-AC converters; modulation; gating circuits.</div><div class="desc-zh">功率二极管/晶闸管/晶体管；AC-DC/DC-DC/DC-AC变换器；调制；门极电路。</div><div class="prereq"><strong>前置:</strong> ELEC 301/344/342</div></div>
+<div class="course-card pwr"><div class="course-code">ELEC 453</div><div class="course-title-en">Power System Analysis</div><div class="course-title-zh">电力系统分析</div><span class="course-credits">4 学分</span><div class="desc-en">Transmission/distribution; phasors; complex power; three-phase; symmetrical components; sequence networks.</div><div class="desc-zh">输配电；相量；复功率；三相；对称分量；序网络。</div><div class="prereq"><strong>前置:</strong> ELEC 342</div></div>
+<div class="course-card pwr"><div class="course-code">ELEC 454</div><div class="course-title-en">Power System Analysis II</div><div class="course-title-zh">电力系统分析II</div><span class="course-credits">4 学分</span><div class="desc-en">Monitoring/control; large networks; automatic generation control; optimum power flow; transients.</div><div class="desc-zh">监控；大网络；自动发电控制；最优潮流；暂态。</div><div class="prereq"><strong>前置:</strong> ELEC 453</div></div>
+<div class="course-card nano"><div class="course-code">ELEC 461</div><div class="course-title-en">Nanotechnology in Electronics</div><div class="course-title-zh">电子学纳米技术</div><span class="course-credits">3 学分</span><div class="desc-en">Electronic devices where quantum effects and discrete nature of matter become important.</div><div class="desc-zh">量子效应和物质离散性变得重要的电子器件。</div><div class="prereq"><strong>前置:</strong> CHEM 312/ELEC 315/PHYS</div></div>
+<div class="course-card bio"><div class="course-code">ELEC 471</div><div class="course-title-en">Medical Imaging</div><div class="course-title-zh">医学成像</div><span class="course-credits">3 学分</span><div class="desc-en">Physical principles of ultrasound, MRI, CT, X-ray, molecular imaging.</div><div class="desc-zh">超声、MRI、CT、X射线、分子成像的物理原理。</div><div class="prereq"><strong>前置:</strong> ELEC 371+341+311+221</div></div>
+<div class="course-card bio"><div class="course-code">ELEC 472</div><div class="course-title-en">Biomechatronics</div><div class="course-title-zh">生物机电一体化</div><span class="course-credits">3 学分</span><div class="desc-en">Mechatronic systems for biological materials; compliant structures; bioelectronic circuits; BioMEMS.</div><div class="desc-zh">生物材料机电系统；柔性结构；生物电子电路；BioMEMS。</div><div class="prereq"><strong>前置:</strong> ELEC 201+202+CPEN 211+ELEC 341</div></div>
+<div class="course-card gen"><div class="course-code">ELEC 491</div><div class="course-title-en">EE Capstone Design Project</div><div class="course-title-zh">EE顶点设计</div><span class="course-credits">5-10 学分</span><div class="desc-en">Design/analysis/implementation for real-world EE problems from industry/research labs.</div><div class="desc-zh">真实EE问题的设计/分析/实现。</div><div class="prereq"><strong>前置:</strong> ELEC 391</div></div>
+<div class="course-card gen"><div class="course-code">ELEC 499</div><div class="course-title-en">Undergraduate Thesis</div><div class="course-title-zh">本科论文</div><span class="course-credits">3-6 学分</span><div class="desc-en">Project in EE or CE: design, experimental and/or computer simulation. Individual thesis.</div><div class="desc-zh">EE或CE项目：设计、实验和/或计算机仿真。个人论文。</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s500">
+<h2>📓 500+</h2>
+<div class="course-grid">
+
+</div>
+</div>
+
+<div class="year-section " id="sall">
+<h2>🗺️ 总览</h2>
+<div class="course-grid">
+
+</div>
+</div>
+
+<div class="track-section" id="ckt">
+<h2>⚡ 电路/电子线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 201 电路I] --> B[301 电子电路] --> C[401 CMOS模拟IC]
+  B --> D[402 VLSI系统] --> E[403 高级VLSI]
+  C --> F[404 RF IC]
+</div></div>
+</div>
+
+<div class="track-section" id="em">
+<h2>📡 电磁/光子线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 211 工程电磁学] --> B[311 电磁场与波] --> C[411 天线与传播]
+  B --> D[412 光波导与光子学]
+</div></div>
+</div>
+
+<div class="track-section" id="sig">
+<h2>📶 信号/通信线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 221 信号与系统] --> B[321 随机信号] --> C[421 数字信号处理]
+  A --> D[331 计算机通信]
+  A --> E[431 通信系统I]
+</div></div>
+</div>
+
+<div class="track-section" id="ctrl">
+<h2>🎛️ 控制/机器人线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 341 系统与控制] --> B[441 控制系统]
+  A --> C[442 机器人学导论]
+</div></div>
+</div>
+
+<div class="track-section" id="pwr">
+<h2>🔌 电力/能源线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 342 机电能量转换] --> B[352 电能系统]
+  A --> C[451 电力电子]
+  A --> D[453 电力系统分析] --> E[454 电力系统II]
+</div></div>
+</div>
+
+<div class="track-section" id="bio">
+<h2>🧬 生物医学工程线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 371 生物医学仪器] --> B[471 医学成像]
+  A --> C[472 生物机电一体化]
+</div></div>
+</div>
+
+<div class="track-section" id="nano">
+<h2>🔬 纳米/微系统线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[ELEC 315 电子材料与器件] --> B[461 纳米电子技术]
+  B --> C[MEMS/微系统 462-465]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>🗺️ 全图</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Y1[100/200级]
+    A[201-202 电路]; B[211 电磁]; C[221 信号]; D[291 设计室]
   end
-  subgraph Y3["300级"]
-    F["301 电子电路"]; G["311 电磁场波"]; H["321 随机信号"]
-    I["331 计算机通信"]; J["341 系统控制"]; K["342 机电转换"]
-    L["315 电子材料"]; M["371 生物医学仪器"]
+  subgraph Y3[300级]
+    E[301 电子电路]; F[311 电磁波]; G[321 随机信号]
+    H[331 通信]; I[341 控制]; J[342 机电]; K[315 材料]; L[371 生物医学]
   end
-  subgraph Y4["400级"]
-    N["401/402/403 VLSI/IC"]; O["411/412/413 电磁/光子"]
-    P["421/431/432 信号/通信"]; Q["441/442 控制/机器人"]
-    R["451-455 电力系统"]; S["461-465 纳米/微系统"]
-    T["471-474 生物医学"]; U["491/499 顶点/论文"]
+  subgraph Y4[400级]
+    M[401-404 IC/VLSI]; N[411-412 电磁/光子]
+    O[421/431 信号/通信]; P[441-442 控制/机器人]
+    Q[451-454 电力]; R[461 纳米]; S[471-472 生物医学]; T[491 顶点]
   end
-  A-->F; B-->G; C-->H; C-->I; F-->N; G-->O; H-->P; J-->Q; K-->R; L-->S; M-->T
-  F-->U; N-->U</div></div></div>
-<hr><p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>57</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p>
+  A-->E; B-->F; C-->G; C-->H; E-->M; F-->N; G-->O; I-->P; J-->Q; K-->R; L-->S; M-->T
+</div></div>
+</div>
+
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>35</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p>
 </div>
 <script>
-
 mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
 
 var currentMode = 'year';
@@ -532,6 +329,4 @@ document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
     if (t) t.classList.add('visible');
   });
 });
-
-</script>
-</body></html>
+</script></body></html>

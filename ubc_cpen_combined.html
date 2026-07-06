@@ -1,295 +1,242 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UBC CPEN Course Map | UBC计算机工程课程关系图</title>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UBC CPEN Course Map</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
   :root {
     --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
     --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
-    --ckt: #ffab70; --em: #79c0ff; --sig: #c297ff; --ctrl: #7ee787;
-    --pwr: #f2cc60; --bio: #56d4dd; --nano: #f97583; --gen: #8b949e;
-    --hw: #ffab70; --sys: #79c0ff; --sw: #7ee787; --ai: #c297ff; --sec: #f97583;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
   .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
   h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
-  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-  .mode-btn { flex: 1; text-align: center; padding: 10px 18px; cursor: pointer; font-size: 0.92rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
-  .mode-btn:first-child { border-right: 1px solid var(--border); }
-  .mode-btn.active { background: var(--accent); color: #fff; }
-  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
-  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; position: sticky; top: 0; background: var(--bg); padding: 8px 0; z-index: 100; border-bottom: 1px solid var(--border); }
-  .tab { padding: 7px 15px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.84rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
-  .tab:hover { color: var(--text); }
-  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .tab-track .tab.active { background: #7c3aed !important; border-color: #7c3aed !important; }
-  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; padding: 12px 16px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.8rem; }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
-  .flow-box { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 18px; border: 1px solid var(--border); overflow-x: auto; }
-  .flow-box h3 { color: #333; font-size: 0.92rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
-  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 18px; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
   .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
   .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
   .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
   .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
   .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
   .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
   .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
   .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
   .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
   .prereq strong { color: #ff7b72; }
   .coreq { font-size: 0.76rem; color: #d2a8ff; }
-  .sec-desc { color: var(--text2); margin-bottom: 18px; font-size: 0.88rem; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
   .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
   .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
   .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
-  .tab-deps { font-size: 0.8rem; }
-  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
-  h2 { margin-bottom: 6px; font-size: 1.3rem; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
-  @media (max-width: 768px) { .course-grid { grid-template-columns: 1fr; } }
-</style>
-</head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#8b5cf6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">💻 UBC 计算机工程系课程完整依赖关系图</h1>
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#8b5cf6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC 计算机工程系课程完整依赖关系图</h1>
 <p class="subtitle">UBC Computer Engineering Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/cpenv" style="color:var(--accent)">UBC Academic Calendar</a></p>
 <div class="legend"><span style="color:var(--text2);font-weight:600;">图例:</span>
-
 <div class="legend-item"><div class="legend-dot" style="background:var(--hw)"></div>硬件/数字</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--sys)"></div>系统/OS</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--sw)"></div>软件工程</div>
 <div class="legend-item"><div class="legend-dot" style="background:var(--ai)"></div>AI/ML</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--sec)"></div>安全</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--gen)"></div>其他</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--sec)"></div>安全</div></div>
+<div class="mode-bar"><div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div><div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div></div>
+<div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s100">📘 100/200级</div>
+<div class="tab" data-tab="s300">📙 300级</div>
+<div class="tab" data-tab="s400">📕 400级</div>
+<div class="tab" data-tab="s500">📓 500+</div>
+<div class="tab" data-tab="sall">🗺️ 总览</div>
 </div>
-<div class="mode-bar">
-  <div class="mode-btn active" data-mode="year">📘 按年级查看课程</div>
-  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系</div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="hw">💾 硬件/数字</div>
+<div class="tab tab-deps" data-tab="sys">🖥️ 系统/OS</div>
+<div class="tab tab-deps" data-tab="sw">💻 软件工程</div>
+<div class="tab tab-deps" data-tab="ai">🤖 AI/ML</div>
+<div class="tab tab-deps" data-tab="sec">🔒 安全</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
 </div>
-<div class="tabs tab-year" id="tabYear"><div class="tab active" data-tab="s100">📘 100/200级</div><div class="tab " data-tab="s300">📙 300级</div><div class="tab " data-tab="s400">📕 400级</div><div class="tab " data-tab="s500">📓 500+</div><div class="tab " data-tab="sall">🗺️ 总览</div></div>
-<div class="tabs tab-track" id="tabTrack" style="display:none;"><div class="tab tab-deps active" data-tab="hw">💾 硬件/数字</div><div class="tab tab-deps " data-tab="sys">🖥️ 系统/OS</div><div class="tab tab-deps " data-tab="sw">💻 软件工程</div><div class="tab tab-deps " data-tab="ai">🤖 AI/ML</div><div class="tab tab-deps " data-tab="sec">🔒 安全</div><div class="tab tab-deps " data-tab="full">🗺️ 全图</div></div>
-<div class="year-section visible" id="s100"><h2>📘 100/200级</h2><p class="sec-desc">6 courses</p><div class="course-grid"><div class="course-card hw">
-  <div class="course-code">ELEC 211</div>
-  <div class="course-title-en">Computing Systems I</div><div class="course-title-zh">计算系统I</div>
-  <span class="course-credits">5 学分</span>
-  <div class="desc-en">Boolean algebra; combinational/sequential circuits; microcomputer organization; memory addressing; instruction sets; assembly language; I/O; digital system design.</div><div class="desc-zh">布尔代数；组合/时序电路；微机组织；内存寻址；指令集；汇编语言；I/O；数字系统设计。</div>
-  <div class="prereq"><strong>前置:</strong> APSC 160</div></div>
-<div class="course-card sys">
-  <div class="course-code">ELEC 212</div>
-  <div class="course-title-en">Computing Systems II</div><div class="course-title-zh">计算系统II</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Hardware-software interface abstractions: procedure invocation, dynamic dispatch, virtual memory, heap, garbage collection, caches, interrupts, processes, threads, locks, files, devices, networks.</div><div class="desc-zh">硬件-软件接口抽象：过程调用、动态分派、虚拟内存、堆、垃圾回收、缓存、中断、进程、线程、锁、文件、设备、网络。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 211 + CPEN 221/223/CPSC 259</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 221</div>
-  <div class="course-title-en">Software Construction I</div><div class="course-title-zh">软件构造I</div>
-  <span class="course-credits">4-5 学分</span>
-  <div class="desc-en">Design, implementation, reasoning about software: abstraction, specification, testing, verification, abstract data types, OOP, type hierarchies, concurrent design.</div><div class="desc-zh">软件设计、实现与推理：抽象、规格说明、测试、验证、抽象数据类型、OOP、类型层次、并发设计。</div>
-  <div class="prereq"><strong>前置:</strong> APSC 160</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 223</div>
-  <div class="course-title-en">Software Design for Engineers I</div><div class="course-title-zh">工程师软件设计I</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Robust software design: static typing, procedural specifications, unit testing, black/white-box tests, user-defined data types, data abstractions, UML.</div><div class="desc-zh">健壮软件设计：静态类型、过程式规格、单元测试、黑/白盒测试、用户定义类型、数据抽象、UML。</div>
-  <div class="prereq"><strong>前置:</strong> APSC 160</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 281</div>
-  <div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Written and oral communication in engineering.</div><div class="desc-zh">工程书面与口头沟通。</div>
-  <div class="prereq"><strong>前置:</strong> APSC 176/ENGL 110/111/112/120/121/WRDS 150</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 291</div>
-  <div class="course-title-en">CE Design Studio I</div><div class="course-title-zh">计算机工程设计工作室I</div>
-  <span class="course-credits">6 学分</span>
-  <div class="desc-en">Design projects involving hardware and software.</div><div class="desc-zh">涉及硬件和软件的设计项目。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 211</div><div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 201</div></div></div></div>
-<div class="year-section " id="s300"><h2>📙 300级</h2><p class="sec-desc">8 courses</p><div class="course-grid"><div class="course-card hw">
-  <div class="course-code">ELEC 311</div>
-  <div class="course-title-en">Digital Systems Design</div><div class="course-title-zh">数字系统设计</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Advanced combinational/sequential electronic system design using HDLs and CAD; FPGAs; complex state machines; microcontrollers; arithmetic circuits; interface units.</div><div class="desc-zh">使用HDL和CAD的高级组合/时序电子系统设计；FPGA；复杂状态机；微控制器；算术电路；接口单元。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 211 或 CPEN 312</div></div>
-<div class="course-card hw">
-  <div class="course-code">ELEC 312</div>
-  <div class="course-title-en">Digital Systems and Microcomputers</div><div class="course-title-zh">数字系统与微机</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Data representation; Boolean algebra; combinatorial/sequential circuits; memory/PLDs; microcomputer organization; I/O interfacing.</div><div class="desc-zh">数据表示；布尔代数；组合/时序电路；存储器/PLD；微机组织；I/O接口。</div>
-  <div class="prereq"><strong>前置:</strong> ELEC 201/203/204 或 MECH 221</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 320</div>
-  <div class="course-title-en">Software Construction II</div><div class="course-title-zh">软件构造II</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Contemporary concepts for interactive software: client-server architectures, session-oriented systems, security, scalability, deployment models.</div><div class="desc-zh">交互式软件当代概念：客户端-服务器架构、面向会话系统、安全、可扩展性、部署模型。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 221 + CPSC 221</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 321</div>
-  <div class="course-title-en">Software Engineering</div><div class="course-title-zh">软件工程</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Engineering practices for non-trivial software-intensive systems: requirements, architecture, implementation, verification, maintenance, iterative development.</div><div class="desc-zh">非平凡软件密集系统工程实践：需求、架构、实现、验证、维护、迭代开发。</div>
-  <div class="coreq"><strong>并修/注意:</strong> 并修: CPEN 322</div></div>
-<div class="course-card sys">
-  <div class="course-code">ELEC 331</div>
-  <div class="course-title-en">Operating Systems</div><div class="course-title-zh">操作系统</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Operating systems design/implementation: process concurrency, synchronization, scheduling, device drivers, memory management, virtual memory, file systems, networking, security.</div><div class="desc-zh">操作系统设计与实现：进程并发、同步、调度、设备驱动、内存管理、虚拟内存、文件系统、网络、安全。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 212 + CPEN 221</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 333</div>
-  <div class="course-title-en">Software Design for Engineers II</div><div class="course-title-zh">工程师软件设计II</div>
-  <span class="course-credits">3-4 学分</span>
-  <div class="desc-en">OS abstractions; real-time systems; concurrent programming; information structures; OO analysis/design/modelling with UML; software testing. Not open to CE students.</div><div class="desc-zh">OS抽象；实时系统；并发编程；信息结构；面向对象分析/设计/UML建模；软件测试。非CE学生。</div>
-  <div class="prereq"><strong>前置:</strong> CPSC 259 或 CPEN 223</div></div>
-<div class="course-card ai">
-  <div class="course-code">ELEC 355</div>
-  <div class="course-title-en">ML with Engineering Applications</div><div class="course-title-zh">机器学习工程应用</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Foundations of data science and ML with applications to engineering problems.</div><div class="desc-zh">数据科学与机器学习基础及其工程应用。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 152/221 + MATH 302/318/STAT + CPEN 221/223/CPSC 259</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 391</div>
-  <div class="course-title-en">CE Design Studio II</div><div class="course-title-zh">计算机工程设计工作室II</div>
-  <span class="course-credits">6 学分</span>
-  <div class="desc-en">Design/implementation of hardware platform + software at OS/application layers; project management; presentations.</div><div class="desc-zh">硬件平台+软件(OS/应用层)的设计与实现；项目管理；演示。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 212 + CPSC 221 + ELEC 201</div></div></div></div>
-<div class="year-section " id="s400"><h2>📕 400级</h2><p class="sec-desc">15 courses</p><div class="course-grid"><div class="course-card hw">
-  <div class="course-code">ELEC 411</div>
-  <div class="course-title-en">Computer Architecture</div><div class="course-title-zh">计算机架构</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Modern processors, GPUs, memory hierarchies; instruction set design; pipelining; superscalar; out-of-order; branch prediction; caches; virtual addressing; multicores; VLIW; on-chip networks.</div><div class="desc-zh">现代处理器、GPU、存储层次；指令集设计；流水线；超标量；乱序执行；分支预测；缓存；虚拟寻址；多核；VLIW；片上网络。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 211 + CPEN 212</div></div>
-<div class="course-card hw">
-  <div class="course-code">ELEC 412</div>
-  <div class="course-title-en">Microcomputer Systems Design</div><div class="course-title-zh">微机系统设计</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Microprocessor/system buses; advanced I/O; interrupts; serial I/O; networking; memory system design; hardware/software interaction; testability; safety critical systems.</div><div class="desc-zh">微处理器/系统总线；高级I/O；中断；串行I/O；网络；存储系统设计；软硬件交互；可测试性；安全关键系统。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 311 + CPEN 211/312</div></div>
-<div class="course-card hw">
-  <div class="course-code">ELEC 416</div>
-  <div class="course-title-en">Gate-Model Quantum Computing</div><div class="course-title-zh">门模型量子计算</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Software-based introduction to gate model quantum computing: Grover's, Shor's, quantum compilation, variational algorithms, Hamiltonian simulation, noise characterization.</div><div class="desc-zh">门模型量子计算软件导论：Grover算法、Shor算法、量子编译、变分算法、哈密顿模拟、噪声表征。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 221/223/CPSC 221/259/PHYS 210 + MATH 152/221/223</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 421</div>
-  <div class="course-title-en">Software Project Management</div><div class="course-title-zh">软件项目管理</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Advanced project planning, cost estimation, scheduling; project management tools; productivity factors/metrics; risk analysis; case studies.</div><div class="desc-zh">高级项目规划、成本估算、调度；项目管理工具；生产力因素/度量；风险分析；案例研究。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 321 或 CPSC 310</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 422</div>
-  <div class="course-title-en">Software Testing and Analysis</div><div class="course-title-zh">软件测试与分析</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Unit, integration, system, performance, regression testing; requirements flowdown; coverage criteria; static methods; tools; correctness, reliability, safety assessment.</div><div class="desc-zh">单元/集成/系统/性能/回归测试；需求分解；覆盖准则；静态方法；工具；正确性/可靠性/安全性评估。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 221/321 或 CPSC 210/310</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 423</div>
-  <div class="course-title-en">Software Architecture</div><div class="course-title-zh">软件架构</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Software architecture bridging requirements to implementation; architectural description/patterns; iterative development; COTS products.</div><div class="desc-zh">连接需求到实现的软件架构；架构描述/模式；迭代开发；商用现货产品。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 221/321 或 CPSC 310</div></div>
-<div class="course-card sys">
-  <div class="course-code">ELEC 431</div>
-  <div class="course-title-en">Design of Distributed Software Applications</div><div class="course-title-zh">分布式软件应用设计</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Communications, processes, naming, synchronization, consistency/replication, fault tolerance, middleware, security for distributed applications.</div><div class="desc-zh">分布式应用的通信、进程、命名、同步、一致性/复制、容错、中间件、安全。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 331/CPSC 313 + CPEN 221/CPSC 210</div></div>
-<div class="course-card sys">
-  <div class="course-code">ELEC 432</div>
-  <div class="course-title-en">Real-time System Design</div><div class="course-title-zh">实时系统设计</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Multi-tasking; interrupt-driven systems; task scheduling; schedulability analysis; IPC/synchronization; resource management; performance; hardware/software integration; reliability.</div><div class="desc-zh">多任务；中断驱动系统；任务调度；可调度性分析；IPC/同步；资源管理；性能；软硬件集成；可靠性。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 331/333 或 CPSC 313</div></div>
-<div class="course-card sw">
-  <div class="course-code">ELEC 441</div>
-  <div class="course-title-en">Human Computer Interfaces in Engineering Design</div><div class="course-title-zh">工程设计中的HCI</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Task analysis; user modelling; usability engineering; representations; metaphors; prototyping tools; interactive multimedia; scientific/engineering visualization.</div><div class="desc-zh">任务分析；用户建模；可用性工程；表示；隐喻；原型工具；交互多媒体；科学/工程可视化。</div>
-  <div class="prereq"><strong>前置:</strong> CPSC 221 + CPEN 221/CPSC 210/CPEN 333</div></div>
-<div class="course-card sec">
-  <div class="course-code">ELEC 442</div>
-  <div class="course-title-en">Introduction to Cybersecurity</div><div class="course-title-zh">网络安全导论</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Security risks, threats, vulnerabilities; cryptography; software/web security; access control; usable privacy/security; secure systems engineering; cryptocurrencies.</div><div class="desc-zh">安全风险/威胁/漏洞；密码学；软件/Web安全；访问控制；可用隐私/安全；安全系统工程；加密货币。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 331/333 或 CPSC 313</div></div>
-<div class="course-card ai">
-  <div class="course-code">ELEC 455</div>
-  <div class="course-title-en">Deep Learning</div><div class="course-title-zh">深度学习</div>
-  <span class="course-credits">4 学分</span>
-  <div class="desc-en">Fundamentals of deep learning: MLPs, CNNs, RNNs, Transformers, GNNs; supervised, unsupervised, reinforcement learning.</div><div class="desc-zh">深度学习基础：MLP、CNN、RNN、Transformer、GNN；监督/无监督/强化学习。</div>
-  <div class="prereq"><strong>前置:</strong> MATH 152/221 + MATH 302/318/STAT + CPEN 221/223/CPSC 259</div><div class="coreq"><strong>并修/注意:</strong> 推荐: CPEN 355 或 CPSC 340</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 481</div>
-  <div class="course-title-en">Economic Analysis of Engineering Projects</div><div class="course-title-zh">工程项目经济分析</div>
-  <span class="course-credits">3 学分</span>
-  <div class="desc-en">Time-money relationships; economic analysis; interest, inflation, depreciation, taxation, uncertainty; cost estimation; financial analysis.</div><div class="desc-zh">时间-金钱关系；经济分析；利率、通胀、折旧、税收、不确定性；成本估算；财务分析。</div>
-  </div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 491</div>
-  <div class="course-title-en">CE Capstone Design Project</div><div class="course-title-zh">计算机工程顶点设计项目</div>
-  <span class="course-credits">5-10 学分</span>
-  <div class="desc-en">Design, analysis, implementation of solutions for real-world CE problems from industry/research labs. Project management.</div><div class="desc-zh">应对真实计算机工程问题的设计、分析与实现。项目管理。</div>
-  <div class="prereq"><strong>前置:</strong> CPEN 331 + CPSC 320 + CPEN 311/322 + CPEN 291/391</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 497</div>
-  <div class="course-title-en">Research Experience in CE</div><div class="course-title-zh">计算机工程研究经历</div>
-  <span class="course-credits">1-3 学分</span>
-  <div class="desc-en">Directed research experience. Pass/Fail.</div><div class="desc-zh">指导研究经历。通过/不通过。</div>
-  <div class="prereq"><strong>前置:</strong> 三年级以上</div></div>
-<div class="course-card gen">
-  <div class="course-code">ELEC 499</div>
-  <div class="course-title-en">Undergraduate Thesis</div><div class="course-title-zh">本科论文</div>
-  <span class="course-credits">3-6 学分</span>
-  <div class="desc-en">Project in EE or CE involving design, experimental and/or computer simulation. Individual thesis.</div><div class="desc-zh">涉及设计、实验和/或计算机仿真的EE或CE项目。个人论文。</div>
-  </div></div></div>
-<div class="year-section " id="s500"><h2>📓 500+</h2><p class="sec-desc">0 courses</p><div class="course-grid"></div></div>
-<div class="year-section " id="sall"><h2>🗺️ 总览</h2><p class="sec-desc">0 courses</p><div class="course-grid"></div></div>
-<div class="track-section" id="hw"><h2>💾 硬件/数字</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["CPEN 211 计算系统I"] --> B["311 数字系统设计"] --> C["411 计算机架构"]
-  B --> D["412 微机系统设计"]
-  A --> E["312 数字系统/微机"]
-  C --> F["416 量子计算"]</div></div></div>
-<div class="track-section" id="sys"><h2>🖥️ 系统/OS</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["CPEN 212 计算系统II"] --> B["331 操作系统"] --> C["431 分布式系统"]
-  B --> D["432 实时系统设计"]
-  C --> E["442 网络安全导论"]</div></div></div>
-<div class="track-section" id="sw"><h2>💻 软件工程</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["CPEN 221/223 软件设计"] --> B["321 软件工程"] --> C["421 软件项目管理"]
-  B --> D["422 软件测试"]
-  B --> E["423 软件架构"]
-  A --> F["320 软件构造II"]
-  A --> G["441 HCI设计"]</div></div></div>
-<div class="track-section" id="ai"><h2>🤖 AI/ML</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["CPEN 355 ML工程应用"] --> B["455 深度学习"]
-  A --> C["416 量子计算"]</div></div></div>
-<div class="track-section" id="sec"><h2>🔒 安全</h2><div class="flow-box"><div class="mermaid">flowchart LR
-  A["CPEN 331/313 系统基础"] --> B["442 网络安全导论"]</div></div></div>
-<div class="track-section" id="full"><h2>🗺️ 全图</h2><div class="flow-box"><div class="mermaid">flowchart TD
-  subgraph Y1["100/200级"]
-    A["211 计算系统I"]; B["212 计算系统II"]
-    C["221/223 软件设计"]; D["291 设计工作室I"]
+
+<div class="year-section visible" id="s100">
+<h2>📘 100/200级</h2>
+<div class="course-grid">
+<div class="course-card hw"><div class="course-code">CPEN 211</div><div class="course-title-en">Computing Systems I</div><div class="course-title-zh">计算系统I</div><span class="course-credits">5 学分</span><div class="desc-en">Boolean algebra; combinational/sequential circuits; microcomputer organization; assembly; I/O.</div><div class="desc-zh">布尔代数；组合/时序电路；微机组织；汇编；I/O。</div><div class="prereq"><strong>前置:</strong> APSC 160</div></div>
+<div class="course-card sys"><div class="course-code">CPEN 212</div><div class="course-title-en">Computing Systems II</div><div class="course-title-zh">计算系统II</div><span class="course-credits">4 学分</span><div class="desc-en">Hardware-software interface: procedure invocation, virtual memory, caches, interrupts, processes, threads.</div><div class="desc-zh">硬软件接口：过程调用、虚拟内存、缓存、中断、进程、线程。</div><div class="prereq"><strong>前置:</strong> CPEN 211+CPEN 221/223/CPSC 259</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 221</div><div class="course-title-en">Software Construction I</div><div class="course-title-zh">软件构造I</div><span class="course-credits">4-5 学分</span><div class="desc-en">Design/implementation: abstraction, specification, testing, OOP, type hierarchies, concurrency.</div><div class="desc-zh">设计与实现：抽象、规格说明、测试、OOP、类型层次、并发。</div><div class="prereq"><strong>前置:</strong> APSC 160</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 223</div><div class="course-title-en">Software Design for Engineers I</div><div class="course-title-zh">工程师软件设计I</div><span class="course-credits">4 学分</span><div class="desc-en">Robust software: static typing, unit testing, black/white-box tests, data abstractions, UML.</div><div class="desc-zh">健壮软件：静态类型、单元测试、黑白盒测试、数据抽象、UML。</div><div class="prereq"><strong>前置:</strong> APSC 160</div></div>
+<div class="course-card gen"><div class="course-code">CPEN 281</div><div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div><span class="course-credits">3 学分</span><div class="desc-en">Written and oral communication in engineering.</div><div class="desc-zh">工程书面与口头沟通。</div><div class="prereq"><strong>前置:</strong> APSC 176/ENGL/WRDS 150</div></div>
+<div class="course-card gen"><div class="course-code">CPEN 291</div><div class="course-title-en">CE Design Studio I</div><div class="course-title-zh">CE设计工作室I</div><span class="course-credits">6 学分</span><div class="desc-en">Design projects involving hardware and software.</div><div class="desc-zh">涉及硬件和软件的设计项目。</div><div class="prereq"><strong>前置:</strong> CPEN 211</div><div class="coreq"><strong>并修/注意:</strong> 并修: ELEC 201</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>📙 300级</h2>
+<div class="course-grid">
+<div class="course-card hw"><div class="course-code">CPEN 311</div><div class="course-title-en">Digital Systems Design</div><div class="course-title-zh">数字系统设计</div><span class="course-credits">4 学分</span><div class="desc-en">Advanced digital design with HDLs/FPGAs; complex state machines; microcontrollers; arithmetic circuits.</div><div class="desc-zh">高级数字设计 HDL/FPGA；复杂状态机；微控制器；算术电路。</div><div class="prereq"><strong>前置:</strong> CPEN 211/312</div></div>
+<div class="course-card hw"><div class="course-code">CPEN 312</div><div class="course-title-en">Digital Systems and Microcomputers</div><div class="course-title-zh">数字系统与微机</div><span class="course-credits">3 学分</span><div class="desc-en">Boolean algebra; combinatorial/sequential circuits; memory/PLDs; microcomputer organization; I/O.</div><div class="desc-zh">布尔代数；组合/时序电路；存储器/PLD；微机组织；I/O。</div><div class="prereq"><strong>前置:</strong> ELEC 201/203/204 or MECH 221</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 320</div><div class="course-title-en">Software Construction II</div><div class="course-title-zh">软件构造II</div><span class="course-credits">4 学分</span><div class="desc-en">Interactive software: client-server, session-oriented, security, scalability, deployment models.</div><div class="desc-zh">交互式软件：客户端-服务器、面向会话、安全、可扩展性、部署。</div><div class="prereq"><strong>前置:</strong> CPEN 221 + CPSC 221</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 321</div><div class="course-title-en">Software Engineering</div><div class="course-title-zh">软件工程</div><span class="course-credits">4 学分</span><div class="desc-en">Requirements, architecture, implementation, verification, maintenance, iterative development.</div><div class="desc-zh">需求、架构、实现、验证、维护、迭代开发。</div><div class="coreq"><strong>并修/注意:</strong> 并修: CPEN 322</div></div>
+<div class="course-card sys"><div class="course-code">CPEN 331</div><div class="course-title-en">Operating Systems</div><div class="course-title-zh">操作系统</div><span class="course-credits">4 学分</span><div class="desc-en">OS design: process concurrency, synchronization, scheduling, memory management, file systems, networking.</div><div class="desc-zh">OS设计：进程并发、同步、调度、内存管理、文件系统、网络。</div><div class="prereq"><strong>前置:</strong> CPEN 212 + CPEN 221</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 333</div><div class="course-title-en">Software Design for Engineers II</div><div class="course-title-zh">工程师软件设计II</div><span class="course-credits">3-4 学分</span><div class="desc-en">OS abstractions; real-time systems; concurrent programming; OO design with UML; software testing.</div><div class="desc-zh">OS抽象；实时系统；并发编程；UML面向对象设计；软件测试。</div><div class="prereq"><strong>前置:</strong> CPSC 259/CPEN 223</div></div>
+<div class="course-card ai"><div class="course-code">CPEN 355</div><div class="course-title-en">ML with Engineering Applications</div><div class="course-title-zh">ML工程应用</div><span class="course-credits">4 学分</span><div class="desc-en">Foundations of data science and ML with engineering applications.</div><div class="desc-zh">数据科学与ML基础及工程应用。</div><div class="prereq"><strong>前置:</strong> MATH 152/221+STAT+CPEN 221/223/CPSC 259</div></div>
+<div class="course-card gen"><div class="course-code">CPEN 391</div><div class="course-title-en">CE Design Studio II</div><div class="course-title-zh">CE设计工作室II</div><span class="course-credits">6 学分</span><div class="desc-en">Hardware platform + software at OS/application layers; project management; presentations.</div><div class="desc-zh">硬件平台+软件(OS/应用层)；项目管理；演示。</div><div class="prereq"><strong>前置:</strong> CPEN 212+CPSC 221+ELEC 201</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级</h2>
+<div class="course-grid">
+<div class="course-card hw"><div class="course-code">CPEN 411</div><div class="course-title-en">Computer Architecture</div><div class="course-title-zh">计算机架构</div><span class="course-credits">4 学分</span><div class="desc-en">Modern processors, GPUs, memory hierarchies; pipelining; superscalar; caches; multicores; VLIW.</div><div class="desc-zh">现代处理器、GPU、存储层次；流水线；超标量；缓存；多核；VLIW。</div><div class="prereq"><strong>前置:</strong> CPEN 211+CPEN 212</div></div>
+<div class="course-card hw"><div class="course-code">CPEN 412</div><div class="course-title-en">Microcomputer Systems Design</div><div class="course-title-zh">微机系统设计</div><span class="course-credits">4 学分</span><div class="desc-en">Microprocessor/system buses; advanced I/O; interrupts; networking; memory design.</div><div class="desc-zh">微处理器/系统总线；高级I/O；中断；网络；存储设计。</div><div class="prereq"><strong>前置:</strong> CPEN 311+CPEN 211/312</div></div>
+<div class="course-card hw"><div class="course-code">CPEN 416</div><div class="course-title-en">Gate-Model Quantum Computing</div><div class="course-title-zh">门模型量子计算</div><span class="course-credits">4 学分</span><div class="desc-en">Grover, Shor algorithms; quantum compilation; variational algorithms; Hamiltonian simulation.</div><div class="desc-zh">Grover/Shor算法；量子编译；变分算法；哈密顿模拟。</div><div class="prereq"><strong>前置:</strong> CPEN/CPSC programming+MATH 152/221/223</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 421</div><div class="course-title-en">Software Project Management</div><div class="course-title-zh">软件项目管理</div><span class="course-credits">4 学分</span><div class="desc-en">Advanced project planning, cost estimation, scheduling; risk analysis; case studies.</div><div class="desc-zh">高级项目规划、成本估算、调度；风险分析；案例研究。</div><div class="prereq"><strong>前置:</strong> CPEN 321/CPSC 310</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 422</div><div class="course-title-en">Software Testing and Analysis</div><div class="course-title-zh">软件测试与分析</div><span class="course-credits">4 学分</span><div class="desc-en">Unit/integration/system/performance testing; coverage criteria; static methods.</div><div class="desc-zh">单元/集成/系统/性能测试；覆盖准则；静态方法。</div><div class="prereq"><strong>前置:</strong> CPEN 221/321/CPSC 210/310</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 423</div><div class="course-title-en">Software Architecture</div><div class="course-title-zh">软件架构</div><span class="course-credits">4 学分</span><div class="desc-en">Architecture bridging requirements to implementation; patterns; iterative development; COTS.</div><div class="desc-zh">连接需求到实现的架构；模式；迭代开发；商用现货。</div><div class="prereq"><strong>前置:</strong> CPEN 221/321/CPSC 310</div></div>
+<div class="course-card sys"><div class="course-code">CPEN 431</div><div class="course-title-en">Distributed Software Applications</div><div class="course-title-zh">分布式软件应用</div><span class="course-credits">4 学分</span><div class="desc-en">Communications, processes, naming, synchronization, replication, fault tolerance, middleware.</div><div class="desc-zh">通信、进程、命名、同步、复制、容错、中间件。</div><div class="prereq"><strong>前置:</strong> CPEN 331/CPSC 313+CPEN 221/CPSC 210</div></div>
+<div class="course-card sys"><div class="course-code">CPEN 432</div><div class="course-title-en">Real-time System Design</div><div class="course-title-zh">实时系统设计</div><span class="course-credits">4 学分</span><div class="desc-en">Multi-tasking; interrupt-driven; task scheduling; schedulability; IPC; resource management.</div><div class="desc-zh">多任务；中断驱动；任务调度；可调度性；IPC；资源管理。</div><div class="prereq"><strong>前置:</strong> CPEN 331/333/CPSC 313</div></div>
+<div class="course-card sw"><div class="course-code">CPEN 441</div><div class="course-title-en">Human Computer Interfaces in Engineering</div><div class="course-title-zh">工程设计HCI</div><span class="course-credits">4 学分</span><div class="desc-en">Task analysis; user modelling; usability engineering; prototyping; interactive multimedia.</div><div class="desc-zh">任务分析；用户建模；可用性工程；原型；交互多媒体。</div><div class="prereq"><strong>前置:</strong> CPSC 221+CPEN 221/CPSC 210/CPEN 333</div></div>
+<div class="course-card sec"><div class="course-code">CPEN 442</div><div class="course-title-en">Introduction to Cybersecurity</div><div class="course-title-zh">网络安全导论</div><span class="course-credits">4 学分</span><div class="desc-en">Security risks/threats/vulnerabilities; cryptography; software/web security; access control.</div><div class="desc-zh">安全风险/威胁/漏洞；密码学；软件/Web安全；访问控制。</div><div class="prereq"><strong>前置:</strong> CPEN 331/333/CPSC 313</div></div>
+<div class="course-card ai"><div class="course-code">CPEN 455</div><div class="course-title-en">Deep Learning</div><div class="course-title-zh">深度学习</div><span class="course-credits">4 学分</span><div class="desc-en">MLPs, CNNs, RNNs, Transformers, GNNs; supervised, unsupervised, reinforcement learning.</div><div class="desc-zh">MLP/CNN/RNN/Transformer/GNN；监督/无监督/强化学习。</div><div class="prereq"><strong>前置:</strong> MATH 152/221+STAT+CPEN 221/223/CPSC 259</div></div>
+<div class="course-card gen"><div class="course-code">CPEN 491</div><div class="course-title-en">CE Capstone Design Project</div><div class="course-title-zh">CE顶点设计</div><span class="course-credits">5-10 学分</span><div class="desc-en">Design/analysis/implementation for real-world CE problems. Project management.</div><div class="desc-zh">真实CE问题的设计/分析/实现。项目管理。</div><div class="prereq"><strong>前置:</strong> CPEN 331+CPSC 320+CPEN 311/322+CPEN 291/391</div></div>
+<div class="course-card gen"><div class="course-code">CPEN 499</div><div class="course-title-en">Undergraduate Thesis</div><div class="course-title-zh">本科论文</div><span class="course-credits">3-6 学分</span><div class="desc-en">Project in EE or CE: design, experimental and/or computer simulation.</div><div class="desc-zh">EE或CE项目：设计、实验和/或计算机仿真。</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s500">
+<h2>📓 500+</h2>
+<div class="course-grid">
+
+</div>
+</div>
+
+<div class="year-section " id="sall">
+<h2>🗺️ 总览</h2>
+<div class="course-grid">
+
+</div>
+</div>
+
+<div class="track-section" id="hw">
+<h2>💾 硬件/数字线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[CPEN 211 计算系统I] --> B[311 数字系统设计] --> C[411 计算机架构]
+  B --> D[412 微机系统设计]
+  A --> E[312 数字系统/微机]
+  C --> F[416 量子计算]
+</div></div>
+</div>
+
+<div class="track-section" id="sys">
+<h2>🖥️ 系统/OS线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[CPEN 212 计算系统II] --> B[331 操作系统] --> C[431 分布式系统]
+  B --> D[432 实时系统设计]
+</div></div>
+</div>
+
+<div class="track-section" id="sw">
+<h2>💻 软件工程线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[CPEN 221/223 软件设计] --> B[321 软件工程] --> C[421 软件项目管理]
+  B --> D[422 软件测试]
+  B --> E[423 软件架构]
+  A --> F[320 软件构造II]
+  A --> G[441 HCI设计]
+</div></div>
+</div>
+
+<div class="track-section" id="ai">
+<h2>🤖 AI/ML线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[CPEN 355 ML工程应用] --> B[455 深度学习]
+</div></div>
+</div>
+
+<div class="track-section" id="sec">
+<h2>🔒 安全线</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[CPEN 331 操作系统] --> B[442 网络安全导论]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>🗺️ 全图</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Y1[100/200级]
+    A[211 计算系统I]; B[212 计算系统II]; C[221/223 软件设计]; D[291 设计工作室I]
   end
-  subgraph Y3["300级"]
-    E["311 数字系统"]; F["331 OS"]
-    G["321 软件工程"]; H["355 ML应用"]
-    I["391 设计工作室II"]
+  subgraph Y3[300级]
+    E[311 数字系统]; F[331 OS]; G[321 软件工程]; H[355 ML应用]; I[391 设计工作室II]
   end
-  subgraph Y4["400级"]
-    J["411 计算机架构"]; K["412 微机设计"]
-    L["431 分布式"]; M["432 实时系统"]
-    N["421/422/423 SE系列"]; O["455 深度学习"]
-    P["442 安全"]; Q["491 顶点设计"]
+  subgraph Y4[400级]
+    J[411 架构]; K[412 微机]; L[431 分布式]; M[432 实时]
+    N[421-423 SE系列]; O[455 深度学习]; P[442 安全]; Q[491 顶点设计]
   end
-  A-->E; A-->B; B-->F; C-->G; E-->J; E-->K; F-->L; F-->M; G-->N; H-->O; F-->P; I-->Q</div></div></div>
-<hr><p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>29</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p>
+  A-->B; A-->E; B-->F; C-->G; E-->J; E-->K; F-->L; F-->M; G-->N; H-->O; F-->P; I-->Q
+</div></div>
+</div>
+
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>27</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p>
 </div>
 <script>
-
 mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
 
 var currentMode = 'year';
@@ -350,6 +297,4 @@ document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
     if (t) t.classList.add('visible');
   });
 });
-
-</script>
-</body></html>
+</script></body></html>
