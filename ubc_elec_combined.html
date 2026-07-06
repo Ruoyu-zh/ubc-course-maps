@@ -114,6 +114,13 @@
 
 <div class="year-section visible" id="s100">
 <h2>📘 100/200级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[201 电路I]-->B[202 电路II]
+  C[204 线性电路]-->B
+  D[211 电磁学]-->E[221 信号与系统]
+  F[291 设计工作室I]
+</div></div>
 <div class="course-grid">
 <div class="course-card ckt"><div class="course-code">ELEC 201</div><div class="course-title-en">Circuit Analysis I</div><div class="course-title-zh">电路分析I</div><span class="course-credits">4 学分</span><div class="desc-en">Fundamentals of lumped linear time-invariant circuits; network theorems; op-amps; first order circuits.</div><div class="desc-zh">集总线性时不变电路基础；网络定理；运放；一阶电路。</div><div class="prereq"><strong>前置:</strong> MATH 101 + PHYS 108/118/158</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 255/256</div></div>
 <div class="course-card ckt"><div class="course-code">ELEC 202</div><div class="course-title-en">Circuit Analysis II</div><div class="course-title-zh">电路分析II</div><span class="course-credits">4 学分</span><div class="desc-en">Phasor analysis, AC three phase power; transfer functions; Bode plots; filters; Laplace transforms.</div><div class="desc-zh">相量分析、交流三相功率；传递函数；Bode图；滤波器；拉普拉斯变换。</div><div class="prereq"><strong>前置:</strong> MATH 101+PHYS+MATH 255/256+ELEC 201/203</div></div>
@@ -127,6 +134,14 @@
 
 <div class="year-section " id="s300">
 <h2>📙 300级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[301 电子电路]-->B[401 CMOS IC]
+  C[311 电磁波]-->D[411 天线]
+  E[321 随机信号]-->F[421 DSP]
+  G[341 控制]-->H[441 控制系统]
+  I[342 机电]-->J[451 电力电子]
+</div></div>
 <div class="course-grid">
 <div class="course-card ckt"><div class="course-code">ELEC 301</div><div class="course-title-en">Electronic Circuits</div><div class="course-title-zh">电子电路</div><span class="course-credits">4 学分</span><div class="desc-en">Analysis/design: biasing, small-signal models, frequency response, feedback, op-amps, oscillators.</div><div class="desc-zh">分析与设计：偏置、小信号模型、频率响应、反馈、运放、振荡器。</div><div class="prereq"><strong>前置:</strong> ELEC 201/203+202 or ELEC 204</div></div>
 <div class="course-card em"><div class="course-code">ELEC 311</div><div class="course-title-en">Electromagnetic Fields and Waves</div><div class="course-title-zh">电磁场与波</div><span class="course-credits">4 学分</span><div class="desc-en">Maxwell equations; transmission lines; impedance matching; waveguides; antennas.</div><div class="desc-zh">麦克斯韦方程组；传输线；阻抗匹配；波导；天线。</div><div class="prereq"><strong>前置:</strong> ELEC 211 + MATH 253 + MATH 264</div></div>
@@ -143,6 +158,15 @@
 
 <div class="year-section " id="s400">
 <h2>📕 400级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[401 CMOS IC]-->B[402 VLSI]
+  B-->C[403 高级VLSI]
+  D[411 天线]-->E[412 光子]
+  F[421 DSP]-->G[431 通信]
+  H[441 控制]-->I[442 机器人]
+  J[451 电力电子]-->K[453 电力系统]
+</div></div>
 <div class="course-grid">
 <div class="course-card ckt"><div class="course-code">ELEC 401</div><div class="course-title-en">Analog CMOS Integrated Circuit Design</div><div class="course-title-zh">模拟CMOS IC设计</div><span class="course-credits">4 学分</span><div class="desc-en">Analog ICs: gain stages, op-amp design, frequency compensation, oscillators, A/D, D/A, PLLs, DLLs.</div><div class="desc-zh">模拟IC：增益级、运放设计、频率补偿、振荡器、A/D、D/A、PLL、DLL。</div><div class="prereq"><strong>前置:</strong> ELEC 202/204</div></div>
 <div class="course-card ckt"><div class="course-code">ELEC 402</div><div class="course-title-en">Introduction to VLSI Systems</div><div class="course-title-zh">VLSI系统导论</div><span class="course-credits">4 学分</span><div class="desc-en">Static CMOS logic; standard cell design; memory elements; dynamic logic; timing; power; VHDL/Verilog.</div><div class="desc-zh">静态CMOS逻辑；标准单元设计；存储元件；动态逻辑；时序；功耗；VHDL/Verilog。</div><div class="prereq"><strong>前置:</strong> CPEN 311</div></div>
