@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UBC CPSC Course Dependency Map | UBC计算机系课程关系图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+
+  :root {
+    --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+    --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
+    --core: #58a6ff; --theory: #f97583; --sys: #ffab70;
+    --ai: #c297ff; --swe: #7ee787; --db: #56d4dd;
+    --gfx: #ff7b72; --hci: #f2cc60; --num: #e6a8d7;
+    --net: #79c0ff; --sec: #f0883e; --lang: #8b949e; --gen: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #7ee787); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 10px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 7px 16px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.85rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .tab-track .tab.active { background: #7c3aed !important; border-color: #7c3aed !important; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding: 12px 16px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.8rem; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+  .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+  .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 6px; font-size: 1.3rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 18px; font-size: 0.88rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 18px; margin-bottom: 28px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.92rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 18px; }
+  .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card.core { border-left-color: var(--core); } .course-card.theory { border-left-color: var(--theory); }
+  .course-card.sys { border-left-color: var(--sys); } .course-card.ai { border-left-color: var(--ai); }
+  .course-card.swe { border-left-color: var(--swe); } .course-card.db { border-left-color: var(--db); }
+  .course-card.gfx { border-left-color: var(--gfx); } .course-card.hci { border-left-color: var(--hci); }
+  .course-card.num { border-left-color: var(--num); } .course-card.net { border-left-color: var(--net); }
+  .course-card.sec { border-left-color: var(--sec); } .course-card.lang { border-left-color: var(--lang); }
+
+  .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+  .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
+  .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
+  .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-core { background: rgba(88,166,255,0.15); color: var(--core); }
+  .field-theory { background: rgba(249,117,131,0.15); color: var(--theory); }
+  .field-sys { background: rgba(255,171,112,0.15); color: var(--sys); }
+  .field-ai { background: rgba(194,151,255,0.15); color: var(--ai); }
+  .field-swe { background: rgba(126,231,135,0.15); color: var(--swe); }
+  .field-db { background: rgba(86,212,221,0.15); color: var(--db); }
+  .field-gfx { background: rgba(255,123,114,0.15); color: var(--gfx); }
+  .field-hci { background: rgba(242,204,96,0.15); color: var(--hci); }
+  .field-num { background: rgba(230,168,215,0.15); color: var(--num); }
+  .field-net { background: rgba(121,192,255,0.15); color: var(--net); }
+  .field-sec { background: rgba(240,136,62,0.15); color: var(--sec); }
+  .field-lang { background: rgba(139,148,158,0.15); color: var(--lang); }
+
+  .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
+  .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
+  .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .prereq strong { color: #ff7b72; }
+  .coreq { font-size: 0.76rem; color: #d2a8ff; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+    .mode-btn { font-size: 0.85rem; padding: 10px 14px; }
+  }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>💻 UBC 计算机系课程完整依赖关系图</h1>
+<p class="subtitle">UBC CPSC Course Dependency Map · 中英双语详解 · 数据来源: <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/cpscv" style="color:var(--accent)">UBC Academic Calendar</a></p>
+
+<div class="legend">
+  <span style="color:var(--text2);font-weight:600;">图例:</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>核心编程</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--theory)"></div>理论/算法</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--sys)"></div>系统</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--ai)"></div>AI/ML</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--swe)"></div>软件工程</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--db)"></div>数据库</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gfx)"></div>图形/视觉</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--hci)"></div>人机交互</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--num)"></div>数值计算</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--net)"></div>网络</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--sec)"></div>安全</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--lang)"></div>编程语言</div>
+</div>
+
+<div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div>
+  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div>
+</div>
+
+<div class="tabs tab-year" id="tabYear">
+  <div class="tab active" data-tab="s100">📘 100级·大一</div>
+  <div class="tab" data-tab="s200">📗 200级·大二</div>
+  <div class="tab" data-tab="s300">📙 300级·大三</div>
+  <div class="tab" data-tab="s400">📕 400级·大四</div>
+  <div class="tab" data-tab="s500">📓 500+·研究生</div>
+  <div class="tab" data-tab="sall">🗺️ 总览</div>
+</div>
+
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+  <div class="tab active" data-tab="core">💻 核心编程线</div>
+  <div class="tab" data-tab="theory">📐 理论/算法线</div>
+  <div class="tab" data-tab="sys">🖥️ 系统线</div>
+  <div class="tab" data-tab="ai">🤖 AI/ML线</div>
+  <div class="tab" data-tab="swe">🔧 软件工程线</div>
+  <div class="tab" data-tab="db">🗄️ 数据库线</div>
+  <div class="tab" data-tab="gfx">🎮 图形/视觉线</div>
+  <div class="tab" data-tab="hci">👆 人机交互线</div>
+  <div class="tab" data-tab="num">🔢 数值计算线</div>
+  <div class="tab" data-tab="net">🌐 网络/安全线</div>
+  <div class="tab" data-tab="lang">📝 编程语言线</div>
+  <div class="tab" data-tab="full">🗺️ 全图</div>
+</div>
+
+
+<div class="year-section visible" id="s100">
+<h2>📘 100级 · 一年级 (First Year)</h2>
+<p class="sec-desc">大一入门课，建立编程基础。CPSC 110是CS专业主入口，CPSC 121建立离散数学基础。</p>
+<div class="flow-box"><h3>📊 100级课程关系图</h3><div class="mermaid">flowchart LR
+  HS["高中 Math 12"]
+  C103["CPSC 103<br/>系统程序设计 3cr"]
+  C107["CPSC 107<br/>系统程序设计 3cr"]
+  C110["CPSC 110<br/>计算与编程 4cr"]
+  C121["CPSC 121<br/>计算模型 4cr"]
+  C100["CPSC 100<br/>计算思维 3cr"]
+  HS --> C121
+  C103 --> C107
+  HS --> C100
+  C107 -->|"并修"| C121
+  C110 -->|"并修"| C121
+  C110 -->|"→大二"| NXT["→ CPSC 210"]
+  C107 -->|"→大二"| NXT</div></div>
+<div class="course-grid">
+<div class="course-card gen">
+  <div class="course-code">CPSC 100</div>
+  <div class="course-title-en">Computational Thinking</div>
+  <div class="course-title-zh">计算思维</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Meaning and impact of computational thinking, problem solving, testing, debugging, and how computers work. No prior computing experience needed.</div>
+  <div class="desc-zh">计算思维的意义与影响、问题求解、测试、调试及计算机工作原理。无需编程经验。</div>
+  <div class="prereq"><strong>前置:</strong> 无前置要求</div>
+</div>
+<div class="course-card core">
+  <div class="course-code">CPSC 103</div>
+  <div class="course-title-en">Introduction to Systematic Program Design</div>
+  <div class="course-title-zh">系统程序设计导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Computation for systematic problem solving in non-CS disciplines; introductory programming skills. Not for credit with CPSC 110 or APSC 160.</div>
+  <div class="desc-zh">面向非CS学科的系统化问题求解计算；入门编程技能。与CPSC 110/APSC 160互斥学分。</div>
+  <div class="prereq"><strong>前置:</strong> 无前置要求</div>
+</div>
+<div class="course-card core">
+  <div class="course-code">CPSC 107</div>
+  <div class="course-title-en">Systematic Program Design</div>
+  <div class="course-title-zh">系统程序设计</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Fundamental computation and program structures. Continuing systematic program design from CPSC 103.</div>
+  <div class="desc-zh">基础计算与程序结构。延续CPSC 103的系统化程序设计。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 103</div>
+</div>
+<div class="course-card core">
+  <div class="course-code">CPSC 110</div>
+  <div class="course-title-en">Computation, Programs, and Programming</div>
+  <div class="course-title-zh">计算、程序与编程</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Fundamental program and computation structures. Introductory programming skills. Computation for info processing, simulation, modelling, and interacting with the world.</div>
+  <div class="desc-zh">基础程序与计算结构。入门编程技能。用于信息处理、模拟、建模及与世界交互的计算。这是CS专业的主要入门课。</div>
+  <div class="prereq"><strong>前置:</strong> 无前置要求</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 121</div>
+  <div class="course-title-en">Models of Computation</div>
+  <div class="course-title-zh">计算模型</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Physical and mathematical structures of computation; Boolean algebra, combinational logic, proof techniques, functions, sequential circuits, sets/relations, finite state machines.</div>
+  <div class="desc-zh">计算的物理与数学结构：布尔代数、组合逻辑、证明技巧、函数、时序电路、集合/关系、有限状态机。</div>
+  <div class="prereq"><strong>前置:</strong> Principles of Math 12 或 Pre-calculus 12</div><div class="coreq"><strong>并修/注意:</strong> 并修: CPSC 107 或 CPSC 110</div>
+</div>
+</div>
+</div>
+
+<div class="year-section " id="s200">
+<h2>📗 200级 · 二年级 (Second Year)</h2>
+<p class="sec-desc">大二核心年：软件构造(210)、计算机系统(213)、算法与数据结构(221)是后续所有课程的三大支柱。</p>
+<div class="flow-box"><h3>📊 200级课程关系图</h3><div class="mermaid">flowchart LR
+  subgraph IN["来自大一"]
+    P["CPSC 107 或 CPSC 110"]
+  end
+  C210["CPSC 210<br/>软件构造 4cr"]
+  C213["CPSC 213<br/>计算机系统 4cr"]
+  C221["CPSC 221<br/>算法与数据结构 4cr"]
+  C203["CPSC 203<br/>编程与算法 3cr"]
+  C259["CPSC 259<br/>EE数据结构 4cr"]
+  C298["CPSC 298 → 299<br/>Co-op I & II"]
+  P --> C210
+  P --> C203
+  C210 --> C213
+  C121["CPSC 121"] --> C213
+  C210 --> C221
+  C121 --> C221
+  C213 -->|"→大三"| NXT["→ CPSC 310/313"]
+  C221 -->|"→大三"| NXT2["→ CPSC 304/310/320"]</div></div>
+<div class="course-grid">
+<div class="course-card core">
+  <div class="course-code">CPSC 203</div>
+  <div class="course-title-en">Programming, Problem Solving, and Algorithms</div>
+  <div class="course-title-zh">编程、问题求解与算法</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Analysis of complex algorithmic problems using modern programming; topics like Voronoi Diagrams, Markov Chains, Bin Packing, Graph Search.</div>
+  <div class="desc-zh">使用现代编程分析复杂算法问题：Voronoi图、马尔可夫链、装箱问题、图搜索。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 103/110/APSC 160/EOSC 211/MATH 210/PHYS 210/COMM 337 之一</div>
+</div>
+<div class="course-card core">
+  <div class="course-code">CPSC 210</div>
+  <div class="course-title-en">Software Construction</div>
+  <div class="course-title-zh">软件构造</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Design, development, and analysis of robust software components. Topics include software design, computational models, data structures, debugging, and testing.</div>
+  <div class="desc-zh">健壮软件组件的设计、开发与分析：软件设计、计算模型、数据结构、调试和测试。CS专业核心课。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 107 或 CPSC 110</div>
+</div>
+<div class="course-card sys">
+  <div class="course-code">CPSC 213</div>
+  <div class="course-title-en">Introduction to Computer Systems</div>
+  <div class="course-title-zh">计算机系统导论</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-sys">系统</span>
+  <div class="desc-en">Software architecture, operating systems, I/O architectures; critical sections, deadlock avoidance, performance; disks and networks.</div>
+  <div class="desc-zh">软件架构、操作系统、I/O架构；临界区、死锁避免、性能；磁盘和网络。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 121 + CPSC 210</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 221</div>
+  <div class="course-title-en">Basic Algorithms and Data Structures</div>
+  <div class="course-title-zh">基础算法与数据结构</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Design and analysis of basic algorithms and data structures; algorithm analysis, searching/sorting, data structures, graphs, concurrency.</div>
+  <div class="desc-zh">基础算法与数据结构的设计与分析：算法分析、搜索/排序、数据结构、图、并发。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 210/CPEN 221 + (CPSC 121 或 MATH 220 或 MATH 226≥68%)</div>
+</div>
+<div class="course-card core">
+  <div class="course-code">CPSC 259</div>
+  <div class="course-title-en">Data Structures and Algorithms for Electrical Engineers</div>
+  <div class="course-title-zh">电气工程师数据结构与算法</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-core">核心编程</span>
+  <div class="desc-en">Advanced procedural programming. Fundamental algorithms for sorting and searching. Data structures (lists, trees, hash tables), scripting languages, file I/O.</div>
+  <div class="desc-zh">高级过程式编程。排序与搜索基础算法。数据结构（列表、树、哈希表）、脚本语言、文件I/O。</div>
+  <div class="prereq"><strong>前置:</strong> APSC 160</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 298</div>
+  <div class="course-title-en">Co-operative Work Placement I</div>
+  <div class="course-title-zh">Co-op实习I</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Approved and supervised technical work experience in the computing industry for a minimum of 3.5 months. Technical report required.</div>
+  <div class="desc-zh">在计算行业经批准的受监督技术工作，至少3.5个月。需提交技术报告。</div>
+  <div class="prereq"><strong>前置:</strong> 限CS Co-op项目学生</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 299</div>
+  <div class="course-title-en">Co-operative Work Placement II</div>
+  <div class="course-title-zh">Co-op实习II</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Approved and supervised technical work experience. Normally summer after second year.</div>
+  <div class="desc-zh">经批准的技术工作，通常在二年级后暑期。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 298</div>
+</div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>📙 300级 · 三年级 (Third Year)</h2>
+<p class="sec-desc">大三进入专业方向：软件工程(310)、系统(313)、AI/ML(322/330/340)、数据库(304)、算法(320)等。</p>
+<div class="flow-box"><h3>📊 300级课程关系图</h3><div class="mermaid">flowchart TD
+  C210["CPSC 210"] --> C310["310 软件工程 4cr"]
+  C213["CPSC 213"] --> C310
+  C221["CPSC 221"] --> C310
+  C213 --> C313["313 硬件与OS 3cr"]
+  C213 --> C317["317 网络导论 3cr"]
+  C221 --> C304["304 数据库 3cr"]
+  C221 --> C320["320 中级算法 3cr"]
+  C221 --> C322["322 AI导论 3cr"]
+  C221 --> C340["340 ML与数据挖掘 3cr"]
+  C210 --> C311["311 编程语言 3cr"]
+  C210 --> C312["312 函数式编程 3cr"]
+  C210 --> C330["330 应用ML 3cr"]
+  C210 --> C344["344 HCI方法 3cr"]
+  C310 --> C319["319 软件工程项目 4cr"]
+  C213 --> C337["337 安全导论 3cr"]</div></div>
+<div class="course-grid">
+<div class="course-card num">
+  <div class="course-code">CPSC 302</div>
+  <div class="course-title-en">Numerical Computation for Algebraic Problems</div>
+  <div class="course-title-zh">代数问题数值计算</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-num">数值计算</span>
+  <div class="desc-en">Numerical techniques for basic mathematical processes involving no discretization. Linear systems, round-off errors, norms, eigenvalue problems, nonlinear equations.</div>
+  <div class="desc-zh">不涉及离散化的基本数学过程数值技术：线性系统、舍入误差、范数、特征值问题、非线性方程。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 103/110/CPEN 221/EOSC 211/PHYS 210 + MATH 101级 + MATH 152/221/223</div>
+</div>
+<div class="course-card num">
+  <div class="course-code">CPSC 303</div>
+  <div class="course-title-en">Numerical Approximation and Discretization</div>
+  <div class="course-title-zh">数值逼近与离散化</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-num">数值计算</span>
+  <div class="desc-en">Numerical techniques for basic mathematical processes involving discretization. Interpolation, approximation, splines, least squares, numerical differentiation/integration, ODEs.</div>
+  <div class="desc-zh">涉及离散化的基本数学过程数值技术：插值、逼近、样条、最小二乘、数值微分/积分、常微分方程。</div>
+  <div class="prereq"><strong>前置:</strong> 同CPSC 302</div>
+</div>
+<div class="course-card db">
+  <div class="course-code">CPSC 304</div>
+  <div class="course-title-en">Introduction to Relational Databases</div>
+  <div class="course-title-zh">关系数据库导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-db">数据库</span>
+  <div class="desc-en">Overview of database systems, ER models, logical database design and normalization, formal query languages, SQL, data warehouses.</div>
+  <div class="desc-zh">数据库系统概览、ER模型、逻辑数据库设计与规范化、形式查询语言、SQL、数据仓库。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221 或 DSCI 221</div>
+</div>
+<div class="course-card swe">
+  <div class="course-code">CPSC 310</div>
+  <div class="course-title-en">Introduction to Software Engineering</div>
+  <div class="course-title-zh">软件工程导论</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-swe">软件工程</span>
+  <div class="desc-en">Specification, design, validation, evolution and construction of modern software systems, within socially/professionally relevant domains like ethics, IP, and information security.</div>
+  <div class="desc-zh">现代软件系统的规格说明、设计、验证、演化与构建，涵盖伦理、知识产权、信息安全等领域。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 213 + CPSC 221</div>
+</div>
+<div class="course-card lang">
+  <div class="course-code">CPSC 311</div>
+  <div class="course-title-en">Definition of Programming Languages</div>
+  <div class="course-title-zh">程序设计语言定义</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-lang">编程语言</span>
+  <div class="desc-en">Comparative study of advanced programming language features. Statement types, data types, variable binding, parameter passing. Syntactic and semantic description methods.</div>
+  <div class="desc-zh">高级编程语言特性的比较研究：语句类型、数据类型、变量绑定、参数传递。语法与语义描述方法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 210</div>
+</div>
+<div class="course-card lang">
+  <div class="course-code">CPSC 312</div>
+  <div class="course-title-en">Functional and Logic Programming</div>
+  <div class="course-title-zh">函数式与逻辑编程</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-lang">编程语言</span>
+  <div class="desc-en">Principles of symbolic computing, using languages based upon first-order logic and the lambda calculus. AI and knowledge representation applications.</div>
+  <div class="desc-zh">符号计算原理，使用基于一阶逻辑和λ演算的语言。AI与知识表示应用。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 210 或 CPEN 221</div>
+</div>
+<div class="course-card sys">
+  <div class="course-code">CPSC 313</div>
+  <div class="course-title-en">Computer Hardware and Operating Systems</div>
+  <div class="course-title-zh">计算机硬件与操作系统</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-sys">系统</span>
+  <div class="desc-en">Instruction sets, pipelining, code optimization, caching, virtual memory management, dynamically linked libraries, exception processing, execution time.</div>
+  <div class="desc-zh">指令集、流水线、代码优化、缓存、虚拟内存管理、动态链接库、异常处理、执行时间。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 213 + (CPSC 221 或 DSCI 221)</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 314</div>
+  <div class="course-title-en">Computer Graphics</div>
+  <div class="course-title-zh">计算机图形学</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Human vision and colour; geometric transformations; algorithms for 2-D and 3-D graphics; hardware/architectures; shading and lighting; animation.</div>
+  <div class="desc-zh">人类视觉与色彩；几何变换；2D与3D图形算法；硬件与架构；着色与光照；动画。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221 + MATH 200级 + MATH 152/221/223</div>
+</div>
+<div class="course-card net">
+  <div class="course-code">CPSC 317</div>
+  <div class="course-title-en">Introduction to Computer Networking</div>
+  <div class="course-title-zh">计算机网络导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-net">网络</span>
+  <div class="desc-en">Computer networking, basic communication protocols, network infrastructure and routing. Application-level protocols and distributed application principles.</div>
+  <div class="desc-zh">计算机网络、基本通信协议、网络基础设施与路由。应用层协议及分布式应用原理。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 213 + (CPSC 221 或 DSCI 221)</div>
+</div>
+<div class="course-card swe">
+  <div class="course-code">CPSC 319</div>
+  <div class="course-title-en">Software Engineering Project</div>
+  <div class="course-title-zh">软件工程项目</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-swe">软件工程</span>
+  <div class="desc-en">The design, implementation, and test of a large software system, using a team approach.</div>
+  <div class="desc-zh">使用团队方法设计、实现和测试大型软件系统。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 310</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 320</div>
+  <div class="course-title-en">Intermediate Algorithm Design and Analysis</div>
+  <div class="course-title-zh">中级算法设计与分析</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Systematic study of basic concepts and techniques in the design and analysis of algorithms. Models of computation, data structures, graph-theoretic/algebraic/text processing algorithms.</div>
+  <div class="desc-zh">算法设计与分析基本概念与技术的系统研究：计算模型、数据结构、图论/代数/文本处理算法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221/DSCI 221 + 200级以上MATH/STAT 3学分</div>
+</div>
+<div class="course-card ai">
+  <div class="course-code">CPSC 322</div>
+  <div class="course-title-en">Introduction to Artificial Intelligence</div>
+  <div class="course-title-zh">人工智能导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-ai">AI/ML</span>
+  <div class="desc-en">Problem-solving and planning. State/action models and graph searching. Natural language understanding, computational vision, AI applications.</div>
+  <div class="desc-zh">问题求解与规划。状态/动作模型与图搜索。自然语言理解、计算视觉、AI应用。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221 或 DSCI 221</div>
+</div>
+<div class="course-card ai">
+  <div class="course-code">CPSC 330</div>
+  <div class="course-title-en">Applied Machine Learning</div>
+  <div class="course-title-zh">应用机器学习</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-ai">AI/ML</span>
+  <div class="desc-en">Application of machine learning tools, with an emphasis on solving practical problems. Data cleaning, feature extraction, supervised/unsupervised ML, reproducible workflows.</div>
+  <div class="desc-zh">机器学习工具应用，侧重解决实际问题：数据清洗、特征提取、监督/无监督ML、可复现工作流。</div>
+  <div class="prereq"><strong>前置:</strong> (CPSC 203/210/CPEN 221/DSCI 221) 或 (MATH 210 + CPSC 107/110)</div>
+</div>
+<div class="course-card sec">
+  <div class="course-code">CPSC 337</div>
+  <div class="course-title-en">Introduction to Computer Security</div>
+  <div class="course-title-zh">计算机安全导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-sec">安全</span>
+  <div class="desc-en">Fundamentals of computer security and privacy. Cryptography, network/application security, security assessments, defensive strategies.</div>
+  <div class="desc-zh">计算机安全与隐私基础：密码学、网络/应用安全、安全评估、防御策略。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 213</div>
+</div>
+<div class="course-card ai">
+  <div class="course-code">CPSC 340</div>
+  <div class="course-title-en">Machine Learning and Data Mining</div>
+  <div class="course-title-zh">机器学习与数据挖掘</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-ai">AI/ML</span>
+  <div class="desc-en">Models of algorithms for dimensionality reduction, nonlinear regression, classification, clustering and unsupervised learning; applications to graphics, games, bioinformatics, IR, e-commerce, databases, CV, AI.</div>
+  <div class="desc-zh">降维、非线性回归、分类、聚类和无监督学习算法模型；应用于图形、游戏、生物信息学、信息检索、电商、数据库、计算机视觉、AI。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221/DSCI 221 + MATH 152/221/223 + MATH 200级 + (STAT 241/251或等价)</div>
+</div>
+<div class="course-card hci">
+  <div class="course-code">CPSC 344</div>
+  <div class="course-title-en">Introduction to Human Computer Interaction Methods</div>
+  <div class="course-title-zh">人机交互方法导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-hci">人机交互</span>
+  <div class="desc-en">Basic tools and techniques, teaching a systematic approach to interface design, task analysis, analytic and empirical evaluation methods.</div>
+  <div class="desc-zh">基本工具与技术，教授界面设计、任务分析、分析与实证评估方法的系统方法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 210 或 CPEN 221</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 349</div>
+  <div class="course-title-en">Honours Research Seminar</div>
+  <div class="course-title-zh">荣誉研究研讨会</div>
+  <span class="course-credits">0 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Students attend research seminars by faculty, produce a thesis proposal, and choose an honours thesis supervisor.</div>
+  <div class="desc-zh">学生参加教师研究研讨会、撰写论文提案并选择荣誉论文导师。</div>
+  <div class="prereq"><strong>前置:</strong> 限荣誉/专业学生</div>
+</div>
+<div class="course-card db">
+  <div class="course-code">CPSC 368</div>
+  <div class="course-title-en">Databases in Data Science</div>
+  <div class="course-title-zh">数据科学中的数据库</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-db">数据库</span>
+  <div class="desc-en">Overview of relational and non-relational database systems, role/usage of databases in querying, data modelling, query languages, query optimization.</div>
+  <div class="desc-zh">关系与非关系数据库系统概览、数据库在查询中的角色/使用、数据建模、查询语言、查询优化。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 203/210/CPEN 221/DSCI 221 之一</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 398</div>
+  <div class="course-title-en">Co-operative Work Placement III</div>
+  <div class="course-title-zh">Co-op实习III</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Approved supervised technical work experience, minimum 3.5 months. Normally summer after third year.</div>
+  <div class="desc-zh">经批准的技术工作，至少3.5个月，通常在三年级后暑期。</div>
+  <div class="prereq"><strong>前置:</strong> 限CS Co-op项目</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 399</div>
+  <div class="course-title-en">Co-operative Work Placement IV</div>
+  <div class="course-title-zh">Co-op实习IV</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Approved supervised technical work experience, minimum 3.5 months. Normally fall of fourth year.</div>
+  <div class="desc-zh">经批准的技术工作，至少3.5个月，通常在四年级秋季。</div>
+  <div class="prereq"><strong>前置:</strong> 限CS Co-op项目</div>
+</div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级 · 四年级 (Fourth Year)</h2>
+<p class="sec-desc">大四顶峰：高级课程覆盖各专业方向。高级算法、ML、OS、编译器、图形学等。荣誉论文(449)需要先修349。</p>
+<div class="flow-box"><h3>📊 400级课程关系图</h3><div class="mermaid">flowchart TD
+  C310["CPSC 310"] --> C410["410 高级SE 3cr"]
+  C310 --> C455["455 行业实践 3cr"]
+  C310 --> C447["447 可视化 3cr"]
+  C310 --> C319
+  C319["CPSC 319"] --> C410
+  C320["CPSC 320"] --> C420["420 高级算法 3cr"]
+  C320 --> C421["421 计算理论 3cr"]
+  C320 --> C418["418 并行计算 3cr"]
+  C320 --> C445["445 生物信息学 3cr"]
+  C340["CPSC 340"] --> C440["440 高级ML 3cr"]
+  C340 --> C423["423 NLP 3cr"]
+  C304["CPSC 304"] --> C404["404 高级数据库 3cr"]
+  C313["CPSC 313"] --> C415["415 OS设计 4cr"]
+  C313 --> C416["416 分布式 3cr"]
+  C313 --> C417["417 网络 3cr"]
+  C317 --> C415; C317 --> C416; C317 --> C417
+  C314["CPSC 314"] --> C426["426 动画 3cr"]
+  C314 --> C427["427 游戏编程 3cr"]
+  C344 --> C444["444 高级HCI 3cr"]
+  C311["CPSC 311"] --> C411["411 编译器 3cr"]
+  C349["CPSC 349"] --> C449["449 荣誉论文 6cr"]</div></div>
+<div class="course-grid">
+<div class="course-card num">
+  <div class="course-code">CPSC 402</div>
+  <div class="course-title-en">Numerical Linear Algebra</div>
+  <div class="course-title-zh">数值线性代数</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-num">数值计算</span>
+  <div class="desc-en">Investigation of practical techniques of computational linear algebra. Orthogonal transformations, QR method, sparse matrix techniques.</div>
+  <div class="desc-zh">计算线性代数实用技术研究：正交变换、QR方法、稀疏矩阵技术。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 302/303 或 MATH 307</div>
+</div>
+<div class="course-card db">
+  <div class="course-code">CPSC 404</div>
+  <div class="course-title-en">Advanced Relational Databases</div>
+  <div class="course-title-zh">高级关系数据库</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-db">数据库</span>
+  <div class="desc-en">Physical database design, indexing, external mergesort, relational query processing and optimization, transaction processing, concurrency control, crash recovery.</div>
+  <div class="desc-zh">物理数据库设计、索引、外部归并排序、关系查询处理与优化、事务处理、并发控制、崩溃恢复。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 304 + (CPSC 213/261/CPEN 212)</div>
+</div>
+<div class="course-card num">
+  <div class="course-code">CPSC 406</div>
+  <div class="course-title-en">Computational Optimization</div>
+  <div class="course-title-zh">计算优化</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-num">数值计算</span>
+  <div class="desc-en">Formulation and analysis of algorithms for continuous and discrete optimization problems; linear, nonlinear, network, dynamic, integer optimization; duality theory.</div>
+  <div class="desc-zh">连续与离散优化问题算法的表述与分析：线性/非线性/网络/动态/整数优化；对偶理论。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 302/303 或 MATH 307</div>
+</div>
+<div class="course-card swe">
+  <div class="course-code">CPSC 410</div>
+  <div class="course-title-en">Advanced Software Engineering</div>
+  <div class="course-title-zh">高级软件工程</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-swe">软件工程</span>
+  <div class="desc-en">Specification, design, construction and validation of multi-version software systems.</div>
+  <div class="desc-zh">多版本软件系统的规格说明、设计、构建与验证。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 310 或 (CPEN 321 + CPEN 331)</div>
+</div>
+<div class="course-card lang">
+  <div class="course-code">CPSC 411</div>
+  <div class="course-title-en">Introduction to Compiler Construction</div>
+  <div class="course-title-zh">编译器构造导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-lang">编程语言</span>
+  <div class="desc-en">A practical introduction to lexical analysis, syntactic analysis, type-checking, code generation and optimization. Design and implement a compiler for a small language.</div>
+  <div class="desc-zh">词法分析、语法分析、类型检查、代码生成与优化的实用导论。为小型语言设计并实现编译器。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 213 + CPSC 221 + CPSC 311</div>
+</div>
+<div class="course-card sys">
+  <div class="course-code">CPSC 415</div>
+  <div class="course-title-en">Operating Systems Design and Implementation</div>
+  <div class="course-title-zh">操作系统设计与实现</div>
+  <span class="course-credits">4 学分</span><span class="course-field field-sys">系统</span>
+  <div class="desc-en">Team-based design and implementation of a complete operating system, with emphasis on modern hardware and practical OS concepts.</div>
+  <div class="desc-zh">基于团队的设计与实现完整操作系统，侧重现代硬件与实用OS概念。</div>
+  <div class="prereq"><strong>前置:</strong> 每门前置需≥76%: (CPSC 310/CPEN 321) + (CPSC 313/CPEN 331) + (CPSC 317/ELEC 331)</div>
+</div>
+<div class="course-card sys">
+  <div class="course-code">CPSC 416</div>
+  <div class="course-title-en">Distributed Systems</div>
+  <div class="course-title-zh">分布式系统</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-sys">系统</span>
+  <div class="desc-en">Concepts and design of distributed systems. Communication architecture, interprocess communication, process migration, naming, distributed file systems, fault tolerance, concurrency control.</div>
+  <div class="desc-zh">分布式系统概念与设计：通信架构、进程间通信、进程迁移、命名、分布式文件系统、容错、并发控制。</div>
+  <div class="prereq"><strong>前置:</strong> (CPSC 313/CPEN 331) + (CPSC 317/ELEC 331)</div>
+</div>
+<div class="course-card net">
+  <div class="course-code">CPSC 417</div>
+  <div class="course-title-en">Computer Networking</div>
+  <div class="course-title-zh">计算机网络</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-net">网络</span>
+  <div class="desc-en">Network protocols and architecture including internetworking, the Internet, layered communication protocols, routing, flow/congestion control, network performance.</div>
+  <div class="desc-zh">网络协议与架构：互联网络、互联网、分层通信协议、路由、流量/拥塞控制、网络性能。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 313 + CPSC 317</div>
+</div>
+<div class="course-card sys">
+  <div class="course-code">CPSC 418</div>
+  <div class="course-title-en">Parallel Computation</div>
+  <div class="course-title-zh">并行计算</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-sys">系统</span>
+  <div class="desc-en">Algorithms, architectures, and programming paradigms for parallel computation. Shared memory, message passing, data parallel models. Parallel algorithms, correctness and performance analysis.</div>
+  <div class="desc-zh">并行计算算法、架构与编程范式：共享内存、消息传递、数据并行模型。并行算法、正确性与性能分析。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 320 + (CPSC 261/313/CPEN 212/411)</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 420</div>
+  <div class="course-title-en">Advanced Algorithms Design and Analysis</div>
+  <div class="course-title-zh">高级算法设计与分析</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Advanced topics in algorithm design/analysis and data structures; graph-theoretic, algebraic, geometric problems; nonsequential models; complexity; approximation algorithms.</div>
+  <div class="desc-zh">算法设计与数据结构高级专题：图论/代数/几何问题；非顺序模型；复杂性；近似算法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 320</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 421</div>
+  <div class="course-title-en">Introduction to Theory of Computing</div>
+  <div class="course-title-zh">计算理论导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Characterizations of computability (using machines, languages and functions). Universality, equivalence, Church's thesis, unsolvable problems, finite automata, grammars, formal languages.</div>
+  <div class="desc-zh">可计算性特征（使用机器、语言和函数）：普遍性、等价性、Church论题、不可解问题、有限自动机、文法、形式语言。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 320 或 MATH 220 或 MATH 226</div>
+</div>
+<div class="course-card ai">
+  <div class="course-code">CPSC 423</div>
+  <div class="course-title-en">Natural Language Processing</div>
+  <div class="course-title-zh">自然语言处理</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-ai">AI/ML</span>
+  <div class="desc-en">Fundamentals of data-driven NLP: applications (MT, summarization, QA), text representations (word embeddings, language models), statistical and neural-network methods.</div>
+  <div class="desc-zh">数据驱动NLP基础：应用（机器翻译、摘要、问答）、文本表示（词嵌入、语言模型）、统计与神经网络方法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 340 或 (AI 240/CPSC 330 + STAT 200/251等)</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 424</div>
+  <div class="course-title-en">Geometric Modelling</div>
+  <div class="course-title-zh">几何建模</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Digital representation of curves and surfaces, including splines, subdivision surfaces and meshes. Algorithms for acquisition, creation, representation, and processing of 3D shapes.</div>
+  <div class="desc-zh">曲线与曲面的数字表示：样条、细分曲面与网格。3D形状采集、创建、表示和处理的算法。</div>
+  <div class="prereq"><strong>前置:</strong> MATH 152/221/223 + MATH 200/217/226/253</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 425</div>
+  <div class="course-title-en">Computer Vision</div>
+  <div class="course-title-zh">计算机视觉</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Introduction to the processing and interpretation of images. Image sensing, sampling, filtering; colour analysis, texture, stereo imaging, motion, 3D shape recovery, recognition.</div>
+  <div class="desc-zh">图像处理与解释导论：图像感知、采样、滤波；色彩分析、纹理、立体成像、运动、3D形状恢复、识别。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221 + MATH 200级 + MATH 152/221/223</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 426</div>
+  <div class="course-title-en">Computer Animation</div>
+  <div class="course-title-zh">计算机动画</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Motion in computer graphics for characters and their environments. Keyframing, inverse kinematics, particle systems, rigid body dynamics, contact/collision, motion capture.</div>
+  <div class="desc-zh">计算机图形中的角色与环境运动：关键帧、逆运动学、粒子系统、刚体动力学、接触/碰撞、运动捕捉。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 314</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 427</div>
+  <div class="course-title-en">Video Game Programming</div>
+  <div class="course-title-zh">视频游戏编程</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Video game programming techniques and technologies: rendering, animation, interaction, game AI, real-time software; start-to-finish simple game design/implementation.</div>
+  <div class="desc-zh">视频游戏编程技术与技术：渲染、动画、交互、游戏AI、实时软件；从零到完整的简单游戏设计与实现。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 314 + MATH 200级 + MATH 152/221/223</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 430</div>
+  <div class="course-title-en">Computers and Society</div>
+  <div class="course-title-zh">计算机与社会</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Impact of computer technology on society; historical perspectives; social/economic consequences of large-scale info processing and automatic control; legal/ethical problems.</div>
+  <div class="desc-zh">计算机技术对社会的影响：历史视角、大规模信息处理与自动控制的社会/经济后果、法律/伦理问题。</div>
+  <div class="prereq"><strong>前置:</strong> CS 3学分 + 三年级以上</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 436</div>
+  <div class="course-title-en">Topics in Computer Science</div>
+  <div class="course-title-zh">计算机科学专题</div>
+  <span class="course-credits">1-6 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Selected topics in a specific area within Computer Science. May be taken more than once with departmental permission.</div>
+  <div class="desc-zh">计算机科学特定领域的精选专题。经系里批准可多次选修。</div>
+  <div class="prereq"><strong>前置:</strong> CS三年级 + 系里批准</div>
+</div>
+<div class="course-card ai">
+  <div class="course-code">CPSC 440</div>
+  <div class="course-title-en">Advanced Machine Learning</div>
+  <div class="course-title-zh">高级机器学习</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-ai">AI/ML</span>
+  <div class="desc-en">Advanced ML techniques focusing on probabilistic models. Deep learning, differentiable programming, exponential families, Bayesian inference, probabilistic graphical models, generative models, Monte Carlo and variational inference.</div>
+  <div class="desc-zh">侧重概率模型的高级ML技术：深度学习、可微编程、指数族、贝叶斯推理、概率图模型、生成模型、蒙特卡洛与变分推断。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 340 或 (AI 240 + STAT 251等)</div>
+</div>
+<div class="course-card hci">
+  <div class="course-code">CPSC 444</div>
+  <div class="course-title-en">Advanced Methods for Human Computer Interaction</div>
+  <div class="course-title-zh">高级人机交互方法</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-hci">人机交互</span>
+  <div class="desc-en">Design and evaluation methodologies and theories; formal models (visual, motor, information processing); advanced evaluation (lab experiments, field studies); HCI research frontiers.</div>
+  <div class="desc-zh">设计与评估方法论与理论：形式模型（视觉/运动/信息处理）、高级评估（实验室实验/现场研究）、HCI研究前沿。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 344 + STAT 200级</div>
+</div>
+<div class="course-card theory">
+  <div class="course-code">CPSC 445</div>
+  <div class="course-title-en">Algorithms in Bioinformatics</div>
+  <div class="course-title-zh">生物信息学算法</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-theory">理论/算法</span>
+  <div class="desc-en">Sequence alignment, phylogenetic tree reconstruction, prediction of RNA and protein structure, gene finding/annotation, gene expression, biomolecular computing.</div>
+  <div class="desc-zh">序列比对、系统发育树重建、RNA与蛋白质结构预测、基因发现/注释、基因表达、生物分子计算。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 320 + (BMEG 250 或 BIOL 6学分)</div>
+</div>
+<div class="course-card gfx">
+  <div class="course-code">CPSC 447</div>
+  <div class="course-title-en">Introduction to Visualization</div>
+  <div class="course-title-zh">可视化导论</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gfx">图形/视觉</span>
+  <div class="desc-en">Design and implementation of static and interactive visualizations. Selection of appropriate visualization methods for data types/analysis tasks.</div>
+  <div class="desc-zh">静态与交互式可视化的设计与实现。为数据类型/分析任务选择适当的可视化方法。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 310 或 CPEN 321</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 448</div>
+  <div class="course-title-en">Directed Studies in Computer Science</div>
+  <div class="course-title-zh">计算机科学指导研究</div>
+  <span class="course-credits">3-6 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Open to CS students with at least 72% average and departmental permission. May consist of supervised reading, seminar participation, and programming projects.</div>
+  <div class="desc-zh">面向平均分≥72%并经系里批准的CS学生。可包括监督阅读、研讨会参与和编程项目。</div>
+  <div class="prereq"><strong>前置:</strong> ≥72%平均分 + 系里批准</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 449</div>
+  <div class="course-title-en">Honours Thesis</div>
+  <div class="course-title-zh">荣誉论文</div>
+  <span class="course-credits">6 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Under supervision of a faculty member, students investigate a research topic and prepare a thesis.</div>
+  <div class="desc-zh">在教师监督下研究一个课题并撰写论文。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 349</div>
+</div>
+<div class="course-card swe">
+  <div class="course-code">CPSC 455</div>
+  <div class="course-title-en">Applied Industry Practices</div>
+  <div class="course-title-zh">应用行业实践</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-swe">软件工程</span>
+  <div class="desc-en">Hands-on project, mentored by industry experts, integrating skills relevant to early career: technical skills, communication, teamwork, networking, portfolio building.</div>
+  <div class="desc-zh">由行业专家指导的实践项目，整合与早期职业相关的技能：技术、沟通、团队合作、人脉、作品集构建。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 310 或 CPEN 321</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 490</div>
+  <div class="course-title-en">Student Directed Seminars</div>
+  <div class="course-title-zh">学生指导研讨会</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Self-directed, collaborative studies, in a group-learning environment, initiated and coordinated by senior undergraduate students with faculty advisor supervision.</div>
+  <div class="desc-zh">由高年级本科生发起和协调、教师监督的自主协作小组学习。</div>
+  
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 491</div>
+  <div class="course-title-en">Interactive Digital Media Practicum</div>
+  <div class="course-title-zh">交互数字媒体实践</div>
+  <span class="course-credits">6 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Design and implementation of interactive digital media systems using modern processes and tools. Interdisciplinary teams with Master of Digital Media students.</div>
+  <div class="desc-zh">使用现代流程与工具设计与实现交互数字媒体系统。与数字媒体硕士学生组成跨学科团队。</div>
+  <div class="prereq"><strong>前置:</strong> CPSC 221 + CPSC 310 + CPSC 344 + 三年级</div>
+</div>
+<div class="course-card gen">
+  <div class="course-code">CPSC 499</div>
+  <div class="course-title-en">Co-operative Work Placement V</div>
+  <div class="course-title-zh">Co-op实习V</div>
+  <span class="course-credits">3 学分</span><span class="course-field field-gen">其他</span>
+  <div class="desc-en">Approved supervised technical work experience, minimum 3.5 months. Normally summer after fourth year.</div>
+  <div class="desc-zh">经批准的技术工作，至少3.5个月，通常在四年级后暑期。</div>
+  <div class="prereq"><strong>前置:</strong> 限CS Co-op项目</div>
+</div>
+</div>
+</div>
+
+<div class="year-section" id="s500">
+<h2>📓 500+ · 研究生课程 (Graduate Level)</h2>
+<p class="sec-desc">研究生课程涵盖算法、AI、系统、图形、HCI、数值计算等方向。其中包括硕士论文(549)和博士论文(649)。</p>
+<div class="flow-box"><h3>📊 研究生课程分类</h3><div class="mermaid">
+flowchart TD
+  subgraph ALGO["📐 算法与理论"]
+    A500["500 算法设计"]; A501["501 自动机/形式语言"]
+    A506["506 计算复杂性"]; A516["516 计算几何"]
+    A536["536 算法专题"]
+  end
+  subgraph AI_ML["🤖 AI/ML"]
+    B502["502 AI I"]; B522["522 AI II"]
+    B540["540 ML"]; B550["550 ML II"]
+    B503["503 计算语言学"]; B515["515 机器人"]
+    B532["532 AI专题"]; B564["564 数据挖掘"]
+  end
+  subgraph SYS["🖥️ 系统"]
+    C508["508 OS"]; C513["513 形式验证"]
+    C527["527 通信协议"]; C538["538 系统专题"]
+    C541["541 安全专题"]
+  end
+  subgraph GFX["🎮 图形与可视化"]
+    D505["505 图像分析I"]; D514["514 渲染"]
+    D524["524 建模"]; D525["525 图像分析II"]
+    D526["526 动画"]; D533["533 图形专题"]
+    D547["547 信息可视化"]
+  end
+  subgraph PL["📝 编程语言"]
+    E509["509 语言原理"]; E511["511 语言实现"]
+    E529["529 语言定义"]; E539["539 语言专题"]
+  end
+  subgraph OTHER["🔢 其他"]
+    F507["507 软件工程"]; F504["504 数据管理"]
+    F530["530 信息处理专题"]; F542["542 数值计算专题"]
+    F544["544 HCI"]; F543["543 物理UI"]
+    F548["548 指导研究"]; F549["549 硕士论文"]
+    F599["589 硕士Essay"]; F649["649 博士论文"]
+  end
+</div></div>
+<div class="course-grid">
+<div class="course-card theory"><div class="course-code">CPSC 500</div><div class="course-title-en">Fundamentals of Algorithm Design and Analysis</div><div class="course-title-zh">算法设计与分析基础</div><span class="course-credits">3 学分</span></div>
+<div class="course-card theory"><div class="course-code">CPSC 501</div><div class="course-title-en">Theory of Automata, Formal Languages and Computability</div><div class="course-title-zh">自动机、形式语言与可计算性理论</div><span class="course-credits">3 学分</span></div>
+<div class="course-card ai"><div class="course-code">CPSC 502 / 522</div><div class="course-title-en">Artificial Intelligence I & II</div><div class="course-title-zh">人工智能 I & II</div><span class="course-credits">各3 学分</span></div>
+<div class="course-card ai"><div class="course-code">CPSC 540 / 550</div><div class="course-title-en">Machine Learning / Machine Learning II</div><div class="course-title-zh">机器学习 / 机器学习II</div><span class="course-credits">各3 学分</span></div>
+<div class="course-card sys"><div class="course-code">CPSC 508</div><div class="course-title-en">Operating Systems</div><div class="course-title-zh">操作系统</div><span class="course-credits">3 学分</span></div>
+<div class="course-card gfx"><div class="course-code">CPSC 514 / 524 / 526</div><div class="course-title-en">Graphics: Rendering / Modelling / Animation</div><div class="course-title-zh">图形学：渲染/建模/动画</div><span class="course-credits">各3 学分</span></div>
+<div class="course-card num"><div class="course-code">CPSC 520 / 546</div><div class="course-title-en">Numerical Differential Equations / Numerical Optimization</div><div class="course-title-zh">数值微分方程 / 数值优化</div><span class="course-credits">各3 学分</span></div>
+<div class="course-card gen"><div class="course-code">CPSC 549 / 599 / 649</div><div class="course-title-en">Thesis / Essay / Dissertation</div><div class="course-title-zh">硕士论文 / 硕士短文 / 博士论文</div><span class="course-credits">6-12 / 3 / 0 学分</span></div>
+</div></div>
+
+
+<div class="year-section" id="sall">
+<h2>🗺️ 完整修课路径总览</h2>
+<p class="sec-desc">从大一入门到研究生，计算机科学专业的标准修课路径。</p>
+<div class="flow-box full"><h3>📊 五年全景：大一 → 大二 → 大三 → 大四 → 研究生</h3><div class="mermaid">
+flowchart LR
+  subgraph Y1["📘 大一"]
+    Y1C["CPSC 110 计算与编程<br/>CPSC 121 计算模型"]
+  end
+  subgraph Y2["📗 大二"]
+    Y2C["CPSC 210 软件构造<br/>CPSC 213 计算机系统<br/>CPSC 221 算法与数据结构"]
+  end
+  subgraph Y3["📙 大三"]
+    Y3C["310 软件工程 | 313 硬件OS<br/>320 中级算法 | 322/330/340 AI/ML<br/>304 数据库 | 314 图形<br/>317 网络 | 344 HCI"]
+  end
+  subgraph Y4["📕 大四"]
+    Y4C["410 高级SE | 420 高级算法<br/>415 OS | 416 分布式<br/>440 高级ML | 423 NLP<br/>411 编译器 | 425 视觉<br/>426 动画 | 427 游戏<br/>449 荣誉论文"]
+  end
+  subgraph GR["📓 研究生"]
+    GC["500+ 算法/AI/系统/图形<br/>549 硕士论文 | 649 博士论文"]
+  end
+  Y1C --> Y2C --> Y3C --> Y4C --> GC
+</div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:20px;">
+<div class="path-card" style="border-left:4px solid var(--swe);"><h4 style="color:var(--swe);">🟢 软件工程方向</h4><p><strong>大一:</strong> CPSC 110 → 121<br><strong>大二:</strong> CPSC 210 → 213 → 221<br><strong>大三:</strong> CPSC 310 → 319<br><strong>大四:</strong> CPSC 410, 455</p></div>
+<div class="path-card" style="border-left:4px solid var(--ai);"><h4 style="color:var(--ai);">🟣 AI/ML方向</h4><p><strong>大二:</strong> CPSC 210 → 221<br><strong>大三:</strong> CPSC 322/330/340<br><strong>大四:</strong> CPSC 440, 423<br><strong>研究生:</strong> CPSC 502/522/540/550</p></div>
+<div class="path-card" style="border-left:4px solid var(--theory);"><h4 style="color:var(--theory);">🔴 理论/算法方向</h4><p><strong>大二:</strong> CPSC 121 → 221<br><strong>大三:</strong> CPSC 320<br><strong>大四:</strong> CPSC 420, 421, 445<br><strong>研究生:</strong> CPSC 500/501/506</p></div>
+<div class="path-card" style="border-left:4px solid var(--sys);"><h4 style="color:var(--sys);">🟠 系统方向</h4><p><strong>大二:</strong> CPSC 210 → 213 → 221<br><strong>大三:</strong> CPSC 313, 317<br><strong>大四:</strong> CPSC 415, 416, 417, 418</p></div>
+<div class="path-card" style="border-left:4px solid var(--gfx);"><h4 style="color:var(--gfx);">🎮 图形/游戏方向</h4><p><strong>大二:</strong> CPSC 221 + MATH<br><strong>大三:</strong> CPSC 314<br><strong>大四:</strong> CPSC 425, 426, 427</p></div>
+</div></div>
+
+
+<div class="track-section" id="core">
+<h2>💻 核心编程线 (Core Programming Track)</h2>
+<p class="sec-desc">从零基础到软件构造的核心编程链。CPSC 110→210→221是所有CS方向的基础。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C103["CPSC 103<br/>系统程序设计"]
+  C107["CPSC 107<br/>系统程序设计"]
+  C110["CPSC 110<br/>计算与编程 4cr"]
+  C210["CPSC 210<br/>软件构造 4cr"]
+  C221["CPSC 221<br/>算法与数据结构 4cr"]
+  C203["CPSC 203<br/>编程与算法 3cr"]
+  C103 --> C107 --> C210
+  C110 --> C210
+  C110 --> C203
+  C210 --> C221
+  C210 --> C203
+  C210 -->|"→所有方向"| NEXT["→ 300/400级课程"]</div></div>
+</div>
+
+<div class="track-section" id="theory">
+<h2>📐 理论/算法线 (Theory & Algorithms)</h2>
+<p class="sec-desc">从计算模型到高级算法的完整链条。CS理论的骨架。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C121["CPSC 121<br/>计算模型 4cr"]
+  C221["CPSC 221<br/>算法与数据结构 4cr"]
+  C320["CPSC 320<br/>中级算法 3cr"]
+  C420["CPSC 420<br/>高级算法 3cr"]
+  C421["CPSC 421<br/>计算理论 3cr"]
+  C445["CPSC 445<br/>生物信息学 3cr"]
+  C500["CPSC 500<br/>研究生: 算法设计"]
+  C121 --> C221 --> C320
+  C320 --> C420
+  C320 --> C421
+  C320 --> C445
+  C420 --> C500</div></div>
+</div>
+
+<div class="track-section" id="sys">
+<h2>🖥️ 系统线 (Systems Track)</h2>
+<p class="sec-desc">从计算机系统导论到操作系统、分布式系统、并行计算。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C213["CPSC 213<br/>计算机系统 4cr"]
+  C313["CPSC 313<br/>硬件与OS 3cr"]
+  C317["CPSC 317<br/>网络导论 3cr"]
+  C415["CPSC 415<br/>OS设计与实现 4cr"]
+  C416["CPSC 416<br/>分布式系统 3cr"]
+  C417["CPSC 417<br/>计算机网络 3cr"]
+  C418["CPSC 418<br/>并行计算 3cr"]
+  C213 --> C313
+  C213 --> C317
+  C313 --> C415
+  C317 --> C415
+  C313 --> C416
+  C317 --> C416
+  C313 --> C417
+  C317 --> C417
+  C320["CPSC 320"] --> C418
+  C313 --> C418</div></div>
+</div>
+
+<div class="track-section" id="ai">
+<h2>🤖 AI / 机器学习线 (AI & ML Track)</h2>
+<p class="sec-desc">从AI导论到高级ML和NLP。UBC CS最强的方向之一。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C221["CPSC 221<br/>算法"]
+  C322["CPSC 322<br/>AI导论 3cr"]
+  C330["CPSC 330<br/>应用ML 3cr"]
+  C340["CPSC 340<br/>ML与数据挖掘 3cr"]
+  C440["CPSC 440<br/>高级ML 3cr"]
+  C423["CPSC 423<br/>NLP 3cr"]
+  C502["CPSC 502/522<br/>研究生AI"]
+  C540["CPSC 540/550<br/>研究生ML"]
+  C221 --> C322
+  C221 --> C340
+  C210["CPSC 210"] --> C330
+  C340 --> C440
+  C340 --> C423
+  C440 --> C540
+  C322 --> C502</div></div>
+</div>
+
+<div class="track-section" id="swe">
+<h2>🔧 软件工程线 (Software Engineering)</h2>
+<p class="sec-desc">从软件构造到软件工程项目再到高级SE。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C210["CPSC 210<br/>软件构造"]
+  C310["CPSC 310<br/>软件工程导论 4cr"]
+  C319["CPSC 319<br/>软件工程项目 4cr"]
+  C410["CPSC 410<br/>高级SE 3cr"]
+  C455["CPSC 455<br/>行业实践 3cr"]
+  C447["CPSC 447<br/>可视化 3cr"]
+  C210 --> C310 --> C319
+  C310 --> C410
+  C310 --> C455
+  C310 --> C447
+  C319 --> C410</div></div>
+</div>
+
+<div class="track-section" id="db">
+<h2>🗄️ 数据库线 (Databases)</h2>
+<p class="sec-desc">从关系数据库到高级数据库系统。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C221["CPSC 221<br/>算法"]
+  C304["CPSC 304<br/>关系数据库 3cr"]
+  C368["CPSC 368<br/>数据科学DB 3cr"]
+  C404["CPSC 404<br/>高级数据库 3cr"]
+  C221 --> C304 --> C404
+  C210["CPSC 210"] --> C368</div></div>
+</div>
+
+<div class="track-section" id="gfx">
+<h2>🎮 图形/视觉/游戏线 (Graphics, Vision & Games)</h2>
+<p class="sec-desc">从计算机图形学到动画、视觉和游戏编程。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C221["CPSC 221"] --> C314["CPSC 314<br/>图形学 3cr"]
+  C314 --> C426["CPSC 426<br/>动画 3cr"]
+  C314 --> C427["CPSC 427<br/>游戏编程 3cr"]
+  C221 --> C425["CPSC 425<br/>计算机视觉 3cr"]
+  C314 --> C424["CPSC 424<br/>几何建模 3cr"]
+  C310["CPSC 310"] --> C447["CPSC 447<br/>可视化 3cr"]</div></div>
+</div>
+
+<div class="track-section" id="hci">
+<h2>👆 人机交互线 (Human-Computer Interaction)</h2>
+<p class="sec-desc">从HCI方法到高级HCI研究。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C210["CPSC 210"] --> C344["CPSC 344<br/>HCI方法 3cr"]
+  C344 --> C444["CPSC 444<br/>高级HCI 3cr"]
+  C444 --> C544["CPSC 544<br/>研究生HCI"]</div></div>
+</div>
+
+<div class="track-section" id="num">
+<h2>🔢 数值计算线 (Numerical Computation)</h2>
+<p class="sec-desc">数值方法与计算优化。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C302["CPSC 302<br/>代数数值计算 3cr"]
+  C303["CPSC 303<br/>数值离散化 3cr"]
+  C402["CPSC 402<br/>数值线性代数 3cr"]
+  C406["CPSC 406<br/>计算优化 3cr"]
+  C302 --> C402
+  C303 --> C402
+  C302 --> C406
+  C303 --> C406</div></div>
+</div>
+
+<div class="track-section" id="net">
+<h2>🌐 网络与安全线 (Networking & Security)</h2>
+<p class="sec-desc">计算机网络与安全。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C213["CPSC 213"] --> C317["CPSC 317<br/>网络导论 3cr"]
+  C213 --> C337["CPSC 337<br/>安全导论 3cr"]
+  C317 --> C417["CPSC 417<br/>计算机网络 3cr"]
+  C313["CPSC 313"] --> C417
+  C317 --> C416["CPSC 416<br/>分布式 3cr"]</div></div>
+</div>
+
+<div class="track-section" id="lang">
+<h2>📝 编程语言线 (Programming Languages)</h2>
+<p class="sec-desc">编程语言设计与实现。</p>
+<div class="flow-box"><div class="mermaid">flowchart LR
+  C210["CPSC 210"] --> C311["CPSC 311<br/>语言定义 3cr"]
+  C210 --> C312["CPSC 312<br/>函数式/逻辑编程 3cr"]
+  C311 --> C411["CPSC 411<br/>编译器构造 3cr"]
+  C213["CPSC 213"] --> C411
+  C221["CPSC 221"] --> C411</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>🗺️ 全图 (Complete Dependency Map)</h2>
+<p class="sec-desc">所有本科核心课程之间的完整前置关系。</p>
+<div class="flow-box"><div class="mermaid">flowchart TD
+  subgraph Y1["📘 大一"]
+    A110["110 计算与编程"]; A121["121 计算模型"]
+    A103["103 系统程序设计"]; A107["107 系统程序设计"]
+  end
+  subgraph Y2["📗 大二"]
+    B210["210 软件构造"]; B213["213 计算机系统"]
+    B221["221 算法与数据结构"]; B203["203 编程与算法"]
+  end
+  subgraph Y3["📙 大三"]
+    C310["310 软件工程"]; C313["313 硬件与OS"]
+    C320["320 中级算法"]; C304["304 数据库"]
+    C322["322 AI导论"]; C340["340 ML数据挖掘"]
+    C314["314 图形学"]; C317["317 网络"]
+    C344["344 HCI"]; C311["311 编程语言"]
+    C337["337 安全"]; C302["302/303 数值"]
+  end
+  subgraph Y4["📕 大四"]
+    D410["410 高级SE"]; D415["415 OS设计"]
+    D420["420 高级算法"]; D421["421 计算理论"]
+    D440["440 高级ML"]; D404["404 高级DB"]
+    D411["411 编译器"]; D416["416 分布式"]
+    D425["425 视觉"]; D426["426 动画"]
+  end
+  A103-->A107-->B210; A110-->B210; A110-->B203
+  A121-->B213; A121-->B221
+  B210-->B213; B210-->B221
+  B213-->C310; B213-->C313; B213-->C317; B213-->C337
+  B221-->C310; B221-->C320; B221-->C304; B221-->C322; B221-->C340; B221-->C314
+  B210-->C311; B210-->C344; B210-->C330
+  C310-->C319; C310-->D410; C313-->D415
+  C320-->D420; C320-->D421; C340-->D440
+  C304-->D404; C311-->D411; C314-->D426; C314-->D425</div></div>
+</div>
+
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">
+📊 共 <strong>112</strong> 门课程 (60 本科 + 52 研究生) | 数据来源: UBC Vancouver Academic Calendar | 生成: 2026-07-06<br>
+⚠️ 箭头 = 前置条件 | 请以 <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/cpscv" style="color:var(--accent)">官方日历</a> 为准确认最新要求
+</p>
+</div>
+
+<script>
+mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'core';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab); if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]'); if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab); if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]'); if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active'); currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab); if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active'); currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab); if (t) t.classList.add('visible');
+  });
+});
+</script>
+</body></html>
