@@ -1,307 +1,251 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UBC Course Scheduler | 自动排课工具</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UBC Scheduler | 自动排课</title>
 <style>
-  :root { --bg: #0d1117; --card-bg: #161b22; --border: #30363d; --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff; --danger: #f85149; --success: #3fb950; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
-  .container { max-width: 1300px; margin: 0 auto; padding: 24px; }
-  h1 { text-align: center; font-size: 1.8rem; padding: 20px 0 8px; background: linear-gradient(135deg, #58a6ff, #3fb950); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .subtitle { text-align: center; color: var(--text2); margin-bottom: 24px; font-size: 0.9rem; }
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--dn:#f85149;--ok:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif}
+.c{max-width:1500px;margin:0 auto;padding:16px}
+h1{text-align:center;font-size:1.5rem;padding:12px 0 4px;background:linear-gradient(135deg,#58a6ff,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-  .layout { display: grid; grid-template-columns: 420px 1fr; gap: 24px; }
-  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.pn{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.pn h2{font-size:0.95rem;margin-bottom:10px}
 
-  /* Input panel */
-  .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-  .panel h2 { font-size: 1.1rem; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.cg{margin-bottom:8px}
+.cgh{font-weight:700;font-size:0.85rem;padding:4px 0;display:flex;align-items:center;gap:6px;cursor:pointer}
+.act{display:flex;align-items:center;gap:6px;padding:3px 0 3px 20px;font-size:0.8rem;color:var(--t2)}
+.act label{display:flex;align-items:center;gap:6px;cursor:pointer}
+.act input[type=radio]{accent-color:var(--ac)}
+.tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:0.65rem;font-weight:600}
+.tag-LEC{background:rgba(88,166,255,0.15);color:#58a6ff}
+.tag-LAB{background:rgba(126,231,135,0.15);color:#7ee787}
+.tag-TUT,.tag-DIS{background:rgba(210,153,34,0.15);color:#d29922}
+.color-dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex-shrink:0}
+.conflict-tag{color:var(--dn);font-weight:700;font-size:0.7rem;margin-left:4px}
 
-  .quick-input { width: 100%; min-height: 120px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 12px; font-family: 'Consolas', monospace; font-size: 0.85rem; resize: vertical; }
-  .quick-input::placeholder { color: var(--text2); }
-  .hint { font-size: 0.75rem; color: var(--text2); margin-top: 6px; line-height: 1.5; }
+/* Timetable */
+.tt-grid{display:grid;grid-template-columns:50px repeat(5,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:8px;overflow:hidden}
+.tt-h{background:var(--cbg);padding:6px 2px;text-align:center;font-weight:700;font-size:0.7rem;color:var(--t2)}
+.tt-tm{background:var(--cbg);padding:1px 4px;text-align:right;font-size:0.62rem;color:var(--t2);display:flex;align-items:center;justify-content:flex-end}
+.tt-c{background:var(--cbg);min-height:22px;padding:1px}
+.tt-b{margin:1px;padding:2px 4px;border-radius:3px;font-size:0.6rem;line-height:1.2;overflow:hidden}
+.tt-b.x{outline:2px solid var(--dn);outline-offset:-1px;z-index:2;position:relative}
 
-  .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
-  .btn-primary { background: var(--accent); color: #fff; width: 100%; margin-top: 12px; }
-  .btn-primary:hover { opacity: 0.9; }
-  .btn-danger { background: var(--danger); color: #fff; }
-  .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+.sum-ok{background:rgba(63,185,80,0.1);color:var(--ok);padding:10px 14px;border-radius:8px;margin-top:10px;font-weight:600;font-size:0.82rem}
+.sum-err{background:rgba(248,81,73,0.1);color:var(--dn);padding:10px 14px;border-radius:8px;margin-top:10px;font-weight:600;font-size:0.82rem}
 
-  .course-list { margin-top: 16px; }
-  .course-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; margin-bottom: 6px; font-size: 0.85rem; }
-  .course-item .code { font-weight: 700; color: var(--accent); min-width: 100px; }
-  .course-item .time { color: var(--text2); flex: 1; }
-  .course-item .del { color: var(--danger); cursor: pointer; font-weight: 700; padding: 2px 6px; }
-  .conflict-badge { background: rgba(248,81,73,0.15); color: var(--danger); padding: 2px 8px; border-radius: 10px; font-size: 0.72rem; font-weight: 600; }
-
-  /* Timetable */
-  .timetable { display: grid; grid-template-columns: 60px repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .tt-header { background: var(--card-bg); padding: 8px; text-align: center; font-weight: 700; font-size: 0.8rem; color: var(--text2); }
-  .tt-time { background: var(--card-bg); padding: 4px 8px; text-align: right; font-size: 0.7rem; color: var(--text2); display: flex; align-items: center; justify-content: flex-end; }
-  .tt-cell { background: var(--card-bg); min-height: 36px; padding: 2px; position: relative; transition: all 0.15s; }
-  .tt-course { padding: 4px 6px; border-radius: 4px; font-size: 0.7rem; margin: 1px 0; cursor: pointer; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-  .tt-course.conflict { border: 2px solid var(--danger); }
-  .tt-course:hover { opacity: 0.85; }
-
-  .legend-row { display: flex; gap: 12px; margin-top: 12px; font-size: 0.75rem; color: var(--text2); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 4px; }
-
-  /* Solutions */
-  .solution-bar { margin-top: 16px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .solution-tag { padding: 6px 14px; border-radius: 20px; background: var(--card-bg); border: 1px solid var(--border); cursor: pointer; font-size: 0.82rem; }
-  .solution-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .solution-tag.conflict-tag { border-color: var(--danger); color: var(--danger); }
-
-  .summary { font-size: 0.82rem; color: var(--text2); margin-top: 8px; }
+.btn{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:0.8rem;font-weight:600}
+.btn-ac{background:var(--ac);color:#fff;margin-top:8px}
+.btn-ok{background:var(--ok);color:#000}
+.auto-msg{font-size:0.78rem;color:var(--t2);margin-top:6px}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="c">
 
-<h1>📅 UBC 自动排课工具</h1>
-<p class="subtitle">输入课程编号和上课时间 → 自动检测冲突 → 生成最优课表</p>
+<h1>📅 UBC 2026W Term 1 智能排课</h1>
 
-<div class="layout">
-  <!-- LEFT: Input -->
-  <div>
-    <div class="panel">
-      <h2>📝 添加课程</h2>
-      <textarea class="quick-input" id="courseInput" placeholder="每行一门课，格式：
-CPSC 221 201 MWF 10:00-11:00
-PHYS 301 101 MWF 11:00-12:00
-MATH 215 201 TTh 9:30-11:00
-STAT 251 202 TTh 14:00-15:30
-ELEC 201 101 MWF 13:00-14:00
-
-格式说明：课号 课号 section 周几 开始-结束
-周几: M=周一 T=周二 W=周三 Th=周四 F=周五
-      MWF=周一三五  TTh=周二四"></textarea>
-      <div class="hint">
-        💡 从 Workday 复制课程时间，按上面格式粘贴即可。也可以手动输入。
-      </div>
-      <button class="btn btn-primary" onclick="parseAndRender()">🔍 解析并生成课表</button>
-    </div>
-
-    <div class="panel" style="margin-top:16px;">
-      <h2>📋 已加载课程 <span id="courseCount" style="color:var(--text2)">(0)</span></h2>
-      <div class="course-list" id="courseList">
-        <div style="color:var(--text2);font-size:0.85rem;">等待输入...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RIGHT: Timetable -->
-  <div>
-    <div class="panel">
-      <h2>📊 周课表</h2>
-      <div class="timetable" id="timetable"></div>
-      <div class="legend-row" id="legend"></div>
-    </div>
-    <div id="solutionArea"></div>
-    <div class="summary" id="summary"></div>
-  </div>
+<div class="grid2">
+<div>
+<div class="pn"><h2>📋 选择每门课的 Section（勾选 = 已选）</h2><div id="picker"></div></div>
+<div class="pn"><h2>📊 已选课表</h2><div id="summary"></div><button class="btn btn-ac" onclick="renderAll()">🔄 刷新课表</button></div>
 </div>
-
+<div>
+<div class="pn"><h2>📅 周课表</h2><div class="tt-grid" id="tt"></div></div>
+</div>
+</div>
 </div>
 
 <script>
-const COLORS = ['#58a6ff','#3fb950','#d29922','#f85149','#a371f7','#56d4dd','#f97583','#7ee787','#c297ff','#ffab70','#79c0ff','#f2cc60'];
-const DAY_MAP = {'M':'Mon','T':'Tue','W':'Wed','Th':'Thu','F':'Fri'};
-const DAY_ORDER = ['Mon','Tue','Wed','Thu','Fri'];
-const HOUR_START = 8, HOUR_END = 21;
-
-let courses = [];
-
-function parseTime(str) {
-  // Parse "10:00" or "14:30"
-  let [h,m] = str.split(':').map(Number);
-  return h*60 + (m||0);
-}
-
-function parseDays(str) {
-  let days = [];
-  let i = 0;
-  while (i < str.length) {
-    if (str[i] === 'T' && str[i+1] === 'h') { days.push('Thu'); i+=2; }
-    else if (str[i] === 'T') { days.push('Tue'); i+=1; }
-    else if (str[i] === 'M') { days.push('Mon'); i+=1; }
-    else if (str[i] === 'W') { days.push('Wed'); i+=1; }
-    else if (str[i] === 'F') { days.push('Fri'); i+=1; }
-    else { i++; }
+// Course data extracted from screenshots
+const COURSES = [
+  {
+    code:'MATH 217', color:'#58a6ff',
+    sections:[
+      {id:'101',type:'LEC',days:['Tue','Thu'],start:570,end:660,loc:'IRC G1'} // 9:30-11:00
+    ]
+  },
+  {
+    code:'PHYS 200', color:'#d29922',
+    sections:[
+      {id:'101',type:'LEC',days:['Tue','Thu'],start:750,end:840,loc:'LIFE 2201'}, // 12:30-14:00
+      {id:'T1A',type:'DIS',days:['Wed'],start:510,end:600,loc:'CHEM D300'}, // 8:30-10:00
+      {id:'T1B',type:'DIS',days:['Wed'],start:930,end:1020,loc:'IBLC 261'}, // 15:30-17:00
+    ]
+  },
+  {
+    code:'PHYS 219', color:'#a371f7',
+    sections:[
+      {id:'T1A',type:'DIS',days:['Tue'],start:660,end:750,loc:'HENN 200'}, // 11:00-12:30
+      {id:'L1A',type:'LAB',days:['Tue'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
+      {id:'L1B',type:'LAB',days:['Thu'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
+      {id:'L1C',type:'LAB',days:['Fri'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
+      {id:'L1D',type:'LAB',days:['Thu'],start:570,end:750,loc:'HEBB 418'}, // 9:30-12:30
+    ]
+  },
+  {
+    code:'CPSC 259', color:'#3fb950',
+    sections:[
+      {id:'101',type:'LEC',days:['Mon','Wed','Fri'],start:480,end:540,loc:'FSC 1005'}, // 8:00-9:00
+      {id:'L1A',type:'LAB',days:['Mon'],start:540,end:660,loc:'ICCS X351'}, // 9:00-11:00
+      {id:'L1B',type:'LAB',days:['Mon'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
+      {id:'L1C',type:'LAB',days:['Thu'],start:1050,end:1170,loc:'ICCS X351'}, // 17:30-19:30
+      {id:'L1D',type:'LAB',days:['Thu'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
+      {id:'L1E',type:'LAB',days:['Mon'],start:900,end:1020,loc:'ICCS X351'}, // 15:00-17:00
+      {id:'L1F',type:'LAB',days:['Fri'],start:540,end:660,loc:'ICCS X351'}, // 9:00-11:00
+      {id:'L1G',type:'LAB',days:['Tue'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
+      {id:'L1H',type:'LAB',days:['Thu'],start:930,end:1050,loc:'ICCS X351'}, // 15:30-17:30
+    ]
+  },
+  {
+    code:'CPEN 211', color:'#f0883e',
+    sections:[
+      {id:'101',type:'LEC',days:['Tue','Thu'],start:930,end:1050,loc:'ESB 1013'}, // 15:30-17:30
+      {id:'T1A',type:'DIS',days:['Fri'],start:960,end:1080,loc:'ESB 1013',alt:true}, // 16:00-18:00 alt weeks
+      {id:'L1A',type:'LAB',days:['Thu'],start:780,end:900,loc:'MCLD 4018'}, // 13:00-15:00
+      {id:'L1B',type:'LAB',days:['Thu'],start:660,end:780,loc:'MCLD 4018'}, // 11:00-13:00
+      {id:'L1C',type:'LAB',days:['Wed'],start:900,end:1020,loc:'MCLD 4018'}, // 15:00-17:00
+      {id:'L1D',type:'LAB',days:['Wed'],start:780,end:900,loc:'MCLD 4018'}, // 13:00-15:00
+      {id:'L1F',type:'LAB',days:['Fri'],start:840,end:960,loc:'MCLD 4018'}, // 14:00-16:00
+    ]
   }
-  return days;
-}
+];
 
-function parseAndRender() {
-  const raw = document.getElementById('courseInput').value.trim();
-  courses = [];
-  const lines = raw.split('\n').filter(l => l.trim());
+const COLORS = ['#58a6ff','#d29922','#a371f7','#3fb950','#f0883e'];
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
 
-  for (let line of lines) {
-    line = line.trim();
-    // Parse: DEPT NUM SECTION DAYS START-END
-    // e.g. "CPSC 221 201 MWF 10:00-11:00"
-    let parts = line.split(/\s+/);
-    if (parts.length < 5) continue;
+// Track selected: {courseIdx: {type: sectionIdx}}
+let selected = {};
 
-    let dept = parts[0];
-    let num = parts[1];
-    let section = parts[2];
-    let daysStr = parts[3];
-    let timeStr = parts.slice(4).join(''); // "10:00-11:00"
+// Recommended pre-selections (conflict-free)
+const PRESELECT = {
+  'PHYS 200': {'DIS': 'T1A'},
+  'PHYS 219': {'LAB': 'L1A'},
+  'CPSC 259': {'LAB': 'L1F'},
+  'CPEN 211': {'LAB': 'L1D'},
+};
 
-    let [startStr, endStr] = timeStr.split('-');
-    if (!startStr || !endStr) continue;
+function buildPicker() {
+  let html = '';
+  COURSES.forEach((c, ci) => {
+    html += `<div class="cg"><div class="cgh"><span class="color-dot" style="background:${COLORS[ci]}"></span>${c.code}</div>`;
+    let types = {};
+    c.sections.forEach((s, si) => { if (!types[s.type]) types[s.type] = []; types[s.type].push({...s, idx:si}); });
 
-    let start = parseTime(startStr);
-    let end = parseTime(endStr);
-    let days = parseDays(daysStr);
-
-    let code = dept + ' ' + num;
-    courses.push({ code, section, days, start, end, colorIdx: courses.length });
-  }
-
-  renderAll();
-}
-
-function timeOverlap(a, b) {
-  for (let da of a.days) {
-    for (let db of b.days) {
-      if (da === db) {
-        if (a.start < b.end && b.start < a.end) return true;
-      }
+    for (let [type, secs] of Object.entries(types)) {
+      let preselected = PRESELECT[c.code] && PRESELECT[c.code][type];
+      secs.forEach(s => {
+        // Pre-select: LEC always first, others by PRESELECT
+        let checked = '';
+        if (type === 'LEC') checked = (secs.indexOf(s) === 0) ? 'checked' : '';
+        else if (preselected && s.id === preselected) checked = 'checked';
+        else if (!preselected && secs.indexOf(s) === 0) checked = 'checked';
+        let alt = s.alt ? ' (交替周)' : '';
+        html += `<div class="act"><label><input type="radio" name="c_${ci}_${type}" data-ci="${ci}" data-si="${s.idx}" data-type="${type}" ${checked} onchange="onPick()"><span class="tag tag-${type}">${type}</span> Sec ${s.id}: ${s.days.join('/')} ${fmt(s.start)}-${fmt(s.end)}${alt} | ${s.loc}</label></div>`;
+      });
     }
+    html += '</div>';
+  });
+  document.getElementById('picker').innerHTML = html;
+  onPick();
+}
+
+function getSelected() {
+  let result = [];
+  let radios = document.querySelectorAll('#picker input[type=radio]:checked');
+  radios.forEach(r => {
+    let ci = parseInt(r.dataset.ci), si = parseInt(r.dataset.si);
+    let c = COURSES[ci];
+    let s = c.sections[si];
+    result.push({code: c.code, color: COLORS[ci], section: s.id, type: s.type, days: s.days, start: s.start, end: s.end, loc: s.loc, alt: s.alt||false});
+  });
+  return result;
+}
+
+function overlap(a,b) {
+  for (let da of a.days) for (let db of b.days) {
+    if (da===db && a.start<b.end && b.start<a.end) return true;
   }
   return false;
 }
 
-function findConflicts() {
-  let conflicts = new Set();
-  for (let i = 0; i < courses.length; i++) {
-    for (let j = i+1; j < courses.length; j++) {
-      if (timeOverlap(courses[i], courses[j])) {
-        conflicts.add(i);
-        conflicts.add(j);
-      }
-    }
+function findConflicts(acts) {
+  let cf = new Set();
+  for (let i=0;i<acts.length;i++) for (let j=i+1;j<acts.length;j++) {
+    if (overlap(acts[i], acts[j])) { cf.add(i); cf.add(j); }
   }
-  return conflicts;
+  return cf;
 }
 
-function renderAll() {
-  let conflicts = findConflicts();
-  renderTimetable(conflicts);
-  renderCourseList(conflicts);
-  document.getElementById('courseCount').textContent = `(${courses.length})`;
-  document.getElementById('summary').innerHTML = conflicts.size > 0
-    ? `<span style="color:var(--danger)">⚠️ 发现 ${conflicts.size} 门课有时间冲突！请调整时间。</span>`
-    : `<span style="color:var(--success)">✅ 所有课程无冲突，课表完美！</span>`;
-}
-
-function renderTimetable(conflicts) {
-  let html = '<div class="tt-header"></div>';
-  for (let d of DAY_ORDER) html += `<div class="tt-header">${d}</div>`;
-
-  // Build slot map: for each 30-min slot, what courses occupy it
-  let slots = {};
-  for (let d of DAY_ORDER) {
-    slots[d] = {};
-    for (let h = HOUR_START*60; h < HOUR_END*60; h += 30) {
-      slots[d][h] = [];
-    }
-  }
-
-  for (let i = 0; i < courses.length; i++) {
-    let c = courses[i];
-    for (let d of c.days) {
-      for (let t = c.start; t < c.end; t += 30) {
-        if (slots[d] && slots[d][t] !== undefined) {
-          slots[d][t].push(i);
-        }
-      }
-    }
-  }
-
-  // Build cell content
-  let hourLabels = [];
-  let cellContent = {};
-  for (let d of DAY_ORDER) cellContent[d] = {};
-
-  for (let h = HOUR_START; h < HOUR_END; h++) {
-    hourLabels.push(`${h}:00`);
-    let hmin = h*60;
-    for (let d of DAY_ORDER) {
-      cellContent[d][hmin] = slots[d][hmin] || [];
-    }
-  }
-
-  for (let hi = 0; hi < hourLabels.length; hi++) {
-    html += `<div class="tt-time">${hourLabels[hi]}</div>`;
-    for (let d of DAY_ORDER) {
-      let hmin = (HOUR_START + hi)*60;
-      let cellCourses = slots[d][hmin] || [];
-      // Only show course tag at the START of each course block
-      let tags = [];
-      for (let ci of cellCourses) {
-        let c = courses[ci];
-        if (c.start === hmin) {
-          // Find how many 30-min slots this course spans
-          let slots_count = Math.ceil((c.end - c.start) / 30);
-          let isConflict = conflicts.has(ci);
-          let color = COLORS[ci % COLORS.length];
-          tags.push(`<div class="tt-course${isConflict ? ' conflict' : ''}" style="background:${color}22;border-left:3px solid ${color};color:var(--text)" title="${c.code} ${c.section}">${c.code} ${c.section}</div>`);
-        }
-      }
-      html += `<div class="tt-cell">${tags.join('')}</div>`;
-    }
-  }
-
-  document.getElementById('timetable').innerHTML = html;
-
-  // Legend
-  let legendHtml = '';
-  for (let i = 0; i < courses.length; i++) {
-    let c = courses[i];
-    let color = COLORS[i % COLORS.length];
-    legendHtml += `<span><span class="legend-dot" style="background:${color}"></span>${c.code} ${c.section} ${c.days.join('/')} ${fmtTime(c.start)}-${fmtTime(c.end)}</span>`;
-  }
-  document.getElementById('legend').innerHTML = legendHtml || '暂无课程';
-}
-
-function fmtTime(mins) {
-  let h = Math.floor(mins/60), m = mins%60;
-  return `${h}:${m.toString().padStart(2,'0')}`;
-}
-
-function renderCourseList(conflicts) {
+function onPick() {
+  let acts = getSelected();
+  let cf = findConflicts(acts);
+  let summ = document.getElementById('summary');
   let html = '';
-  for (let i = 0; i < courses.length; i++) {
-    let c = courses[i];
-    let isConflict = conflicts.has(i);
-    let color = COLORS[i % COLORS.length];
-    html += `<div class="course-item">
-      <span class="code" style="color:${color}">${c.code} ${c.section}</span>
-      <span class="time">${c.days.join('/')} ${fmtTime(c.start)}-${fmtTime(c.end)}</span>
-      ${isConflict ? '<span class="conflict-badge">冲突</span>' : ''}
-      <span class="del" onclick="removeCourse(${i})" title="删除">✕</span>
-    </div>`;
+
+  // Group by course
+  let groups = {};
+  acts.forEach((a,i) => {
+    if (!groups[a.code]) groups[a.code] = {color:a.color, items:[]};
+    groups[a.code].items.push({...a, cf: cf.has(i)});
+  });
+
+  for (let [code, g] of Object.entries(groups)) {
+    html += `<div style="font-weight:700;color:${g.color};margin-top:8px">${code}</div>`;
+    g.items.forEach(a => {
+      html += `<div style="font-size:0.78rem;color:var(--t2);padding-left:12px">${a.type} ${a.section}: ${a.days.join('/')} ${fmt(a.start)}-${fmt(a.end)} ${a.loc}${a.cf?' <span class=conflict-tag>⚠冲突</span>':''}${a.alt?' <span style=color:var(--t2)>(交替周)</span>':''}</div>`;
+    });
   }
-  document.getElementById('courseList').innerHTML = html || '<div style="color:var(--text2);font-size:0.85rem;">暂无课程</div>';
+
+  if (cf.size === 0) {
+    html += '<div class="sum-ok">✅ 所有课程无时间冲突！课表完美。</div>';
+  } else {
+    html += `<div class="sum-err">⚠️ ${cf.size} 个时间冲突！请调整上面带 ⚠ 标记的 section。</div>`;
+  }
+  summ.innerHTML = html;
+  renderTT(acts, cf);
 }
 
-function removeCourse(idx) {
-  courses.splice(idx, 1);
-  renderAll();
+function renderTT(acts, cf) {
+  let slots = {};
+  for (let d of DAYS) { slots[d]={}; for (let t=480;t<1260;t+=30) slots[d][t]=[]; }
+  acts.forEach((a,i) => {
+    for (let d of a.days) for (let t=a.start; t<a.end; t+=30) if (slots[d]&&slots[d][t]!==undefined) slots[d][t].push(i);
+  });
+
+  let rows = [];
+  // Header row
+  let hdr = ['<div class="tt-h"></div>'];
+  for (let d of DAYS) hdr.push(`<div class="tt-h">${d}</div>`);
+  rows.push(hdr.join(''));
+
+  // Time rows
+  for (let hr=8; hr<21; hr++) {
+    let cells = [`<div class="tt-tm">${hr}:00</div>`];
+    for (let d of DAYS) {
+      let slotActs = slots[d][hr*60] || [];
+      let tags=[], shown=new Set();
+      for (let ci of slotActs) {
+        if (shown.has(ci)) continue;
+        let a = acts[ci];
+        if (a.start === hr*60) {
+          shown.add(ci);
+          tags.push(`<div class="tt-b${cf.has(ci)?' x':''}" style="background:${a.color}22;border-left:3px solid ${a.color}" title="${a.code} ${a.type} ${a.section}\n${a.loc}">${a.code}<br>${a.type} ${a.section}</div>`);
+        }
+      }
+      cells.push(`<div class="tt-c">${tags.join('')}</div>`);
+    }
+    rows.push(cells.join(''));
+  }
+  document.getElementById('tt').innerHTML = rows.join('');
 }
 
-// Preload example
-document.getElementById('courseInput').value = `CPSC 221 201 MWF 10:00-11:00
-PHYS 301 101 MWF 11:00-12:00
-MATH 215 201 TTh 9:30-11:00
-STAT 251 202 TTh 11:00-12:30
-ELEC 201 101 MWF 13:00-14:00`;
-parseAndRender();
+function fmt(m) { let hh=Math.floor(m/60), mm=m%60; return hh+':'+mm.toString().padStart(2,'0'); }
+
+buildPicker();
 </script>
 </body></html>
