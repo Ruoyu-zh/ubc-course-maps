@@ -71,9 +71,9 @@ const CHOICES = [
     {id:'T1A',days:['Wed'],start:510,end:600,loc:'CHEM D300',note:'⚠与CPSC 259冲突'},
   ]},
   {label:'PHYS 219 实验', key:'phys219lab', opts:[
-    {id:'L1A',days:['Tue'],start:840,end:1020,loc:'HEBB 418',note:'周二紧凑'},
-    {id:'L1B',days:['Thu'],start:840,end:1020,loc:'HEBB 418',note:'周四紧凑'},
-    {id:'L1C',days:['Fri'],start:840,end:1020,loc:'HEBB 418',note:'⚠周五与CPEN交替冲突'},
+    {id:'L1C',days:['Fri'],start:840,end:1020,loc:'HEBB 418',note='推荐(仅与CPEN讨论交替冲突)'},
+    {id:'L1A',days:['Tue'],start:840,end:1020,loc:'HEBB 418',note='⚠与CPEN 211 Lecture冲突'},
+    {id:'L1B',days:['Thu'],start:840,end:1020,loc:'HEBB 418',note='⚠与CPEN 211 Lecture冲突'},
   ]},
   {label:'CPSC 259 实验', key:'cpsc259lab', opts:[
     {id:'L1A',days:['Mon'],start:540,end:660,loc:'ICCS X351',note:'周一上午'},
@@ -83,8 +83,9 @@ const CHOICES = [
     {id:'L1C',days:['Thu'],start:1050,end:1170,loc:'ICCS X351',note:'周四晚5:30-7:30'},
   ]},
   {label:'CPEN 211 实验', key:'cpen211lab', opts:[
-    {id:'L1D',days:['Wed'],start:780,end:900,loc:'MCLD 4018',note:'周三下午'},
-    {id:'L1B',days:['Thu'],start:660,end:780,loc:'MCLD 4018',note:'周四11-13'},
+    {id:'L1D',days:['Wed'],start:780,end:900,loc:'MCLD 4018',note:'推荐'},
+    {id:'L1C',days:['Wed'],start:900,end:1020,loc:'MCLD 4018',note:'⚠与PHYS 200 T1B冲突'},
+    {id:'L1F',days:['Fri'],start:840,end:960,loc:'MCLD 4018',note:'⚠与PHYS 219 L1C冲突'},
   ]},
 ];
 
