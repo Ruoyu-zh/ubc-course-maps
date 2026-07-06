@@ -2,250 +2,218 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UBC Scheduler | 自动排课</title>
+<title>UBC Scheduler | 2026W Term1 全部排法</title>
 <style>
 :root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--dn:#f85149;--ok:#3fb950}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif}
-.c{max-width:1500px;margin:0 auto;padding:16px}
-h1{text-align:center;font-size:1.5rem;padding:12px 0 4px;background:linear-gradient(135deg,#58a6ff,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c{max-width:1100px;margin:0 auto;padding:20px}
+h1{text-align:center;font-size:1.5rem;padding:12px 0 6px;background:linear-gradient(135deg,#58a6ff,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{text-align:center;color:var(--t2);margin-bottom:16px;font-size:0.85rem}
 
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-@media(max-width:900px){.grid2{grid-template-columns:1fr}}
-.pn{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:14px}
-.pn h2{font-size:0.95rem;margin-bottom:10px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--bd);cursor:pointer;font-size:0.82rem;font-weight:600;background:var(--cbg);color:var(--tx);transition:all 0.15s}
+.btn:hover{border-color:var(--ac)}
+.btn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 
-.cg{margin-bottom:8px}
-.cgh{font-weight:700;font-size:0.85rem;padding:4px 0;display:flex;align-items:center;gap:6px;cursor:pointer}
-.act{display:flex;align-items:center;gap:6px;padding:3px 0 3px 20px;font-size:0.8rem;color:var(--t2)}
-.act label{display:flex;align-items:center;gap:6px;cursor:pointer}
-.act input[type=radio]{accent-color:var(--ac)}
-.tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:0.65rem;font-weight:600}
+.tt-grid{display:grid;grid-template-columns:60px repeat(5,1fr);gap:2px;background:var(--bd);border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+.tt-h{background:var(--cbg);padding:10px 4px;text-align:center;font-weight:700;font-size:0.8rem;color:var(--t2)}
+.tt-tm{background:var(--cbg);padding:4px 6px;text-align:right;font-size:0.68rem;color:var(--t2);display:flex;align-items:flex-start;justify-content:flex-end}
+.tt-c{background:var(--cbg);min-height:36px;padding:2px}
+.tt-b{margin:1px;padding:4px 6px;border-radius:4px;font-size:0.66rem;line-height:1.3;overflow:hidden}
+.tt-b.x{outline:2px solid var(--dn);outline-offset:-1px}
+
+.msg{padding:14px 18px;border-radius:10px;margin:14px 0;font-weight:600;font-size:0.88rem;text-align:center}
+.msg-ok{background:rgba(63,185,80,0.1);color:var(--ok)}
+.msg-warn{background:rgba(210,153,34,0.1);color:#d29922}
+.msg-err{background:rgba(248,81,73,0.1);color:var(--dn)}
+
+.detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:14px}
+.card{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.card h3{font-size:0.88rem;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.card .row{font-size:0.78rem;color:var(--t2);padding:3px 0;display:flex;align-items:center;gap:6px}
+.tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:0.62rem;font-weight:600}
 .tag-LEC{background:rgba(88,166,255,0.15);color:#58a6ff}
 .tag-LAB{background:rgba(126,231,135,0.15);color:#7ee787}
-.tag-TUT,.tag-DIS{background:rgba(210,153,34,0.15);color:#d29922}
-.color-dot{width:10px;height:10px;border-radius:3px;display:inline-block;flex-shrink:0}
-.conflict-tag{color:var(--dn);font-weight:700;font-size:0.7rem;margin-left:4px}
-
-/* Timetable */
-.tt-grid{display:grid;grid-template-columns:50px repeat(5,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:8px;overflow:hidden}
-.tt-h{background:var(--cbg);padding:6px 2px;text-align:center;font-weight:700;font-size:0.7rem;color:var(--t2)}
-.tt-tm{background:var(--cbg);padding:1px 4px;text-align:right;font-size:0.62rem;color:var(--t2);display:flex;align-items:center;justify-content:flex-end}
-.tt-c{background:var(--cbg);min-height:22px;padding:1px}
-.tt-b{margin:1px;padding:2px 4px;border-radius:3px;font-size:0.6rem;line-height:1.2;overflow:hidden}
-.tt-b.x{outline:2px solid var(--dn);outline-offset:-1px;z-index:2;position:relative}
-
-.sum-ok{background:rgba(63,185,80,0.1);color:var(--ok);padding:10px 14px;border-radius:8px;margin-top:10px;font-weight:600;font-size:0.82rem}
-.sum-err{background:rgba(248,81,73,0.1);color:var(--dn);padding:10px 14px;border-radius:8px;margin-top:10px;font-weight:600;font-size:0.82rem}
-
-.btn{padding:8px 16px;border-radius:6px;border:none;cursor:pointer;font-size:0.8rem;font-weight:600}
-.btn-ac{background:var(--ac);color:#fff;margin-top:8px}
-.btn-ok{background:var(--ok);color:#000}
-.auto-msg{font-size:0.78rem;color:var(--t2);margin-top:6px}
+.tag-DIS{background:rgba(210,153,34,0.15);color:#d29922}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
 </style>
 </head>
 <body>
 <div class="c">
+<h1>📅 2026W Term 1 — 全部课表组合</h1>
+<p class="sub">MATH 217 · PHYS 200 · PHYS 219 · CPSC 259 · CPEN 211 | 共 <b id="total">0</b> 种无冲突排法</p>
 
-<h1>📅 UBC 2026W Term 1 智能排课</h1>
-
-<div class="grid2">
-<div>
-<div class="pn"><h2>📋 选择每门课的 Section（勾选 = 已选）</h2><div id="picker"></div></div>
-<div class="pn"><h2>📊 已选课表</h2><div id="summary"></div><button class="btn btn-ac" onclick="renderAll()">🔄 刷新课表</button></div>
-</div>
-<div>
-<div class="pn"><h2>📅 周课表</h2><div class="tt-grid" id="tt"></div></div>
-</div>
-</div>
+<div class="bar" id="combos"></div>
+<div id="msg"></div>
+<div class="tt-grid" id="tt"></div>
+<div class="detail" id="detail"></div>
 </div>
 
 <script>
-// Course data extracted from screenshots
-const COURSES = [
-  {
-    code:'MATH 217', color:'#58a6ff',
-    sections:[
-      {id:'101',type:'LEC',days:['Tue','Thu'],start:570,end:660,loc:'IRC G1'} // 9:30-11:00
-    ]
-  },
-  {
-    code:'PHYS 200', color:'#d29922',
-    sections:[
-      {id:'101',type:'LEC',days:['Tue','Thu'],start:750,end:840,loc:'LIFE 2201'}, // 12:30-14:00
-      {id:'T1A',type:'DIS',days:['Wed'],start:510,end:600,loc:'CHEM D300'}, // 8:30-10:00
-      {id:'T1B',type:'DIS',days:['Wed'],start:930,end:1020,loc:'IBLC 261'}, // 15:30-17:00
-    ]
-  },
-  {
-    code:'PHYS 219', color:'#a371f7',
-    sections:[
-      {id:'T1A',type:'DIS',days:['Tue'],start:660,end:750,loc:'HENN 200'}, // 11:00-12:30
-      {id:'L1A',type:'LAB',days:['Tue'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
-      {id:'L1B',type:'LAB',days:['Thu'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
-      {id:'L1C',type:'LAB',days:['Fri'],start:840,end:1020,loc:'HEBB 418'}, // 14:00-17:00
-      {id:'L1D',type:'LAB',days:['Thu'],start:570,end:750,loc:'HEBB 418'}, // 9:30-12:30
-    ]
-  },
-  {
-    code:'CPSC 259', color:'#3fb950',
-    sections:[
-      {id:'101',type:'LEC',days:['Mon','Wed','Fri'],start:480,end:540,loc:'FSC 1005'}, // 8:00-9:00
-      {id:'L1A',type:'LAB',days:['Mon'],start:540,end:660,loc:'ICCS X351'}, // 9:00-11:00
-      {id:'L1B',type:'LAB',days:['Mon'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
-      {id:'L1C',type:'LAB',days:['Thu'],start:1050,end:1170,loc:'ICCS X351'}, // 17:30-19:30
-      {id:'L1D',type:'LAB',days:['Thu'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
-      {id:'L1E',type:'LAB',days:['Mon'],start:900,end:1020,loc:'ICCS X351'}, // 15:00-17:00
-      {id:'L1F',type:'LAB',days:['Fri'],start:540,end:660,loc:'ICCS X351'}, // 9:00-11:00
-      {id:'L1G',type:'LAB',days:['Tue'],start:780,end:900,loc:'ICCS X351'}, // 13:00-15:00
-      {id:'L1H',type:'LAB',days:['Thu'],start:930,end:1050,loc:'ICCS X351'}, // 15:30-17:30
-    ]
-  },
-  {
-    code:'CPEN 211', color:'#f0883e',
-    sections:[
-      {id:'101',type:'LEC',days:['Tue','Thu'],start:930,end:1050,loc:'ESB 1013'}, // 15:30-17:30
-      {id:'T1A',type:'DIS',days:['Fri'],start:960,end:1080,loc:'ESB 1013',alt:true}, // 16:00-18:00 alt weeks
-      {id:'L1A',type:'LAB',days:['Thu'],start:780,end:900,loc:'MCLD 4018'}, // 13:00-15:00
-      {id:'L1B',type:'LAB',days:['Thu'],start:660,end:780,loc:'MCLD 4018'}, // 11:00-13:00
-      {id:'L1C',type:'LAB',days:['Wed'],start:900,end:1020,loc:'MCLD 4018'}, // 15:00-17:00
-      {id:'L1D',type:'LAB',days:['Wed'],start:780,end:900,loc:'MCLD 4018'}, // 13:00-15:00
-      {id:'L1F',type:'LAB',days:['Fri'],start:840,end:960,loc:'MCLD 4018'}, // 14:00-16:00
-    ]
-  }
+const DAYS=['Mon','Tue','Wed','Thu','Fri'];
+const COLORS={MATH:'#58a6ff',PHYS:'#d29922',PHYS2:'#a371f7',CPSC:'#3fb950',CPEN:'#f0883e'};
+
+// FIXED: only 1 option each (no choice)
+const FIXED = [
+  {code:'MATH 217',sec:'101',type:'LEC',days:['Tue','Thu'],start:570,end:660,loc:'IRC G1'},
+  {code:'PHYS 200',sec:'101',type:'LEC',days:['Tue','Thu'],start:750,end:840,loc:'LIFE 2201'},
+  {code:'PHYS 219',sec:'T1A',type:'DIS',days:['Tue'],start:660,end:750,loc:'HENN 200'},
+  {code:'CPSC 259',sec:'101',type:'LEC',days:['Mon','Wed','Fri'],start:480,end:540,loc:'FSC 1005'},
+  {code:'CPEN 211',sec:'101',type:'LEC',days:['Tue','Thu'],start:930,end:1050,loc:'ESB 1013'},
+  {code:'CPEN 211',sec:'T1A',type:'DIS',days:['Fri'],start:960,end:1080,loc:'ESB 1013',note:'交替周'},
 ];
 
-const COLORS = ['#58a6ff','#d29922','#a371f7','#3fb950','#f0883e'];
-const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+// CHOICES
+const CHOICES = [
+  {label:'PHYS 200 讨论', key:'phys200dis', opts:[
+    {id:'T1B',days:['Wed'],start:930,end:1020,loc:'IBLC 261',note:'推荐'},
+    {id:'T1A',days:['Wed'],start:510,end:600,loc:'CHEM D300',note:'⚠与CPSC 259冲突'},
+  ]},
+  {label:'PHYS 219 实验', key:'phys219lab', opts:[
+    {id:'L1A',days:['Tue'],start:840,end:1020,loc:'HEBB 418',note:'周二紧凑'},
+    {id:'L1B',days:['Thu'],start:840,end:1020,loc:'HEBB 418',note:'周四紧凑'},
+    {id:'L1C',days:['Fri'],start:840,end:1020,loc:'HEBB 418',note:'⚠周五与CPEN交替冲突'},
+  ]},
+  {label:'CPSC 259 实验', key:'cpsc259lab', opts:[
+    {id:'L1A',days:['Mon'],start:540,end:660,loc:'ICCS X351',note:'周一上午'},
+    {id:'L1F',days:['Fri'],start:540,end:660,loc:'ICCS X351',note:'周五上午'},
+    {id:'L1B',days:['Mon'],start:780,end:900,loc:'ICCS X351',note:'周一下午'},
+    {id:'L1E',days:['Mon'],start:900,end:1020,loc:'ICCS X351',note:'周一傍晚'},
+    {id:'L1C',days:['Thu'],start:1050,end:1170,loc:'ICCS X351',note:'周四晚5:30-7:30'},
+  ]},
+  {label:'CPEN 211 实验', key:'cpen211lab', opts:[
+    {id:'L1D',days:['Wed'],start:780,end:900,loc:'MCLD 4018',note:'周三下午'},
+    {id:'L1B',days:['Thu'],start:660,end:780,loc:'MCLD 4018',note:'周四11-13'},
+  ]},
+];
 
-// Track selected: {courseIdx: {type: sectionIdx}}
-let selected = {};
+function fmt(m){let hh=Math.floor(m/60),mm=m%60;return hh+':'+mm.toString().padStart(2,'0');}
 
-// Recommended pre-selections (conflict-free)
-const PRESELECT = {
-  'PHYS 200': {'DIS': 'T1B'},
-  'PHYS 219': {'LAB': 'L1A'},
-  'CPSC 259': {'LAB': 'L1F'},
-  'CPEN 211': {'LAB': 'L1D'},
-};
-
-function buildPicker() {
-  let html = '';
-  COURSES.forEach((c, ci) => {
-    html += `<div class="cg"><div class="cgh"><span class="color-dot" style="background:${COLORS[ci]}"></span>${c.code}</div>`;
-    let types = {};
-    c.sections.forEach((s, si) => { if (!types[s.type]) types[s.type] = []; types[s.type].push({...s, idx:si}); });
-
-    for (let [type, secs] of Object.entries(types)) {
-      let preselected = PRESELECT[c.code] && PRESELECT[c.code][type];
-      secs.forEach(s => {
-        // Pre-select: LEC always first, others by PRESELECT
-        let checked = '';
-        if (type === 'LEC') checked = (secs.indexOf(s) === 0) ? 'checked' : '';
-        else if (preselected && s.id === preselected) checked = 'checked';
-        else if (!preselected && secs.indexOf(s) === 0) checked = 'checked';
-        let alt = s.alt ? ' (交替周)' : '';
-        html += `<div class="act"><label><input type="radio" name="c_${ci}_${type}" data-ci="${ci}" data-si="${s.idx}" data-type="${type}" ${checked} onchange="onPick()"><span class="tag tag-${type}">${type}</span> Sec ${s.id}: ${s.days.join('/')} ${fmt(s.start)}-${fmt(s.end)}${alt} | ${s.loc}</label></div>`;
-      });
-    }
-    html += '</div>';
-  });
-  document.getElementById('picker').innerHTML = html;
-  onPick();
-}
-
-function getSelected() {
-  let result = [];
-  let radios = document.querySelectorAll('#picker input[type=radio]:checked');
-  radios.forEach(r => {
-    let ci = parseInt(r.dataset.ci), si = parseInt(r.dataset.si);
-    let c = COURSES[ci];
-    let s = c.sections[si];
-    result.push({code: c.code, color: COLORS[ci], section: s.id, type: s.type, days: s.days, start: s.start, end: s.end, loc: s.loc, alt: s.alt||false});
-  });
-  return result;
-}
-
-function overlap(a,b) {
-  for (let da of a.days) for (let db of b.days) {
-    if (da===db && a.start<b.end && b.start<a.end) return true;
+function overlap(a,b){
+  for(let da of a.days)for(let db of b.days){
+    if(da===db&&a.start<b.end&&b.start<a.end)return true;
   }
   return false;
 }
 
-function findConflicts(acts) {
-  let cf = new Set();
-  for (let i=0;i<acts.length;i++) for (let j=i+1;j<acts.length;j++) {
-    if (overlap(acts[i], acts[j])) { cf.add(i); cf.add(j); }
+// Generate all combinations
+let all=[];
+function* gen(idx, picks){
+  if(idx===CHOICES.length){yield [...picks];return}
+  for(let oi=0; oi<CHOICES[idx].opts.length; oi++){
+    picks.push(oi);
+    yield* gen(idx+1, picks);
+    picks.pop();
   }
-  return cf;
+}
+for(let combo of gen(0,[])) all.push(combo);
+
+// Score each combination
+let scored=[];
+for(let ci=0; ci<all.length; ci++){
+  let acts=[...FIXED];
+  let names=[];
+  let hasConflict=false, hasNote=false;
+  for(let i=0;i<CHOICES.length;i++){
+    let opt=CHOICES[i].opts[all[ci][i]];
+    acts.push({code:'_',sec:opt.id,type:'_',days:opt.days,start:opt.start,end:opt.end,loc:opt.loc,note:opt.note||''});
+    if(opt.note&&opt.note.startsWith('⚠')) hasConflict=true;
+    if(opt.note&&!opt.note.startsWith('⚠')) hasNote=true;
+    names.push(CHOICES[i].label+':'+opt.id);
+  }
+  // Check actual time conflicts
+  for(let i=0;i<acts.length;i++)for(let j=i+1;j<acts.length;j++){
+    if(overlap(acts[i],acts[j])) hasConflict=true;
+  }
+  let score=0;
+  if(!hasConflict) score+=100;
+  if(hasNote) score-=1;
+  // Prefer PHYS 219 L1A (keeps Thursday lighter)
+  if(all[ci][1]===0) score+=1;
+  // Prefer CPSC 259 L1F (Friday consolidated)
+  if(all[ci][2]===1) score+=1;
+  scored.push({ci,score,hasConflict,names:names.join(' | ')});
+}
+scored.sort((a,b)=>b.score-a.score);
+
+// Show combo buttons
+let bar=document.getElementById('combos');
+scored.slice(0,8).forEach((s,i)=>{
+  let cls='btn'+(i===0?' on':'')+(s.hasConflict?'':'');
+  bar.innerHTML+=`<button class="${cls}" id="btn${s.ci}" onclick="pick(${s.ci})" style="${s.hasConflict?'opacity:0.5':''}">${s.hasConflict?'⚠ ':''}排法${i+1}</button>`;
+});
+document.getElementById('total').textContent=scored.filter(s=>!s.hasConflict).length;
+
+function pick(ci){
+  document.querySelectorAll('.bar .btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('btn'+ci).classList.add('on');
+  render(ci);
 }
 
-function onPick() {
-  let acts = getSelected();
-  let cf = findConflicts(acts);
-  let summ = document.getElementById('summary');
-  let html = '';
+function render(ci){
+  let combo=all[ci];
+  let acts=[...FIXED.map(a=>({...a,color:COLORS[a.code.split(' ')[0]],ci:1}))];
+  let conflicts=new Set();
 
-  // Group by course
-  let groups = {};
-  acts.forEach((a,i) => {
-    if (!groups[a.code]) groups[a.code] = {color:a.color, items:[]};
-    groups[a.code].items.push({...a, cf: cf.has(i)});
-  });
-
-  for (let [code, g] of Object.entries(groups)) {
-    html += `<div style="font-weight:700;color:${g.color};margin-top:8px">${code}</div>`;
-    g.items.forEach(a => {
-      html += `<div style="font-size:0.78rem;color:var(--t2);padding-left:12px">${a.type} ${a.section}: ${a.days.join('/')} ${fmt(a.start)}-${fmt(a.end)} ${a.loc}${a.cf?' <span class=conflict-tag>⚠冲突</span>':''}${a.alt?' <span style=color:var(--t2)>(交替周)</span>':''}</div>`;
-    });
+  for(let i=0;i<CHOICES.length;i++){
+    let opt=CHOICES[i].opts[combo[i]];
+    acts.push({code:CHOICES[i].label,sec:opt.id,type:'',days:opt.days,start:opt.start,end:opt.end,loc:opt.loc,color:COLORS[Object.keys(COLORS)[i]],ci:i+2,note:opt.note||''});
   }
 
-  if (cf.size === 0) {
-    html += '<div class="sum-ok">✅ 所有课程无时间冲突！课表完美。</div>';
-  } else {
-    html += `<div class="sum-err">⚠️ ${cf.size} 个时间冲突！请调整上面带 ⚠ 标记的 section。</div>`;
+  for(let i=0;i<acts.length;i++)for(let j=i+1;j<acts.length;j++){
+    if(overlap(acts[i],acts[j])){conflicts.add(i);conflicts.add(j);}
   }
-  summ.innerHTML = html;
-  renderTT(acts, cf);
-}
 
-function renderTT(acts, cf) {
-  let slots = {};
-  for (let d of DAYS) { slots[d]={}; for (let t=480;t<1260;t+=30) slots[d][t]=[]; }
-  acts.forEach((a,i) => {
-    for (let d of a.days) for (let t=a.start; t<a.end; t+=30) if (slots[d]&&slots[d][t]!==undefined) slots[d][t].push(i);
-  });
+  let hasCf=conflicts.size>0;
+  document.getElementById('msg').innerHTML=hasCf
+    ?'<div class="msg msg-err">⚠️ 此组合有时间冲突！</div>'
+    :'<div class="msg msg-ok">✅ 所有课程无时间冲突，课表完美</div>';
 
-  let rows = [];
-  // Header row
-  let hdr = ['<div class="tt-h"></div>'];
-  for (let d of DAYS) hdr.push(`<div class="tt-h">${d}</div>`);
+  // Timetable
+  let slots={};
+  for(let d of DAYS){slots[d]={};for(let t=480;t<1320;t+=30)slots[d][t]=[]}
+  acts.forEach((a,i)=>{for(let d of a.days)for(let t=a.start;t<a.end;t+=30)if(slots[d]&&slots[d][t]!==undefined)slots[d][t].push(i)});
+
+  let rows=[],hdr=['<div class="tt-h"></div>'];
+  for(let d of DAYS)hdr.push(`<div class="tt-h">${d}</div>`);
   rows.push(hdr.join(''));
-
-  // Time rows
-  for (let hr=8; hr<21; hr++) {
-    let cells = [`<div class="tt-tm">${hr}:00</div>`];
-    for (let d of DAYS) {
-      let slotActs = slots[d][hr*60] || [];
-      let tags=[], shown=new Set();
-      for (let ci of slotActs) {
-        if (shown.has(ci)) continue;
-        let a = acts[ci];
-        if (a.start === hr*60) {
-          shown.add(ci);
-          tags.push(`<div class="tt-b${cf.has(ci)?' x':''}" style="background:${a.color}22;border-left:3px solid ${a.color}" title="${a.code} ${a.type} ${a.section}\n${a.loc}">${a.code}<br>${a.type} ${a.section}</div>`);
-        }
+  for(let hr=8;hr<22;hr++){
+    let cells=[`<div class="tt-tm">${hr}:00</div>`];
+    for(let d of DAYS){
+      let sa=slots[d][hr*60]||[],tags=[],shown=new Set();
+      for(let ci2 of sa){
+        if(shown.has(ci2))continue;
+        let a=acts[ci2];
+        if(a.start===hr*60){shown.add(ci2);tags.push(`<div class="tt-b${conflicts.has(ci2)?' x':''}" style="background:${a.color}22;border-left:3px solid ${a.color}">${a.code.replace('PHYS 219','PHYS 219').replace('PHYS 200','PHYS 200').substring(0,18)}<br>${a.type} ${a.sec}</div>`)}
       }
       cells.push(`<div class="tt-c">${tags.join('')}</div>`);
     }
     rows.push(cells.join(''));
   }
-  document.getElementById('tt').innerHTML = rows.join('');
+  document.getElementById('tt').innerHTML=rows.join('');
+
+  // Detail
+  let detail='';
+  let groups={};
+  [{code:'MATH 217',color:'#58a6ff',items:acts.filter(a=>a.code==='MATH 217')},
+   {code:'PHYS 200',color:'#d29922',items:acts.filter(a=>a.code==='PHYS 200')},
+   {code:'PHYS 219',color:'#a371f7',items:acts.filter(a=>a.code.includes('PHYS 219')||a.code==='PHYS 219')},
+   {code:'CPSC 259',color:'#3fb950',items:acts.filter(a=>a.code==='CPSC 259'||a.code.includes('CPSC 259'))},
+   {code:'CPEN 211',color:'#f0883e',items:acts.filter(a=>a.code==='CPEN 211'||a.code.includes('CPEN 211'))},
+  ].forEach(g=>{
+    if(!g.items.length)return;
+    detail+=`<div class="card"><h3><span class="dot" style="background:${g.color}"></span>${g.code}</h3>`;
+    g.items.forEach(a=>{
+      let typeTag=a.type||(a.code.includes('219')?'LAB/DIS':a.code.includes('200')?'DIS':'');
+      let typeCls=typeTag==='LEC'?'LEC':typeTag==='LAB'?'LAB':'DIS';
+      detail+=`<div class="row"><span class="tag tag-${typeCls}">${typeTag||'—'}</span> Sec ${a.sec}: ${a.days.join('/')} ${fmt(a.start)}-${fmt(a.end)} | ${a.loc}${a.note?' <span style=color:var(--t2)>'+a.note+'</span>':''}${conflicts.has(acts.indexOf(a))?' <span style=color:var(--dn);font-weight:700>⚠</span>':''}</div>`;
+    });
+    detail+='</div>';
+  });
+  document.getElementById('detail').innerHTML=detail;
 }
 
-function fmt(m) { let hh=Math.floor(m/60), mm=m%60; return hh+':'+mm.toString().padStart(2,'0'); }
-
-buildPicker();
+pick(scored[0].ci); // Show best combo
 </script>
 </body></html>
