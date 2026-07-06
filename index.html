@@ -3,33 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UBC PHYS + CPSC | 物理+计算机课程完整关系图</title>
+<title>UBC Course Maps | 课程关系图</title>
 <style>
   :root { --bg: #0d1117; --card-bg: #161b22; --border: #30363d; --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif;
          display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-  .card-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; padding: 40px; }
+  .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px;
+                    max-width: 1200px; padding: 40px; width: 100%; }
   .card {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
-    padding: 40px 36px; text-align: center; cursor: pointer; transition: all 0.25s;
-    width: 380px; text-decoration: none; color: var(--text);
+    padding: 36px 32px; text-align: center; cursor: pointer; transition: all 0.25s;
+    text-decoration: none; color: var(--text);
   }
   .card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
-  .card.phys:hover { border-color: #7c3aed; }
-  .card.cpsc:hover { border-color: #2ea043; }
-  .card-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
-  .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; }
-  .card-subtitle { font-size: 0.9rem; color: var(--text2); margin-bottom: 6px; }
-  .card-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.5; }
-  .card-badge {
-    display: inline-block; padding: 6px 14px; border-radius: 20px;
-    font-size: 0.8rem; font-weight: 600; margin-top: 16px;
-  }
+  .card-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+  .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .card-subtitle { font-size: 0.85rem; color: var(--text2); margin-bottom: 10px; }
+  .card-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
+  .card-badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; margin-top: 14px; }
   .badge-phys { background: rgba(124,58,237,0.15); color: #a78bfa; }
   .badge-cpsc { background: rgba(46,160,67,0.15); color: #56d364; }
+  .badge-elec { background: rgba(249,115,22,0.15); color: #fb923c; }
+  .badge-cpen { background: rgba(139,92,246,0.15); color: #a78bfa; }
   h1 { font-size: 1.8rem; margin-bottom: 6px; }
-  .main-subtitle { font-size: 0.9rem; color: var(--text2); margin-bottom: 30px; }
+  .main-subtitle { font-size: 0.9rem; color: var(--text2); margin-bottom: 24px; }
 </style>
 </head>
 <body>
@@ -38,25 +36,41 @@
   <p class="main-subtitle">点击卡片打开对应的交互式课程地图（中英双语，含前置关系流程图）</p>
 
   <div class="card-container">
-    <a class="card phys" href="ubc_phys_combined.html" target="_blank">
+    <a class="card" href="ubc_phys_combined.html" target="_blank" style="border-top:3px solid #7c3aed;">
       <span class="card-icon">🎓</span>
-      <div class="card-title">UBC 物理系 PHYS</div>
-      <div class="card-subtitle">Department of Physics and Astronomy</div>
-      <div class="card-desc">116 门课程 · 从大一入门到博士论文<br>6个年级级别 + 10条学科线<br>31张前置关系流程图</div>
-      <span class="card-badge badge-phys">📘 按年级查看 · 🔗 按学科线查看</span>
+      <div class="card-title">PHYS 物理系</div>
+      <div class="card-subtitle">Physics and Astronomy</div>
+      <div class="card-desc">116 门课程 · 31张流程图<br>从大一入门到博士论文</div>
+      <span class="card-badge badge-phys">6个年级级别 + 10条学科线</span>
     </a>
 
-    <a class="card cpsc" href="ubc_cpsc_combined.html" target="_blank">
+    <a class="card" href="ubc_cpsc_combined.html" target="_blank" style="border-top:3px solid #2ea043;">
       <span class="card-icon">💻</span>
-      <div class="card-title">UBC 计算机系 CPSC</div>
-      <div class="card-subtitle">Department of Computer Science</div>
-      <div class="card-desc">112 门课程 · 从编程入门到博士论文<br>6个年级级别 + 12条学科线<br>18张前置关系流程图</div>
-      <span class="card-badge badge-cpsc">📘 按年级查看 · 🔗 按学科线查看</span>
+      <div class="card-title">CPSC 计算机系</div>
+      <div class="card-subtitle">Computer Science</div>
+      <div class="card-desc">112 门课程 · 18张流程图<br>从编程入门到博士论文</div>
+      <span class="card-badge badge-cpsc">6个年级级别 + 12条学科线</span>
+    </a>
+
+    <a class="card" href="ubc_elec_combined.html" target="_blank" style="border-top:3px solid #f97316;">
+      <span class="card-icon">🔌</span>
+      <div class="card-title">ELEC 电子工程系</div>
+      <div class="card-subtitle">Electrical Engineering</div>
+      <div class="card-desc">57 门课程 · 8张流程图<br>电路到电力系统到生物医学</div>
+      <span class="card-badge badge-elec">4个年级级别 + 7条学科线</span>
+    </a>
+
+    <a class="card" href="ubc_cpen_combined.html" target="_blank" style="border-top:3px solid #8b5cf6;">
+      <span class="card-icon">🖥️</span>
+      <div class="card-title">CPEN 计算机工程系</div>
+      <div class="card-subtitle">Computer Engineering</div>
+      <div class="card-desc">29 门课程 · 6张流程图<br>数字系统到操作系统到AI</div>
+      <span class="card-badge badge-cpen">4个年级级别 + 5条学科线</span>
     </a>
   </div>
 
   <p style="margin-top:30px;font-size:0.78rem;color:var(--text2);">
-    数据来源: <a href="https://vancouver.calendar.ubc.ca" style="color:var(--accent)">UBC Vancouver Academic Calendar</a> · 生成日期: 2026-07-06
+    数据来源: <a href="https://vancouver.calendar.ubc.ca" style="color:var(--accent)">UBC Vancouver Academic Calendar</a>
   </p>
 </div>
 </body></html>
