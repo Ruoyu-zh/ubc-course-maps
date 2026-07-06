@@ -471,7 +471,9 @@
 <hr><p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>57</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p>
 </div>
 <script>
+
 mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
 var currentMode = 'year';
 var currentYearTab = 's100';
 var currentTrackTab = 'ckt';
@@ -530,5 +532,6 @@ document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
     if (t) t.classList.add('visible');
   });
 });
+
 </script>
 </body></html>
