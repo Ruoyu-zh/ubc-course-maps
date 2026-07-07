@@ -20,33 +20,28 @@ h1{font-size:1.8rem;text-align:center;font-weight:800;padding:24px 0 8px}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:8px 0 16px}
 .tab{padding:8px 16px;border-radius:20px;font-size:0.8rem;font-weight:600;cursor:pointer;border:1px solid var(--bd);color:var(--t2);background:transparent}
 .tab.active{background:var(--ac);color:#fff;border-color:var(--ac)}
-.year-section,.track-section{visibility:hidden;position:absolute;height:0;overflow:hidden}
-.year-section.visible,.track-section.visible{visibility:visible;position:static;height:auto;overflow:visible}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-bottom:24px}
-.course-card{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:16px}
+.year-section{visibility:hidden;position:absolute;height:0;overflow:hidden}
+.year-section.visible{visibility:visible;position:static;height:auto;overflow:visible}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin-bottom:24px}
+.course-card{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:14px}
 .course-card:hover{border-color:var(--ac)}
-.course-code{font-weight:800;font-size:1.05rem;color:var(--ac);margin-bottom:2px}
-.course-title-en{font-size:0.82rem;color:var(--tx);margin-bottom:2px}
-.course-title-zh{font-size:0.78rem;color:var(--grn);margin-bottom:4px}
-.course-credits{font-size:0.72rem;color:var(--t2);display:inline-block;background:rgba(88,166,255,0.1);padding:2px 8px;border-radius:8px;margin-bottom:4px}
-.desc-en{font-size:0.75rem;color:var(--t2);line-height:1.5;margin-bottom:4px}
-.prereq{font-size:0.7rem;color:#f0883e;line-height:1.4}
+.course-code{font-weight:800;font-size:1rem;color:var(--ac);margin-bottom:2px}
+.course-title-en{font-size:0.8rem;color:var(--tx);margin-bottom:1px}
+.course-title-zh{font-size:0.75rem;color:var(--grn);margin-bottom:4px}
+.course-credits{font-size:0.7rem;color:var(--t2);display:inline-block;background:rgba(88,166,255,0.1);padding:1px 7px;border-radius:8px;margin-bottom:3px}
+.desc-en{font-size:0.73rem;color:var(--t2);line-height:1.5;margin-bottom:3px}
+.prereq{font-size:0.68rem;color:#f0883e;line-height:1.4}
 .flow-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px;overflow-x:auto}
 .flow-box h3{font-size:0.9rem;color:var(--ac);margin-bottom:10px}
 .flow-box .mermaid{min-width:400px}
-.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:12px;font-size:0.75rem;color:var(--t2)}
-.legend-item{display:flex;align-items:center;gap:4px}
-.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-.summary-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px}
-.summary-box h3{font-size:0.85rem;color:var(--ac);margin-bottom:8px}
-.summary-box ul{font-size:0.8rem;color:var(--t2);line-height:1.7;padding-left:16px}
 .footer{text-align:center;padding:24px 0;font-size:0.72rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:24px}
+.level-count{font-size:0.78rem;color:var(--t2);margin-bottom:12px;text-align:center}
 @media(max-width:768px){.wrap{padding:12px}h1{font-size:1.3rem}.course-grid{grid-template-columns:1fr}.tab{padding:6px 12px;font-size:0.74rem}}
 </style></head><body>
 <div class="wrap">
 <a class="back-link" href="subjects.html">Back to Subjects</a>
 <h1 class="grad">BIOL Course Map</h1>
-<p class="sub">Biology · 136 Courses · Department of Biology &amp; Zoology &amp; Botany</p>
+<p class="sub">Biology · 136 Courses · Department of Biology, Zoology &amp; Botany</p>
 
 <div class="mode-bar">
 <button class="mode-btn active" onclick="switchMode('year')">By Year Level</button>
@@ -54,218 +49,334 @@ h1{font-size:1.8rem;text-align:center;font-weight:800;padding:24px 0 8px}
 </div>
 
 <div id="tab-year" class="tabs">
-<button class="tab active" onclick="switchYear('100')">100 Level · 入门</button>
-<button class="tab" onclick="switchYear('200')">200 Level · 基础</button>
-<button class="tab" onclick="switchYear('300')">300 Level · 中级</button>
-<button class="tab" onclick="switchYear('400')">400 Level · 高级</button>
-<button class="tab" onclick="switchYear('grad')">Grad · 研究生</button>
+<button class="tab active" onclick="switchYear('100')">100 Level (7)</button>
+<button class="tab" onclick="switchYear('200')">200 Level (11)</button>
+<button class="tab" onclick="switchYear('300')">300 Level (50)</button>
+<button class="tab" onclick="switchYear('400')">400 Level (52)</button>
+<button class="tab" onclick="switchYear('grad')">Grad 500+ (16)</button>
 </div>
 <div id="tab-track" class="tabs" style="display:none">
-<button class="tab" onclick="switchTrack('core')">Core · 核心基础</button>
-<button class="tab" onclick="switchTrack('neurosci')">Neuro · 神经生物学</button>
-<button class="tab" onclick="switchTrack('genetics')">Genetics · 遗传/基因组</button>
-<button class="tab" onclick="switchTrack('molec')">Molecular · 分子/细胞</button>
-<button class="tab" onclick="switchTrack('compute')">Comp · 计算/定量</button>
-<button class="tab" onclick="switchTrack('eco')">Ecology · 生态/进化</button>
+<button class="tab" onclick="switchTrack('core')">Core 核心基础</button>
+<button class="tab" onclick="switchTrack('neuro')">Neuro 神经生物学</button>
+<button class="tab" onclick="switchTrack('genetics')">Genetics 遗传/基因组</button>
+<button class="tab" onclick="switchTrack('molec')">Molecular 分子/细胞</button>
+<button class="tab" onclick="switchTrack('physio')">Physiology 生理学</button>
+<button class="tab" onclick="switchTrack('eco')">Ecology 生态/进化</button>
 </div>
 
-<!-- ====== 100 LEVEL ====== -->
+<!-- 100 LEVEL -->
 <div class="year-section visible" id="sec-100">
-<div class="flow-box"><h3>BIOL 100-Level Prerequisites</h3><div class="mermaid">
+<div class="flow-box"><h3>100-Level Prerequisite Flow</h3><div class="mermaid">
 graph TD
-  S["Start"] --> A["BIOL 111<br/>Intro Modern Bio 3cr"]
-  A --> B["BIOL 112<br/>Biology of Cell 3cr"]
-  A --> C["BIOL 121<br/>Genetics & Evolution 3cr"]
-  A --> D["BIOL 140<br/>Lab Investigation 2cr"]
-  A --> E["BIOL 180<br/>Think Like Biologist 2cr"]
-  B --> F["BIOL 200<br/>Cell Biology"]
-  C --> G["BIOL 234<br/>Genetics"]
-  B --> H["BIOL 201<br/>Biochemistry Intro"]
-  B --> I["MICB 202<br/>Immunology"]
+  S["Start"] --> A["BIOL 111<br/>Intro Modern Bio"]
+  A --> B["BIOL 112<br/>Biology of Cell"]
+  A --> C["BIOL 121<br/>Genetics & Evolution"]
+  A --> D["BIOL 140<br/>Lab Investigation"]
+  A --> E["BIOL 180<br/>Think Like Biologist"]
+  A --> F["BIOL 153<br/>Human Bio 8cr"]
+  A --> G["BIOL 155<br/>Human Bio 6cr"]
+  B --> H["BIOL 200<br/>Cell Biology"]
+  C --> I["BIOL 230<br/>Ecology"]
+  C --> J["BIOL 234<br/>Genetics"]
 </div></div>
-
+<p class="level-count">7 courses at 100-level</p>
 <div class="course-grid">
-<div class="course-card"><div class="course-code">BIOL 111</div><div class="course-title-en">Introduction to Modern Biology</div><div class="course-title-zh">现代生物学导论</div><span class="course-credits">3 学分</span><div class="desc-en">Genetic foundation of variation, evolution, infectious disease, cancer causes, population growth, human impacts on ecosystems. NOT open to students with Biology 12 credit.</div><div class="prereq"><strong>前置:</strong> None</div></div>
-<div class="course-card"><div class="course-code">BIOL 112</div><div class="course-title-en">Biology of the Cell</div><div class="course-title-zh">细胞生物学</div><span class="course-credits">3 学分</span><div class="desc-en">Cellular and molecular biology: macromolecules, membrane structure, organelles, gene expression, cell division. Required for most BIOL specializations.</div><div class="prereq"><strong>前置:</strong> BIOL 111 + CHEM 12/100/111</div></div>
-<div class="course-card"><div class="course-code">BIOL 121</div><div class="course-title-en">Genetics, Evolution and Ecology</div><div class="course-title-zh">遗传、进化与生态学</div><span class="course-credits">3 学分</span><div class="desc-en">Mendelian genetics, population genetics, natural selection, speciation, ecological interactions. Gateway to genetics and ecology streams.</div><div class="prereq"><strong>前置:</strong> BIOL 111 + (BIOL 11 or 12 or BIOL 111)</div></div>
-<div class="course-card"><div class="course-code">BIOL 140</div><div class="course-title-en">Laboratory Investigation in Biology</div><div class="course-title-zh">生物学实验探究</div><span class="course-credits">2 学分</span><div class="desc-en">Hands-on lab skills: microscopy, experimental design, data collection, scientific writing for biology.</div><div class="prereq"><strong>前置:</strong> BIOL 111</div></div>
-<div class="course-card"><div class="course-code">BIOL 180</div><div class="course-title-en">Think Like a Biologist</div><div class="course-title-zh">像生物学家一样思考</div><span class="course-credits">2 学分</span><div class="desc-en">Scientific reasoning, experimental design, data interpretation in biology. Focus on thinking skills over memorization.</div><div class="prereq"><strong>前置:</strong> BIOL 111</div></div>
+<div class="course-card"><div class="course-code">BIOL 111</div><div class="course-title-en">Introduction to Modern Biology</div><div class="course-title-zh">现代生物学导论</div><span class="course-credits">3 cr</span><div class="desc-en">Genetic basis of variation, evolution, infectious diseases, cancer causes, population growth, human impacts on ecosystems.</div><div class="prereq">No prereq. Not open to students with Biology 12 credit (including AP, IB).</div></div>
+<div class="course-card"><div class="course-code">BIOL 112</div><div class="course-title-en">Biology of the Cell</div><div class="course-title-zh">细胞生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Cellular and molecular biology using bacterial and eukaryotic examples. Required for most BIOL specializations.</div><div class="prereq">CHEM 12/100/110/111 + BIOL 11/12/111.</div></div>
+<div class="course-card"><div class="course-code">BIOL 121</div><div class="course-title-en">Genetics, Evolution and Ecology</div><div class="course-title-zh">遗传、进化与生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Storage and transmission of genetic variation; origin and evolution of species; ecological interactions. Credit exclusion: BIOL 344.</div><div class="prereq">BIOL 11/12/111.</div></div>
+<div class="course-card"><div class="course-code">BIOL 140</div><div class="course-title-en">Laboratory Investigations in Life Science</div><div class="course-title-zh">生命科学实验探究</div><span class="course-credits">2 cr</span><div class="desc-en">Guided experimental investigations of biological questions. Hands-on lab skills.</div><div class="prereq">BIOL 11/12/111.</div></div>
+<div class="course-card"><div class="course-code">BIOL 153</div><div class="course-title-en">Human Biology: Anatomy and Physiology</div><div class="course-title-zh">人体生物学：解剖与生理</div><span class="course-credits">8 cr</span><div class="desc-en">Human body anatomy and physiology. Lab experiments on organ physiology and general anatomy. Not eligible for Cr/D/F.</div><div class="prereq">CHEM 12/100 + BIOL 11/12/111.</div></div>
+<div class="course-card"><div class="course-code">BIOL 155</div><div class="course-title-en">Human Biology: Physiology and Introductory Anatomy</div><div class="course-title-zh">人体生物学：生理与解剖导论</div><span class="course-credits">6 cr</span><div class="desc-en">Principles of biology with reference to human body (physiology and introductory anatomy).</div><div class="prereq">CHEM 12/100 + BIOL 11/12/111.</div></div>
+<div class="course-card"><div class="course-code">BIOL 180</div><div class="course-title-en">Thinking Like a Life Scientist</div><div class="course-title-zh">像生命科学家一样思考</div><span class="course-credits">2 cr</span><div class="desc-en">Science as a process, skills of scientists, exploration of biological challenges with practicing UBC scientists.</div><div class="prereq">BIOL 11/12/111.</div></div>
 </div>
 </div>
 
-<!-- ====== 200 LEVEL ====== -->
+<!-- 200 LEVEL -->
 <div class="year-section" id="sec-200">
 <div class="flow-box"><h3>200-Level Core Chain</h3><div class="mermaid">
 graph TD
-  A["BIOL 112"] --> B["BIOL 200<br/>Cell Biology 3cr"]
-  B --> C["BIOL 201<br/>Intro Biochem 3cr"]
-  B --> D["BIOL 234<br/>Genetics 3cr"]
-  B --> E["BIOL 260<br/>Physiology 3cr"]
-  C --> F["BIOC 202<br/>Medical Biochem"]
-  B --> G["MICB 202<br/>Immunology"]
-  B --> H["BIOL 371<br/>Neurobiology I"]
-  D --> I["BIOL 335<br/>Molecular Genetics"]
+  A["BIOL 112"] --> B["BIOL 200<br/>Cell Biology"]
+  B --> C["BIOL 201<br/>Intro Biochemistry"]
+  B --> D["BIOL 234<br/>Fundamentals of Genetics"]
+  B --> E["BIOL 260<br/>Fundamentals of Physiology"]
+  C["BIOL 121"] --> F["BIOL 203<br/>Euk. Microbiology"]
+  C --> G["BIOL 204<br/>Vertebrate Structure"]
+  C --> H["BIOL 205<br/>Invertebrate Zoology"]
+  C --> I["BIOL 230<br/>Fundamentals of Ecology"]
+  C --> J["BIOL 209<br/>Algae/Fungi"]
+  C --> K["BIOL 210<br/>Vascular Plants"]
+  D["BIOL 112+121"] --> L["BIOL 233<br/>Genetics for Life"]
 </div></div>
-
+<p class="level-count">11 courses at 200-level</p>
 <div class="course-grid">
-<div class="course-card"><div class="course-code">BIOL 200</div><div class="course-title-en">Fundamentals of Cell Biology</div><div class="course-title-zh">细胞生物学基础</div><span class="course-credits">3 学分</span><div class="desc-en">Membrane models, organelles, gene-to-protein, endomembrane system, secretion, endocytosis, transport, cytoskeleton, cell motility. Gateway to ALL upper-level BIOL.</div><div class="prereq"><strong>前置:</strong> BIOL 112 + CHEM 123/130</div></div>
-<div class="course-card"><div class="course-code">BIOL 201</div><div class="course-title-en">Introduction to Biochemistry</div><div class="course-title-zh">生物化学导论</div><span class="course-credits">3 学分</span><div class="desc-en">Protein structure/enzyme kinetics, metabolic pathways, bioenergetics. Credit exclusion with BIOC 202/203.</div><div class="prereq"><strong>前置:</strong> BIOL 200 + CHEM 233/260</div></div>
-<div class="course-card"><div class="course-code">BIOL 234</div><div class="course-title-en">Fundamentals of Genetics</div><div class="course-title-zh">遗传学基础</div><span class="course-credits">3 学分</span><div class="desc-en">Chromosomal basis of inheritance, linkage, molecular genetics, gene regulation, population genetics.</div><div class="prereq"><strong>前置:</strong> BIOL 121 + BIOL 200</div></div>
-<div class="course-card"><div class="course-code">BIOL 260</div><div class="course-title-en">Fundamentals of Physiology</div><div class="course-title-zh">生理学基础</div><span class="course-credits">3 学分</span><div class="desc-en">Animal physiology: nervous system, muscle, cardiovascular, respiratory, renal, endocrine systems.</div><div class="prereq"><strong>前置:</strong> BIOL 200</div></div>
+<div class="course-card"><div class="course-code">BIOL 200</div><div class="course-title-en">Fundamentals of Cell Biology</div><div class="course-title-zh">细胞生物学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Membrane models, organelles, gene-to-protein, endomembrane system, secretion, endocytosis, transport, cytoskeleton, cell motility. Gateway to ALL upper-level BIOL.</div><div class="prereq">BIOL 112 + CHEM 123/130; or SCIE 001; or 8cr BIOL + 6cr CHEM transfer; or BIOL 112/121 + CHEM 203/223 coreq.</div></div>
+<div class="course-card"><div class="course-code">BIOL 201</div><div class="course-title-en">Introduction to Biochemistry</div><div class="course-title-zh">生物化学导论</div><span class="course-credits">3 cr</span><div class="desc-en">Biological molecules, protein structure and enzyme action, energy transfer, central metabolic pathways and regulation. Credit exclusion: BIOC 202/203.</div><div class="prereq">BIOL 200 + CHEM 233/260; or BIOL 200 + CHEM 213/204 coreq; or CHEM 313/330 coreq.</div></div>
+<div class="course-card"><div class="course-code">BIOL 203</div><div class="course-title-en">Eukaryotic Microbiology</div><div class="course-title-zh">真核微生物学</div><span class="course-credits">4 cr</span><div class="desc-en">Origin and diversity of protists at cellular and genomic levels; role of endosymbiosis in evolution.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 204</div><div class="course-title-en">Vertebrate Structure and Function</div><div class="course-title-zh">脊椎动物结构与功能</div><span class="course-credits">4 cr</span><div class="desc-en">Introduction to vertebrate phyla and their evolution; comparative study with dissection of representative forms.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 205</div><div class="course-title-en">Comparative Invertebrate Zoology</div><div class="course-title-zh">比较无脊椎动物学</div><span class="course-credits">4 cr</span><div class="desc-en">Unity, diversity and evolutionary history of invertebrates.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 209</div><div class="course-title-en">Biodiversity of Algae, Fungi and Bryophytes</div><div class="course-title-zh">藻类、真菌与苔藓多样性</div><span class="course-credits">4 cr</span><div class="desc-en">Diversity, ecology, cell biology and evolutionary origins of multicellular eukaryotes through mosses, fungi, slime molds, and algae.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 210</div><div class="course-title-en">Vascular Plants</div><div class="course-title-zh">维管植物</div><span class="course-credits">4 cr</span><div class="desc-en">Comparative study of pteridophytes, gymnosperms and angiosperms integrating form, function and ecology. Equivalent: APBI 210.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 230</div><div class="course-title-en">Fundamentals of Ecology</div><div class="course-title-zh">生态学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Dynamics of plant and animal populations, structure of ecological communities, functioning of ecosystems.</div><div class="prereq">BIOL 121 or SCIE 001 or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 233</div><div class="course-title-en">Genetics for Life</div><div class="course-title-zh">生活中的遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">How genetic differences determine individual characteristics; how they are inherited, analyzed, and modified.</div><div class="prereq">BIOL 112+121; or SCIE 001; or CHEM 203/223 coreq + BIOL 112/121.</div></div>
+<div class="course-card"><div class="course-code">BIOL 234</div><div class="course-title-en">Fundamentals of Genetics</div><div class="course-title-zh">遗传学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Genotype and phenotype, mechanisms of inheritance, genetic analysis. Gateway to genetics streams.</div><div class="prereq">BIOL 112+121; or SCIE 001; or CHEM 203/223 coreq + BIOL 112/121; or 8cr 1st-year BIOL transfer.</div></div>
+<div class="course-card"><div class="course-code">BIOL 260</div><div class="course-title-en">Fundamentals of Physiology</div><div class="course-title-zh">生理学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Principles of cellular and organismal physiology illustrated with examples from unicellular organisms, plants and animals.</div><div class="prereq">BIOL 112+121; or SCIE 001; or 8cr BIOL + 6cr CHEM transfer.</div></div>
 </div>
 </div>
 
-<!-- ====== 300 LEVEL ====== -->
+<!-- 300 LEVEL - Complete -->
 <div class="year-section" id="sec-300">
 <div class="flow-box"><h3>300-Level Specialization Paths</h3><div class="mermaid">
 graph TD
-  subgraph Neurobiology
-    B200N["BIOL 200"] --> N1["BIOL 371<br/>Neurobiology I 3cr"]
-    N1 --> N2["BIOL 372<br/>Neurobiology II 3cr"]
-  end
-  subgraph Genetics
-    B200G["BIOL 234"] --> G1["BIOL 335<br/>Molecular Genetics 3cr"]
-    G1 --> G2["BIOL 336<br/>Evolutionary Genetics 3cr"]
-  end
-  subgraph Molecular
-    B200M["BIOL 200"] --> M1["BIOL 201<br/>Intro Biochem 3cr"]
-    M1 --> M2["BIOL 361/362/363/364<br/>Physiology series"]
-  end
-  subgraph Computational
-    B200C["BIOL 200"] --> C1["BIOL 300<br/>Biostatistics 3cr"]
-    C1 --> C2["BIOL 301<br/>Biomathematics 3cr"]
-  end
+  B["BIOL 200"] --> N["BIOL 371<br/>Neurobiology I"]
+  N --> N2["BIOL 372<br/>Neurobiology II"]
+  B --> P1["BIOL 361<br/>Neural/Muscle Phys"]
+  B --> P2["BIOL 362<br/>Cellular Dynamics"]
+  B --> M["BIOL 335<br/>Molecular Genetics"]
+  M --> M2["BIOL 338<br/>Intro Genomics"]
+  C["BIOL 234"] --> E["BIOL 336<br/>Evolutionary Biology"]
+  D["BIOL 230"] --> F["BIOL 306<br/>Advanced Ecology"]
+  G["BIOL 121"] --> H["BIOL 300<br/>Biostatistics"]
+  H --> I["BIOL 301<br/>Biomathematics"]
+  J["BIOL 201"] --> K["BIOL 330<br/>Developmental Bio"]
+  B --> L["BIOL 340<br/>Cell Bio Lab"]
+  B --> Q["BIOL 341<br/>Molecular Bio Lab"]
 </div></div>
-
+<p class="level-count">50 courses at 300-level (all listed below)</p>
 <div class="course-grid">
-<div class="course-card"><div class="course-code">BIOL 300</div><div class="course-title-en">Fundamentals of Biostatistics</div><div class="course-title-zh">生物统计学基础</div><span class="course-credits">3 学分</span><div class="desc-en">Statistical methods for biological data: hypothesis testing, ANOVA, regression, experimental design. R-based analysis.</div><div class="prereq"><strong>前置:</strong> BIOL 200 + STAT 200/201/BIOL 300-level</div></div>
-<div class="course-card"><div class="course-code">BIOL 301</div><div class="course-title-en">Biomathematics</div><div class="course-title-zh">生物数学</div><span class="course-credits">3 学分</span><div class="desc-en">Mathematical modeling of biological systems: differential equations, dynamical systems, ecological and evolutionary models.</div><div class="prereq"><strong>前置:</strong> MATH 100-level + BIOL 200</div></div>
-<div class="course-card"><div class="course-code">BIOL 335</div><div class="course-title-en">Molecular Genetics</div><div class="course-title-zh">分子遗传学</div><span class="course-credits">3 学分</span><div class="desc-en">Gene structure, DNA replication, transcription, translation, gene regulation, genomics, recombinant DNA technology.</div><div class="prereq"><strong>前置:</strong> BIOL 234</div></div>
-<div class="course-card"><div class="course-code">BIOL 336</div><div class="course-title-en">Evolutionary Genetics</div><div class="course-title-zh">进化遗传学</div><span class="course-credits">3 学分</span><div class="desc-en">Population genetics theory, molecular evolution, phylogenetics, genome evolution.</div><div class="prereq"><strong>前置:</strong> BIOL 234</div></div>
-<div class="course-card"><div class="course-code">BIOL 371</div><div class="course-title-en">Principles of Neurobiology I</div><div class="course-title-zh">神经生物学原理 I</div><span class="course-credits">3 学分</span><div class="desc-en">Cellular and molecular neuroscience: neurons, synapses, neurotransmitters, action potentials, sensory transduction.</div><div class="prereq"><strong>前置:</strong> BIOL 200 + (BIOL 260 或 NSCI 200)</div></div>
-<div class="course-card"><div class="course-code">BIOL 372</div><div class="course-title-en">Principles of Neurobiology II</div><div class="course-title-zh">神经生物学原理 II</div><span class="course-credits">3 学分</span><div class="desc-en">Systems neuroscience: neural circuits, plasticity, learning &amp; memory, motor systems, sensory processing.</div><div class="prereq"><strong>前置:</strong> BIOL 371</div></div>
+<div class="course-card"><div class="course-code">BIOL 300</div><div class="course-title-en">Fundamentals of Biostatistics</div><div class="course-title-zh">生物统计学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Statistical procedures for biological research: estimation, hypothesis testing, goodness of fit, ANOVA, regression. R-based.</div><div class="prereq">BIOL 121 or SCIE 001. Coreq: MATH 100/110/180 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 301</div><div class="course-title-en">Biomathematics</div><div class="course-title-zh">生物数学</div><span class="course-credits">3 cr</span><div class="desc-en">Mathematics in biological sciences; experimental design and modelling of biological processes.</div><div class="prereq">Recommended coreq: BIOL 300 or STAT 200.</div></div>
+<div class="course-card"><div class="course-code">BIOL 302</div><div class="course-title-en">Biodiversity, Human and Planetary Health</div><div class="course-title-zh">生物多样性与人类/地球健康</div><span class="course-credits">3 cr</span><div class="desc-en">Effects of biodiversity on human health, from human microbiome to ecosystem.</div><div class="prereq">BIOL 111/121/GEOS 207/SCIE 001 + 3rd-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 303</div><div class="course-title-en">Green Planet: Biology and History of Plants that Changed Civilizations</div><div class="course-title-zh">绿色星球：改变文明的植物</div><span class="course-credits">3 cr</span><div class="desc-en">Biological, cultural, and societal significance of staple crops selected as foods, medicines or raw materials.</div><div class="prereq">3rd-year standing or higher.</div></div>
+<div class="course-card"><div class="course-code">BIOL 306</div><div class="course-title-en">Advanced Ecology</div><div class="course-title-zh">高级生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Ecology of populations, communities and ecosystems. Tests of ecological theory with experiments and environmental applications.</div><div class="prereq">BIOL 230.</div></div>
+<div class="course-card"><div class="course-code">BIOL 307</div><div class="course-title-en">Natural History Collections and Biodiversity Science</div><div class="course-title-zh">自然历史收藏与生物多样性科学</div><span class="course-credits">3 cr</span><div class="desc-en">Biodiversity and specimen-based science; theory and best practices for creating, curating and preserving natural history collections.</div><div class="prereq">3rd-year standing or higher.</div></div>
+<div class="course-card"><div class="course-code">BIOL 310</div><div class="course-title-en">Introduction to Animal Behaviour</div><div class="course-title-zh">动物行为导论</div><span class="course-credits">3 cr</span><div class="desc-en">Animal behavior from ecological and evolutionary perspective; methods to study behaviour and test adaptive significance.</div><div class="prereq">BIOL 121 or SCIE 001 + 3rd-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 311</div><div class="course-title-en">Experimental Methods in Animal Behaviour</div><div class="course-title-zh">动物行为实验方法</div><span class="course-credits">3 cr</span><div class="desc-en">Designing, conducting, and analyzing studies of animal behaviour, with emphasis on field-based methods.</div><div class="prereq">BIOL 300 or STAT 200. Coreq: BIOL 310.</div></div>
+<div class="course-card"><div class="course-code">BIOL 314</div><div class="course-title-en">Elements of Biodiversity</div><div class="course-title-zh">生物多样性要素</div><span class="course-credits">3 cr</span><div class="desc-en">Units of biodiversity from genes to ecosystems, how they are structured in space, and importance to human well-being.</div><div class="prereq">APBI 260/BIOL 230/FRST 201/GEOB 207/GEOS 207. Equivalent: CONS 314.</div></div>
+<div class="course-card"><div class="course-code">BIOL 317</div><div class="course-title-en">Weed Science</div><div class="course-title-zh">杂草科学</div><span class="course-credits">4 cr</span><div class="desc-en">Importance, identification, dissemination and biology of weeds; preventative, cultural, biological and chemical control methods.</div><div class="prereq">No prereq listed. Equivalent: APBI 328.</div></div>
+<div class="course-card"><div class="course-code">BIOL 320</div><div class="course-title-en">Survey of Algae</div><div class="course-title-zh">藻类调查</div><span class="course-credits">4 cr</span><div class="desc-en">A survey of the algae considering their morphology, life history, classification, and ecology.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 321</div><div class="course-title-en">Morphology and Evolution of Bryophytes</div><div class="course-title-zh">苔藓植物形态与进化</div><span class="course-credits">3 cr</span><div class="desc-en">Evolution, taxonomy and morphology of mosses, liverworts and hornworts with emphasis on living plants.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 322</div><div class="course-title-en">Structure and Evolution of Ferns and Fern-allies</div><div class="course-title-zh">蕨类结构与进化</div><span class="course-credits">3 cr</span><div class="desc-en">Anatomy, morphology and relationships of ferns and fern-allies with assessment of fossil and extant taxa.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 323</div><div class="course-title-en">Structure and Reproduction of Fungi</div><div class="course-title-zh">真菌结构与繁殖</div><span class="course-credits">3 cr</span><div class="desc-en">Evolutionary diversity of fungi as shown by their morphology and reproductive biology.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 324</div><div class="course-title-en">Introduction to Seed Plant Taxonomy</div><div class="course-title-zh">种子植物分类学导论</div><span class="course-credits">3 cr</span><div class="desc-en">Seed plant taxonomy emphasizing descriptive morphology and identification. Plant collection required. Equivalent: APBI 324.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 325</div><div class="course-title-en">Introduction to Animal Mechanics and Locomotion</div><div class="course-title-zh">动物力学与运动导论</div><span class="course-credits">3 cr</span><div class="desc-en">Comparative aspects of functional design of skeletal systems and mechanics of swimming, flying and terrestrial locomotion.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 326</div><div class="course-title-en">Experimental Biology of Invertebrates</div><div class="course-title-zh">无脊椎动物实验生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Behaviour and ecology of invertebrates as revealed by hands-on experiments in laboratory and field. Marine emphasis.</div><div class="prereq">BIOL 205. Coreq: STAT 200 or BIOL 300.</div></div>
+<div class="course-card"><div class="course-code">BIOL 327</div><div class="course-title-en">Introduction to Entomology</div><div class="course-title-zh">昆虫学导论</div><span class="course-credits">3 cr</span><div class="desc-en">Survey of the structure, classification and biology of insects; ecology, life-histories and insect-plant relations. Equivalent: APBI 327.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 328</div><div class="course-title-en">Ecology and Evolution of Parasites</div><div class="course-title-zh">寄生虫生态与进化</div><span class="course-credits">3 cr</span><div class="desc-en">Morphology, life histories, ecology and evolution of parasites (and infectious agents) infecting humans and animals.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 329</div><div class="course-title-en">Cell Receptor Signaling, Communication and Regulation</div><div class="course-title-zh">细胞受体信号、通讯与调控</div><span class="course-credits">3 cr</span><div class="desc-en">How cells react to external signals and how responses are regulated. Experimental approaches examined. Not eligible for Cr/D/F.</div><div class="prereq">BIOL 200.</div></div>
+<div class="course-card"><div class="course-code">BIOL 330</div><div class="course-title-en">Developmental Biology (Lecture)</div><div class="course-title-zh">发育生物学（讲座）</div><span class="course-credits">3 cr</span><div class="desc-en">Animal development and its underlying causal principles; introductory embryology.</div><div class="prereq">BIOL 201; or BIOL 200+260+(BIOL 233 or 234).</div></div>
+<div class="course-card"><div class="course-code">BIOL 331</div><div class="course-title-en">Developmental Biology</div><div class="course-title-zh">发育生物学</div><span class="course-credits">5 cr</span><div class="desc-en">Animal development and its underlying causal principles; introductory embryology (lecture + lab).</div><div class="prereq">BIOL 201; or BIOL 200+260+(BIOL 233 or 234).</div></div>
+<div class="course-card"><div class="course-code">BIOL 332</div><div class="course-title-en">Protistology</div><div class="course-title-zh">原生生物学</div><span class="course-credits">4 cr</span><div class="desc-en">Cell biology, ecology, and evolution of protists; origins of multicellularity; role in micropaleontology, parasitology, oceanography.</div><div class="prereq">BIOL 200.</div></div>
+<div class="course-card"><div class="course-code">BIOL 335</div><div class="course-title-en">Molecular Genetics</div><div class="course-title-zh">分子遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Isolation and identification of genes, analysis of gene structure; gene expression and regulation in prokaryotes and eukaryotes; developmental genetics.</div><div class="prereq">BIOL 233/234, MICB 322, or FRST 302.</div></div>
+<div class="course-card"><div class="course-code">BIOL 336</div><div class="course-title-en">Fundamentals of Evolutionary Biology</div><div class="course-title-zh">进化生物学基础</div><span class="course-credits">3 cr</span><div class="desc-en">Natural selection; population genetics, quantitative genetics and systematics; classical and molecular approaches to evolution.</div><div class="prereq">BIOL 233 or 234.</div></div>
+<div class="course-card"><div class="course-code">BIOL 337</div><div class="course-title-en">Introductory Genetics Laboratory</div><div class="course-title-zh">遗传学实验导论</div><span class="course-credits">3 cr</span><div class="desc-en">Laboratory course demonstrating fundamental principles of inheritance: Mendel's Laws, sex-linkage, mapping, mutagenesis, chromosome structure.</div><div class="prereq">BIOL 200. Coreq: BIOL 233 or 234.</div></div>
+<div class="course-card"><div class="course-code">BIOL 338</div><div class="course-title-en">Introduction to Genomics</div><div class="course-title-zh">基因组学导论</div><span class="course-credits">4 cr</span><div class="desc-en">An introduction to genome biology and applications of genomics.</div><div class="prereq">BIOL 234/233 or FRST 302.</div></div>
+<div class="course-card"><div class="course-code">BIOL 340</div><div class="course-title-en">Introductory Cell Biology Laboratory</div><div class="course-title-zh">细胞生物学实验导论</div><span class="course-credits">3 cr</span><div class="desc-en">Cell biology experiments using unicellular eukaryotes or prokaryotes with emphasis on microscopy and cell biology techniques.</div><div class="prereq">BIOL 200 + 3rd-year Science standing + BIOL 180/140 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 341</div><div class="course-title-en">Introductory Molecular Biology Laboratory</div><div class="course-title-zh">分子生物学实验导论</div><span class="course-credits">3 cr</span><div class="desc-en">Designing and conducting molecular biology experiments using bioinformatics recombinant DNA techniques.</div><div class="prereq">BIOL 200 + 3rd-year Science standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 342</div><div class="course-title-en">Integrative Biology Laboratory</div><div class="course-title-zh">整合生物学实验</div><span class="course-credits">2 cr</span><div class="desc-en">Field-based and laboratory-based investigation of organisms.</div><div class="prereq">3rd-year standing in Combined Major Science + BIOL 121+180/140 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 343</div><div class="course-title-en">Plants and Peoples</div><div class="course-title-zh">植物与人类</div><span class="course-credits">3 cr</span><div class="desc-en">Interactions of plants and human societies: role of people in origin, evolution and dispersal of food, drug and economic plants.</div><div class="prereq">No prereq listed.</div></div>
+<div class="course-card"><div class="course-code">BIOL 344</div><div class="course-title-en">Human Heredity and Evolution</div><div class="course-title-zh">人类遗传与进化</div><span class="course-credits">3 cr</span><div class="desc-en">Relates genetic and evolutionary concepts to humans. Primarily for upper-level Arts students. Credit exclusion with BIOL 121.</div><div class="prereq">No prereq. Not open to Life Science students.</div></div>
+<div class="course-card"><div class="course-code">BIOL 345</div><div class="course-title-en">Human Ecology</div><div class="course-title-zh">人类生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Basics of ecology, focussing on observations of the natural world. Group project connects research, awareness and practical uses.</div><div class="prereq">No prereq. Not for Life Science credit.</div></div>
+<div class="course-card"><div class="course-code">BIOL 346</div><div class="course-title-en">Microbes and Society</div><div class="course-title-zh">微生物与社会</div><span class="course-credits">3 cr</span><div class="desc-en">Elementary molecular biology primarily for Arts students. Historical development of discoveries in molecular biology.</div><div class="prereq">No prereq. Not for Life Science credit.</div></div>
+<div class="course-card"><div class="course-code">BIOL 347</div><div class="course-title-en">Principles and Methodology in Biological Research</div><div class="course-title-zh">生物学研究原理与方法</div><span class="course-credits">3 cr</span><div class="desc-en">Contemporary research in Botany and Zoology; history and methodology of scientific discovery; seminars. Restricted to Honours Biology.</div><div class="prereq">Restricted to Honours students in Biology. Not with BIOL 449.</div></div>
+<div class="course-card"><div class="course-code">BIOL 348</div><div class="course-title-en">Biology of Cannabis</div><div class="course-title-zh">大麻生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Biological aspects of cannabis: structure and function, photosynthesis, plant growth, metabolites, neuroscience and endocannabinoid system.</div><div class="prereq">3rd-year standing or higher.</div></div>
+<div class="course-card"><div class="course-code">BIOL 350</div><div class="course-title-en">Darwinian Medicine</div><div class="course-title-zh">达尔文医学</div><span class="course-credits">3 cr</span><div class="desc-en">Using Darwinian natural selection to explore explanations of infectious diseases, allergies, cancer, mental illness. Equivalent: ISCI 350.</div><div class="prereq">3rd-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 351</div><div class="course-title-en">Plant Physiology I</div><div class="course-title-zh">植物生理学 I</div><span class="course-credits">4 cr</span><div class="desc-en">Mechanisms and regulation of functional processes: assimilation, transport and utilization of water, nutrients and carbon by plants.</div><div class="prereq">BIOL 121 + CHEM 123/130; or SCIE 001. Restricted to Majors/Honours Biology. Equivalent: APBI 351, FRST 311.</div></div>
+<div class="course-card"><div class="course-code">BIOL 352</div><div class="course-title-en">Plant Physiology II: Plant Development</div><div class="course-title-zh">植物生理学 II：植物发育</div><span class="course-credits">3 cr</span><div class="desc-en">Growth and development: cell division, tissue culture, meristems, differentiation. CHEM 233 recommended.</div><div class="prereq">BIOL 200 + (BIOL 233 or 234); or FRST 302.</div></div>
+<div class="course-card"><div class="course-code">BIOL 361</div><div class="course-title-en">Neural and Muscular Physiology</div><div class="course-title-zh">神经与肌肉生理学</div><span class="course-credits">3 cr</span><div class="desc-en">Excitable membranes, neural signaling and transmission; transduction and coding of sensory information; muscle contraction.</div><div class="prereq">BIOL 200.</div></div>
+<div class="course-card"><div class="course-code">BIOL 362</div><div class="course-title-en">Cellular Dynamics</div><div class="course-title-zh">细胞动力学</div><span class="course-credits">3 cr</span><div class="desc-en">The cytoskeleton, cell dynamics, and regulation of cellular activities.</div><div class="prereq">BIOL 200 + (APBI 312/351/BIOL 260/351/352/361 or FRST 311).</div></div>
+<div class="course-card"><div class="course-code">BIOL 363</div><div class="course-title-en">Laboratory in Animal Physiology</div><div class="course-title-zh">动物生理学实验</div><span class="course-credits">2 cr</span><div class="desc-en">Experimental studies in animal physiology.</div><div class="prereq">BIOL 204 or BIOL 260.</div></div>
+<div class="course-card"><div class="course-code">BIOL 364</div><div class="course-title-en">Comparative Cardiovascular, Respiratory and Osmoregulatory Physiology</div><div class="course-title-zh">比较心血管/呼吸/渗透调节生理学</div><span class="course-credits">3 cr</span><div class="desc-en">Cardiovascular, respiratory, and osmoregulatory physiology. Equivalent: APBI 311.</div><div class="prereq">BIOL 204 + (BIOL 260 or BIOL 361).</div></div>
+<div class="course-card"><div class="course-code">BIOL 370</div><div class="course-title-en">Principles of Muscle Physiology and Energetics</div><div class="course-title-zh">肌肉生理与能量学原理</div><span class="course-credits">3 cr</span><div class="desc-en">Structure and function of muscular system, metabolism and energetics from comparative perspective across vertebrates and invertebrates.</div><div class="prereq">BIOL 260 + (BIOL 200/201/BIOC 202/203).</div></div>
+<div class="course-card"><div class="course-code">BIOL 371</div><div class="course-title-en">Principles of Neurobiology I</div><div class="course-title-zh">神经生物学原理 I</div><span class="course-credits">3 cr</span><div class="desc-en">Structure and function of nervous system, excitable membranes, and synaptic signaling using vertebrate and invertebrate species.</div><div class="prereq">BIOL 200 + (BIOL 260/NSCI 200/PSYC 270/271/304/CAPS 301).</div></div>
+<div class="course-card"><div class="course-code">BIOL 372</div><div class="course-title-en">Principles of Neurobiology II</div><div class="course-title-zh">神经生物学原理 II</div><span class="course-credits">3 cr</span><div class="desc-en">Neural systems underlying sensation, action, and complex behaviours using vertebrate and invertebrate species.</div><div class="prereq">BIOL 371.</div></div>
+<div class="course-card"><div class="course-code">BIOL 398</div><div class="course-title-en">Co-operative Work Placement I</div><div class="course-title-zh">合作实习 I</div><span class="course-credits">3 cr</span><div class="desc-en">Work experience in an industrial setting, taken during Winter Session Term 2 of third-year. Not eligible for Cr/D/F.</div><div class="prereq">Restricted to Biology Co-op students.</div></div>
+<div class="course-card"><div class="course-code">BIOL 399</div><div class="course-title-en">Co-operative Work Placement II</div><div class="course-title-zh">合作实习 II</div><span class="course-credits">3 cr</span><div class="desc-en">Work experience in industrial research setting, taken during Summer Session following third-year. Not eligible for Cr/D/F.</div><div class="prereq">BIOL 398.</div></div>
 </div>
 </div>
 
-<!-- ====== 400 LEVEL ====== -->
+<!-- 400 LEVEL - Complete -->
 <div class="year-section" id="sec-400">
-<div class="flow-box"><h3>400-Level Advanced Specializations</h3><div class="mermaid">
-graph LR
-  subgraph Neuro
-    N371["BIOL 371/372"] --> NA["451 Comp Neuro<br/>458 Dev Neuro<br/>459 Sensory/Motor<br/>460 Vision"]
-  end
-  subgraph Genetics_Genomics
-    G335["BIOL 335"] --> GA["425 Comp Genomics<br/>426 Genome Evolution<br/>428 Epigenetics"]
-  end
-  subgraph Molecular_Cell
-    M200["BIOL 200+201"] --> MA["403 Cell Signaling<br/>404 Protein Trafficking<br/>408 Stem Cells"]
-  end
+<div class="flow-box"><h3>400-Level Advanced Courses</h3><div class="mermaid">
+graph TD
+  N2["BIOL 372"] --> N400["451 Comp Neuro<br/>455 Comp Neuro<br/>458 Dev Neuro<br/>459 Sensory/Motor<br/>460 Vision"]
+  M["BIOL 335"] --> G400["425 Biomech<br/>430 Genome Evol<br/>431 Evol Cell Bio<br/>433 Plant Genetics<br/>436 Funct Genomics<br/>440 Plant Genomics<br/>463 Gene Reg in Dev"]
+  E["BIOL 336"] --> EV400["401 Evol Dynamics<br/>415 Evol Plants<br/>417 Phylogenetics<br/>418 Evol Ecology<br/>434 Pop Genetics"]
+  P["BIOL 361/364"] --> PH400["450 Molecular Adapt<br/>453 Insect Phys<br/>454 Comp Animal Phys<br/>456 Comp Endocrinology<br/>457 Comp Env Phys"]
+  D["BIOL 230"] --> EC400["402 Aquatic Ecol<br/>403 Microbial Ecol<br/>404 Ecol Methodology<br/>406 Plant Ecol<br/>408 Applied Ecol<br/>409 Field Course"]
 </div></div>
-
+<p class="level-count">52 courses at 400-level (all listed below)</p>
 <div class="course-grid">
-<div class="course-card"><div class="course-code">BIOL 425</div><div class="course-title-en">Computational Genomics</div><div class="course-title-zh">计算基因组学</div><span class="course-credits">3 学分</span><div class="desc-en">Bioinformatics approaches to genome analysis: sequence alignment, assembly, annotation, comparative genomics, RNA-seq.</div><div class="prereq"><strong>前置:</strong> BIOL 335 or CPSC 301</div></div>
-<div class="course-card"><div class="course-code">BIOL 426</div><div class="course-title-en">Genome Evolution</div><div class="course-title-zh">基因组进化</div><span class="course-credits">3 学分</span><div class="desc-en">How genomes evolve: gene duplication, transposable elements, horizontal transfer, genome size evolution.</div><div class="prereq"><strong>前置:</strong> BIOL 336</div></div>
-<div class="course-card"><div class="course-code">BIOL 428</div><div class="course-title-en">Epigenetics</div><div class="course-title-zh">表观遗传学</div><span class="course-credits">3 学分</span><div class="desc-en">Mechanisms of gene regulation beyond DNA sequence: chromatin modification, DNA methylation, non-coding RNAs.</div><div class="prereq"><strong>前置:</strong> BIOL 335</div></div>
-<div class="course-card"><div class="course-code">BIOL 451</div><div class="course-title-en">Comparative Neurobiology</div><div class="course-title-zh">比较神经生物学</div><span class="course-credits">3 学分</span><div class="desc-en">Evolution of nervous systems across species. Comparing neural circuits and behaviors in different organisms.</div><div class="prereq"><strong>前置:</strong> BIOL 371 or BIOL 372 or PSYC 304/370</div></div>
-<div class="course-card"><div class="course-code">BIOL 458</div><div class="course-title-en">Developmental Neurobiology</div><div class="course-title-zh">发育神经生物学</div><span class="course-credits">3 学分</span><div class="desc-en">How the nervous system develops: neural induction, axon guidance, synapse formation, neurotrophic factors.</div><div class="prereq"><strong>前置:</strong> None listed (check calendar)</div></div>
-<div class="course-card"><div class="course-code">BIOL 459</div><div class="course-title-en">Neurobiology of Sensory and Motor Systems</div><div class="course-title-zh">感觉与运动神经生物学</div><span class="course-credits">3 学分</span><div class="desc-en">How sensory information is encoded and how motor commands are generated. Visual, auditory, somatosensory systems.</div><div class="prereq"><strong>前置:</strong> BIOL 372 or PSYC 304/370</div></div>
-<div class="course-card"><div class="course-code">BIOL 460</div><div class="course-title-en">Neurobiology of Vision</div><div class="course-title-zh">视觉神经生物学</div><span class="course-credits">3 学分</span><div class="desc-en">Visual system from retina to cortex. Phototransduction, receptive fields, color vision, motion processing.</div><div class="prereq"><strong>前置:</strong> BIOL 372 or PSYC 304/370</div></div>
-<div class="course-card"><div class="course-code">BIOL 463</div><div class="course-title-en">Gene Regulation in Development</div><div class="course-title-zh">发育基因调控</div><span class="course-credits">3 学分</span><div class="desc-en">Transcriptional control of embryonic development. HOX genes, signaling pathways, stem cell regulation.</div><div class="prereq"><strong>前置:</strong> BIOL 335</div></div>
-<div class="course-card"><div class="course-code">BIOL 464</div><div class="course-title-en">Animal Developmental Genetics</div><div class="course-title-zh">动物发育遗传学</div><span class="course-credits">3 学分</span><div class="desc-en">Genetic analysis of development in model organisms. Drosophila, C. elegans, zebrafish, mouse.</div><div class="prereq"><strong>前置:</strong> BIOL 335</div></div>
-<div class="course-card"><div class="course-code">BIOL 465</div><div class="course-title-en">Diversity of Biological Lab Research</div><div class="course-title-zh">生物学实验研究实践</div><span class="course-credits">3 学分</span><div class="desc-en">Laboratory research experience in a biology lab. Independent project work under faculty supervision.</div><div class="prereq"><strong>前置:</strong> Instructor permission</div></div>
+<div class="course-card"><div class="course-code">BIOL 401</div><div class="course-title-en">Theory of Evolutionary Dynamics</div><div class="course-title-zh">进化动力学理论</div><span class="course-credits">3 cr</span><div class="desc-en">Evolution as a dynamical system based on ecological interactions. Adaptive dynamics and evolutionary game theory.</div><div class="prereq">BIOL 301 + MATH 101/103/105/121. Credit exclusion: BIOL 560. Not eligible for Cr/D/F.</div></div>
+<div class="course-card"><div class="course-code">BIOL 402</div><div class="course-title-en">Aquatic Ecology</div><div class="course-title-zh">水生生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Theoretical and applied limnology; ecology of inland water organisms in relation to physical, chemical and biological factors.</div><div class="prereq">BIOL 230 + (BIOL 300 or STAT 200). Weekend field trip required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 403</div><div class="course-title-en">Microbial Ecology</div><div class="course-title-zh">微生物生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Theoretical and applied ecology of microbes. Focus on microbial symbionts of animals, plants and seaweeds.</div><div class="prereq">BIOL 121/SCIE 001/BIOL 230 + BIOL 300/STAT 200 + 4th-year standing. Not eligible for Cr/D/F.</div></div>
+<div class="course-card"><div class="course-code">BIOL 404</div><div class="course-title-en">Ecological Methodology</div><div class="course-title-zh">生态学方法论</div><span class="course-credits">3 cr</span><div class="desc-en">Design, execution, and analysis of ecological surveys and experiments. Practical field methods for estimating population metrics.</div><div class="prereq">BIOL 230 + (BIOL 300 or STAT 200).</div></div>
+<div class="course-card"><div class="course-code">BIOL 406</div><div class="course-title-en">Plant Ecology I</div><div class="course-title-zh">植物生态学 I</div><span class="course-credits">4 cr</span><div class="desc-en">Plant community ecology including major approaches to sampling, analyzing and interpreting vegetation patterns.</div><div class="prereq">BIOL 230. BIOL 324 recommended.</div></div>
+<div class="course-card"><div class="course-code">BIOL 408</div><div class="course-title-en">Principles of Applied Ecology</div><div class="course-title-zh">应用生态学原理</div><span class="course-credits">6 cr</span><div class="desc-en">Principles of animal and community ecology applicable to the management of animal resources.</div><div class="prereq">BIOL 300.</div></div>
+<div class="course-card"><div class="course-code">BIOL 409</div><div class="course-title-en">Field Course in Ecology</div><div class="course-title-zh">生态学野外课程</div><span class="course-credits">3 cr</span><div class="desc-en">Two-week intensive course in field methods used in ecology. Fieldwork normally in summer. Fee assessed.</div><div class="prereq">BIOL 230 + (BIOL 300 or STAT 200). BIOL 306 recommended. Pre-registration required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 410</div><div class="course-title-en">Current Topics in Animal Behaviour</div><div class="course-title-zh">动物行为学前沿</div><span class="course-credits">3 cr</span><div class="desc-en">Lectures and seminar discussions on selected topics in animal behaviour.</div><div class="prereq">BIOL 310.</div></div>
+<div class="course-card"><div class="course-code">BIOL 411</div><div class="course-title-en">Insect Ecology</div><div class="course-title-zh">昆虫生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Behavioural, population and community ecology of insects. Insect-plant interactions and application of principles. Equivalent: APBI 427.</div><div class="prereq">BIOL 205/327 or APBI 327.</div></div>
+<div class="course-card"><div class="course-code">BIOL 412</div><div class="course-title-en">Plant Biogeography</div><div class="course-title-zh">植物生物地理学</div><span class="course-credits">3 cr</span><div class="desc-en">Description and interpretation of present and past floristic vegetational patterns. Restricted to 3rd/4th years.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 413</div><div class="course-title-en">Zoogeography</div><div class="course-title-zh">动物地理学</div><span class="course-credits">3 cr</span><div class="desc-en">Role of physical, ecological, and evolutionary processes in determining geographic distribution of animals including humans.</div><div class="prereq">BIOL 121 or SCIE 001. Restricted to 3rd/4th years.</div></div>
+<div class="course-card"><div class="course-code">BIOL 415</div><div class="course-title-en">Evolutionary Processes in Plants</div><div class="course-title-zh">植物进化过程</div><span class="course-credits">3 cr</span><div class="desc-en">Experimental and comparative analysis of evolutionary processes, speciation, and phylogenetic patterns in plants.</div><div class="prereq">BIOL 336.</div></div>
+<div class="course-card"><div class="course-code">BIOL 416</div><div class="course-title-en">Principles of Conservation Biology</div><div class="course-title-zh">保护生物学原理</div><span class="course-credits">3 cr</span><div class="desc-en">Ecological basis of conserving biological diversity and ecosystem services; application of ecological theory to conservation problems.</div><div class="prereq">BIOL 230 or FRST 201.</div></div>
+<div class="course-card"><div class="course-code">BIOL 417</div><div class="course-title-en">Phylogenetic Biology</div><div class="course-title-zh">系统发育生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Biodiversity from an evolutionary perspective. The phylogenetic tree that links all organisms. BIOL 336 recommended.</div><div class="prereq">BIOL 200 + (BIOL 233 or 234).</div></div>
+<div class="course-card"><div class="course-code">BIOL 418</div><div class="course-title-en">Evolutionary Ecology</div><div class="course-title-zh">进化生态学</div><span class="course-credits">3 cr</span><div class="desc-en">Ecological adaptation and evolutionary processes in contemporary populations; natural selection, variation, optimization, foraging theory.</div><div class="prereq">BIOL 336 + BIOL 230.</div></div>
+<div class="course-card"><div class="course-code">BIOL 420</div><div class="course-title-en">Ocean Conservation and Sustainability</div><div class="course-title-zh">海洋保护与可持续发展</div><span class="course-credits">3 cr</span><div class="desc-en">Interdisciplinary conservation course with solutions-oriented approach to marine issues. Not eligible for Cr/D/F.</div><div class="prereq">4th-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 421</div><div class="course-title-en">Plant-Microbe Interactions</div><div class="course-title-zh">植物-微生物互作</div><span class="course-credits">3 cr</span><div class="desc-en">Biology and physiology of selected plant-microbe relationships. Impacts on society. Equivalent: APBI 426.</div><div class="prereq">BIOL 200 + (BIOC 202/203/BIOL 201/233/234/260).</div></div>
+<div class="course-card"><div class="course-code">BIOL 423</div><div class="course-title-en">Plant Stress Ecophysiology</div><div class="course-title-zh">植物胁迫生态生理</div><span class="course-credits">3 cr</span><div class="desc-en">Molecular mechanisms of plant responses to extreme environments.</div><div class="prereq">BIOL 351. BIOL 406 or 407 recommended.</div></div>
+<div class="course-card"><div class="course-code">BIOL 424</div><div class="course-title-en">Tropical Ecology and Conservation</div><div class="course-title-zh">热带生态与保护</div><span class="course-credits">3 cr</span><div class="desc-en">Ecology, function, history and conservation of tropical systems. Ecological and evolutionary principles using tropical landscapes.</div><div class="prereq">BIOL 121/SCIE 001 + (BIOL 230/FRST 201/GEOS 207/GEOB 207).</div></div>
+<div class="course-card"><div class="course-code">BIOL 425</div><div class="course-title-en">Biomechanics</div><div class="course-title-zh">生物力学</div><span class="course-credits">3 cr</span><div class="desc-en">Analytical approach to the study of skeletal mechanics and animal locomotion.</div><div class="prereq">BIOL 325.</div></div>
+<div class="course-card"><div class="course-code">BIOL 426</div><div class="course-title-en">Mammalogy</div><div class="course-title-zh">哺乳动物学</div><span class="course-credits">3 cr</span><div class="desc-en">Natural history, behavioral ecology and conservation of terrestrial mammals.</div><div class="prereq">BIOL 204.</div></div>
+<div class="course-card"><div class="course-code">BIOL 427</div><div class="course-title-en">Ornithology and Herpetology</div><div class="course-title-zh">鸟类学与爬行动物学</div><span class="course-credits">3 cr</span><div class="desc-en">Ecology, evolution, behavior, and conservation of birds, amphibians, and reptiles.</div><div class="prereq">BIOL 121 or SCIE 001.</div></div>
+<div class="course-card"><div class="course-code">BIOL 428</div><div class="course-title-en">Evolutionary Morphology of Marine Invertebrates</div><div class="course-title-zh">海洋无脊椎动物进化形态学</div><span class="course-credits">3 cr</span><div class="desc-en">Comparative analysis of marine invertebrate morphology from a macroevolutionary perspective.</div><div class="prereq">BIOL 205 + 3rd-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 430</div><div class="course-title-en">Genome Evolution</div><div class="course-title-zh">基因组进化</div><span class="course-credits">3 cr</span><div class="desc-en">Integration of molecular genetics and genomics with evolutionary biology. Evolutionary dynamics of genomes.</div><div class="prereq">BIOL 335/336/338 or BIOT 380.</div></div>
+<div class="course-card"><div class="course-code">BIOL 431</div><div class="course-title-en">Evolutionary Cell Biology</div><div class="course-title-zh">进化细胞生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Ultrastructure, biogenesis, and evolution of eukaryotic cells and cell organelles including macromolecular basis.</div><div class="prereq">BIOL 200 + 4th-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 432</div><div class="course-title-en">Research Strategies and Techniques in Cell Biology</div><div class="course-title-zh">细胞生物学研究策略与技术</div><span class="course-credits">3 cr</span><div class="desc-en">Major physiological mechanisms defining eukaryotic cells, explored through visits to UBC research laboratories.</div><div class="prereq">BIOL 200 + (BIOL 233 or 234) + 4th-year standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 433</div><div class="course-title-en">Plant Genetics</div><div class="course-title-zh">植物遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Molecular aspects. Systems and techniques for genetic analysis in plants; isolation and regulation of plant genes.</div><div class="prereq">BIOL 335.</div></div>
+<div class="course-card"><div class="course-code">BIOL 434</div><div class="course-title-en">Population Genetics</div><div class="course-title-zh">群体遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Theoretical and experimental aspects of population and quantitative genetics.</div><div class="prereq">BIOL 336 + (BIOL 200+(BIOL 233/234) or FRST 302).</div></div>
+<div class="course-card"><div class="course-code">BIOL 436</div><div class="course-title-en">Integrated Functional Genomics</div><div class="course-title-zh">整合功能基因组学</div><span class="course-credits">3 cr</span><div class="desc-en">Global transcript, protein, and metabolite profiling technologies and their integration; applications focus on plant functions. Equivalent: FNH 436.</div><div class="prereq">BIOL 335/338 or BIOT 380.</div></div>
+<div class="course-card"><div class="course-code">BIOL 437</div><div class="course-title-en">Laboratory in Animal Cell Molecular Biology</div><div class="course-title-zh">动物细胞分子生物学实验</div><span class="course-credits">3 cr</span><div class="desc-en">Use of recombinant DNA techniques to explore problems in animal developmental biology.</div><div class="prereq">BIOL 331 + BIOL 335 + (BIOL 201/BIOC 202/203).</div></div>
+<div class="course-card"><div class="course-code">BIOL 438</div><div class="course-title-en">Zoological Physics</div><div class="course-title-zh">动物物理学</div><span class="course-credits">3 cr</span><div class="desc-en">Animal systems from a physicist's perspective: sensory systems, energy budgets, locomotion, internal flows. Equivalent: PHYS 438.</div><div class="prereq">PHYS 101/106/107/117/131/157 or SCIE 001. BIOL 325 recommended.</div></div>
+<div class="course-card"><div class="course-code">BIOL 439</div><div class="course-title-en">Advanced Microscopy Techniques</div><div class="course-title-zh">高级显微技术</div><span class="course-credits">3 cr</span><div class="desc-en">Microscopy techniques in biological research. Principles, applications and hands-on training of optical and electron microscopy.</div><div class="prereq">BIOL 200. Coreq: BIOL 448/449 + 4th-year standing. Not eligible for Cr/D/F.</div></div>
+<div class="course-card"><div class="course-code">BIOL 440</div><div class="course-title-en">Plant Genomics</div><div class="course-title-zh">植物基因组学</div><span class="course-credits">3 cr</span><div class="desc-en">Concepts, principles, applications, and recent discoveries in genome structure, genetics, and comparative genomics in plants. Equivalent: APBI 440.</div><div class="prereq">Coreq: BIOL 335/338 or BIOT 380.</div></div>
+<div class="course-card"><div class="course-code">BIOL 441</div><div class="course-title-en">Advanced Topics in Cell Biology</div><div class="course-title-zh">细胞生物学高级专题</div><span class="course-credits">3 cr</span><div class="desc-en">Analysis of cellular organelles and intracellular traffic, concentrating on mammalian cell systems.</div><div class="prereq">(BIOL 340/341) + (BIOL 361/362/370/371).</div></div>
+<div class="course-card"><div class="course-code">BIOL 445</div><div class="course-title-en">Darwin's Fishes</div><div class="course-title-zh">达尔文的鱼类</div><span class="course-credits">3 cr</span><div class="desc-en">Computer-assisted lectures using ichthyology and Darwin's work to illustrate basic principles of biology.</div><div class="prereq">3rd-year standing in Science.</div></div>
+<div class="course-card"><div class="course-code">BIOL 446</div><div class="course-title-en">History and Philosophy of Biology</div><div class="course-title-zh">生物学历史与哲学</div><span class="course-credits">3 cr</span><div class="desc-en">Nature of science, history of evolutionary and molecular biology, philosophical questions about scientific methods.</div><div class="prereq">4th-year standing in any degree program.</div></div>
+<div class="course-card"><div class="course-code">BIOL 447</div><div class="course-title-en">Principles and Methodology in Biological Research</div><div class="course-title-zh">生物学研究原理与方法</div><span class="course-credits">3 cr</span><div class="desc-en">Seminars, debates, workshops and tutorials designed to produce competence in specific areas of Biology. Honours only.</div><div class="prereq">Coreq: BIOL 449. Restricted to Honours Biology.</div></div>
+<div class="course-card"><div class="course-code">BIOL 448</div><div class="course-title-en">Directed Studies in Biology</div><div class="course-title-zh">生物学定向研究</div><span class="course-credits">3-12 cr</span><div class="desc-en">Investigation on a specific topic as agreed upon by faculty member and student. Max 6 credits with same supervisor.</div><div class="prereq">Supervisor permission required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 449</div><div class="course-title-en">Directed Biological Research</div><div class="course-title-zh">定向生物学研究</div><span class="course-credits">6 cr</span><div class="desc-en">Research project in selected fields. Thesis and oral examination required. Honours only.</div><div class="prereq">Supervisor permission. Coreq: BIOL 447. Honours Biology only.</div></div>
+<div class="course-card"><div class="course-code">BIOL 450</div><div class="course-title-en">Molecular Adaptation of Animals to the Environment</div><div class="course-title-zh">动物环境分子适应</div><span class="course-credits">3 cr</span><div class="desc-en">Physiological, biochemical, and molecular strategies of adaptation of animals to environmental challenges.</div><div class="prereq">(APBI 311/BIOL 361/362/364/370/371) + (BIOL 201/BIOC 202/203). BIOL 457 recommended.</div></div>
+<div class="course-card"><div class="course-code">BIOL 451</div><div class="course-title-en">Comparative Neurobiology</div><div class="course-title-zh">比较神经生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced investigations of the evolution of animal nervous systems, integrating studies of diverse species.</div><div class="prereq">BIOL 371/372/CAPS 301/PSYC 304/367/370.</div></div>
+<div class="course-card"><div class="course-code">BIOL 453</div><div class="course-title-en">Insect Physiology</div><div class="course-title-zh">昆虫生理学</div><span class="course-credits">4 cr</span><div class="desc-en">Physiological adaptations of insects, including survival in extreme environments. Homeostatic mechanisms, neurophysiology.</div><div class="prereq">(BIOL 204/205/327/APBI 327) + (BIOL 361/364/370/371/APBI 311).</div></div>
+<div class="course-card"><div class="course-code">BIOL 454</div><div class="course-title-en">Comparative Animal Physiology</div><div class="course-title-zh">比较动物生理学</div><span class="course-credits">3 cr</span><div class="desc-en">Selected topics in physiology emphasizing comparisons between diverse phylogenetic groups of animals.</div><div class="prereq">APBI 311/BIOL 362/364.</div></div>
+<div class="course-card"><div class="course-code">BIOL 455</div><div class="course-title-en">Comparative Neurobiology</div><div class="course-title-zh">比较神经生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Current approaches in neurobiology, from cellular to behavioural level, using vertebrate and invertebrate nervous systems.</div><div class="prereq">BIOL 361/362/364/CAPS 301/PSYC 360.</div></div>
+<div class="course-card"><div class="course-code">BIOL 456</div><div class="course-title-en">Comparative and Molecular Endocrinology</div><div class="course-title-zh">比较与分子内分泌学</div><span class="course-credits">3 cr</span><div class="desc-en">Comparative study of vertebrate and invertebrate endocrinology.</div><div class="prereq">APBI 311 or BIOL 364.</div></div>
+<div class="course-card"><div class="course-code">BIOL 457</div><div class="course-title-en">Comparative Environmental Physiology</div><div class="course-title-zh">比较环境生理学</div><span class="course-credits">3 cr</span><div class="desc-en">Survey of physiological adaptions of animals to different environments.</div><div class="prereq">APBI 311 or BIOL 364.</div></div>
+<div class="course-card"><div class="course-code">BIOL 458</div><div class="course-title-en">Developmental Neurobiology</div><div class="course-title-zh">发育神经生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Cellular, molecular and physiological aspects of nervous system development with applications to neurological disorders.</div><div class="prereq">No prereq listed.</div></div>
+<div class="course-card"><div class="course-code">BIOL 459</div><div class="course-title-en">Neurobiology of Sensory and Motor Systems</div><div class="course-title-zh">感觉与运动系统神经生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Analysis of mechanisms of sensory processing and motor orchestration using vertebrate and invertebrate model systems.</div><div class="prereq">BIOL 372/CAPS 301/PSYC 304/367/370.</div></div>
+<div class="course-card"><div class="course-code">BIOL 460</div><div class="course-title-en">Neurobiology of Vision</div><div class="course-title-zh">视觉神经生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced investigation of animal vision; critical analysis of recent literature and research project development in visual neurobiology.</div><div class="prereq">BIOL 372/CAPS 301/PSYC 304/367/370.</div></div>
+<div class="course-card"><div class="course-code">BIOL 462</div><div class="course-title-en">Ecological Plant Biochemistry</div><div class="course-title-zh">生态植物生物化学</div><span class="course-credits">3 cr</span><div class="desc-en">Structure, biosynthesis, distribution and biological function of secondary plant metabolites. Equivalent: FRST 413.</div><div class="prereq">(BIOL 200+(BIOL 201/BIOC 202)) or BIOT 380.</div></div>
+<div class="course-card"><div class="course-code">BIOL 463</div><div class="course-title-en">Gene Regulation in Development</div><div class="course-title-zh">发育基因调控</div><span class="course-credits">3 cr</span><div class="desc-en">Control of gene expression in development; genetic and physiological basis of epigenetic determination; inductive interactions.</div><div class="prereq">(BIOL 335+(BIOL 201/BIOC 202/203)) or BIOT 380.</div></div>
+<div class="course-card"><div class="course-code">BIOL 464</div><div class="course-title-en">Animal Developmental Genetics</div><div class="course-title-zh">动物发育遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Role of genes in embryonic development. Tissue specific expression patterns and role of genetic networks.</div><div class="prereq">BIOL 463.</div></div>
+<div class="course-card"><div class="course-code">BIOL 465</div><div class="course-title-en">Diversity and Evolution of Fishes</div><div class="course-title-zh">鱼类多样性与进化</div><span class="course-credits">3 cr</span><div class="desc-en">Fish diversity with focus on phylogenetic interrelationships and evolutionary, ecological, and biogeographic processes.</div><div class="prereq">BIOL 204.</div></div>
+<div class="course-card"><div class="course-code">BIOL 466</div><div class="course-title-en">Applied Biology of Fishes</div><div class="course-title-zh">应用鱼类生物学</div><span class="course-credits">3 cr</span><div class="desc-en">Physiological ecology and exploitation biology of teleost fishes; computer-based analysis and modeling of fish populations.</div><div class="prereq">BIOL 465.</div></div>
+<div class="course-card"><div class="course-code">BIOL 488</div><div class="course-title-en">Topics in Biology</div><div class="course-title-zh">生物学专题</div><span class="course-credits">1-6 cr</span><div class="desc-en">Selected topics in a specific area within Biology. May be taken more than once with Department permission.</div><div class="prereq">3rd-year standing in Life Science specialization.</div></div>
+<div class="course-card"><div class="course-code">BIOL 490</div><div class="course-title-en">Student Directed Seminars</div><div class="course-title-zh">学生主导研讨会</div><span class="course-credits">3 cr</span><div class="desc-en">Self-directed, collaborative studies in a group-learning environment initiated and coordinated by senior undergraduates.</div><div class="prereq">3rd-year standing. Not suitable as specific BIOL program elective.</div></div>
+<div class="course-card"><div class="course-code">BIOL 498</div><div class="course-title-en">Co-operative Work Placement III</div><div class="course-title-zh">合作实习 III</div><span class="course-credits">3 cr</span><div class="desc-en">Work experience in industrial research setting, Summer Session following fourth-year. Not eligible for Cr/D/F.</div><div class="prereq">Restricted to Biology Co-op students.</div></div>
+<div class="course-card"><div class="course-code">BIOL 499</div><div class="course-title-en">Co-operative Work Placement IV</div><div class="course-title-zh">合作实习 IV</div><span class="course-credits">3 cr</span><div class="desc-en">Work experience in industrial research setting, Winter Session following fourth-year. Not eligible for Cr/D/F.</div><div class="prereq">BIOL 399 or BIOL 498. Restricted to Biology Co-op.</div></div>
 </div>
 </div>
 
-<!-- ====== GRAD ====== -->
+<!-- GRAD -->
 <div class="year-section" id="sec-grad">
-<div class="summary-box"><h3>Graduate-Level BIOL Courses (500+)</h3><p style="font-size:0.8rem;color:var(--t2)">BIOL 500+ courses are for graduate students. Qualified undergraduates may enroll with instructor permission. Key courses: BIOL 501 (Evolutionary Biology), 503 (Ecology), 509 (Population Genetics), 525 (Computational Genomics), 530 (Cell Biology), 533 (Developmental Biology), 535 (Genetics), 537 (Plant Biology), 539 (Conservation Biology), 548 (Advanced Topics), 560 (Neurobiology).</p></div>
+<p class="level-count">16 graduate-level courses (500+)</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">BIOL 501</div><div class="course-title-en">Quantitative Methods in Ecology and Evolution</div><div class="course-title-zh">生态与进化定量方法</div><span class="course-credits">3 cr</span><div class="desc-en">Graduate-level quantitative methods. Not eligible for Cr/D/F.</div><div class="prereq">BIOL 300 or equivalent + graduate standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 503</div><div class="course-title-en">Microbial Ecology (Graduate)</div><div class="course-title-zh">微生物生态学（研究生）</div><span class="course-credits">3 cr</span><div class="desc-en">Theoretical and applied ecology of microbes focusing on microbial symbionts. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 509</div><div class="course-title-en">Population and Quantitative Genetics</div><div class="course-title-zh">群体与数量遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced population and quantitative genetics. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 510</div><div class="course-title-en">Applied Population Genetics</div><div class="course-title-zh">应用群体遗传学</div><span class="course-credits">3 cr</span><div class="desc-en">Equivalent: FRST 510. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 525</div><div class="course-title-en">Topics in Systematics and Evolution</div><div class="course-title-zh">系统学与进化专题</div><span class="course-credits">2-6 cr</span><div class="desc-en">Advanced topics in systematics and evolution. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 530</div><div class="course-title-en">The Biology of the Cell (Graduate)</div><div class="course-title-zh">细胞生物学（研究生）</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced cell biology. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 533</div><div class="course-title-en">Plant Genetics (Graduate)</div><div class="course-title-zh">植物遗传学（研究生）</div><span class="course-credits">3 cr</span><div class="desc-en">Molecular aspects, systems and techniques for genetic analysis in plants. Not eligible for Cr/D/F.</div><div class="prereq">BIOL 335 + graduate standing.</div></div>
+<div class="course-card"><div class="course-code">BIOL 535</div><div class="course-title-en">Teaching and Learning in the Life Sciences</div><div class="course-title-zh">生命科学教学</div><span class="course-credits">3 cr</span><div class="desc-en">Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 537</div><div class="course-title-en">Topics in Biotechnology</div><div class="course-title-zh">生物技术专题</div><span class="course-credits">3 cr</span><div class="desc-en">Research reviews, class discussions about current research in diverse areas of biotechnology. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 539</div><div class="course-title-en">Advanced Microscopy Techniques (Graduate)</div><div class="course-title-zh">高级显微技术（研究生）</div><span class="course-credits">3 cr</span><div class="desc-en">Microscopy techniques in biological research. Hands-on training of optical and electron microscopy. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 548</div><div class="course-title-en">Advanced Topics in Biology</div><div class="course-title-zh">生物学高级专题</div><span class="course-credits">1-9 cr</span><div class="desc-en">Selected advanced topics. Not eligible for Cr/D/F.</div><div class="prereq">Graduate standing required.</div></div>
+<div class="course-card"><div class="course-code">BIOL 560</div><div class="course-title-en">Theory of Adaptive Dynamics and Evolutionary Games</div><div class="course-title-zh">适应动力学与进化博弈论</div><span class="course-credits">3 cr</span><div class="desc-en">Mathematical treatment of population biology with integral calculus. Credit exclusion: BIOL 401. Not eligible for Cr/D/F.</div><div class="prereq">Intro population biology Math course + integral calculus + graduate standing.</div></div>
+</div>
 </div>
 
-<!-- ====== TRACK VIEWS ====== -->
+<!-- TRACK VIEWS -->
 <div class="track-section" id="track-core">
-<div class="flow-box"><h3>BIOL Core Prerequisite Chain</h3><div class="mermaid">
+<div class="flow-box"><h3>Core Foundation Chain</h3><div class="mermaid">
 graph TD
   A["BIOL 111"] --> B["BIOL 112"]
   A --> C["BIOL 121"]
-  B --> D["BIOL 200<br/>Cell Biology"]
-  D --> E["BIOL 201<br/>Biochemistry"]
-  D --> F["BIOL 234<br/>Genetics"]
-  D --> G["BIOL 260<br/>Physiology"]
-  D --> H["BIOL 300<br/>Biostatistics"]
-  D --> I["BIOL 371<br/>Neurobiology I"]
+  B --> D["BIOL 200"]
+  D --> E["BIOL 201 Biochem"]
+  D --> F["BIOL 234 Genetics"]
+  D --> G["BIOL 260 Physiology"]
+  D --> H["BIOL 371 Neurobiology I"]
+  C --> I["BIOL 230 Ecology"]
+  F --> J["BIOL 335 Molecular Genetics"]
+  F["BIOL 234"] --> K["BIOL 336 Evol Biology"]
+  I --> L["BIOL 306 Advanced Ecology"]
 </div></div>
 </div>
 
-<div class="track-section" id="track-neurosci">
+<div class="track-section" id="track-neuro">
 <div class="flow-box"><h3>Neurobiology Track</h3><div class="mermaid">
 graph LR
-  A["BIOL 200"] --> B["BIOL 371<br/>Neurobiology I"]
-  B --> C["BIOL 372<br/>Neurobiology II"]
-  C --> D["BIOL 451<br/>Comparative Neuro"]
-  C --> E["BIOL 459<br/>Sensory/Motor"]
-  C --> F["BIOL 460<br/>Vision"]
-  B --> G["BIOL 458<br/>Dev Neurobiology"]
-  B --> H["NSCI 303<br/>Comp Neuroscience"]
+  A["BIOL 200"] --> B["BIOL 361<br/>Neural/Muscle Phys"]
+  A --> C["BIOL 371<br/>Neurobiology I"]
+  C --> D["BIOL 372<br/>Neurobiology II"]
+  D --> E["BIOL 451<br/>Comp Neuro"]
+  D --> F["BIOL 459<br/>Sensory/Motor"]
+  D --> G["BIOL 460<br/>Vision"]
+  B --> H["BIOL 455<br/>Comp Neuro"]
+  A --> I["BIOL 458<br/>Dev Neuro"]
 </div></div>
 </div>
 
 <div class="track-section" id="track-genetics">
-<div class="flow-box"><h3>Genetics &amp; Genomics Track</h3><div class="mermaid">
+<div class="flow-box"><h3>Genetics & Genomics Track</h3><div class="mermaid">
 graph LR
-  A["BIOL 121"] --> B["BIOL 234<br/>Genetics"]
-  B --> C["BIOL 335<br/>Molecular Genetics"]
-  B --> D["BIOL 336<br/>Evolutionary Gen"]
-  C --> E["BIOL 425<br/>Comp Genomics"]
-  C --> F["BIOL 428<br/>Epigenetics"]
-  D --> G["BIOL 426<br/>Genome Evolution"]
-  C --> H["BIOL 463<br/>Developmental Gene Reg"]
+  A["BIOL 234"] --> B["BIOL 335<br/>Molecular Genetics"]
+  A --> C["BIOL 336<br/>Evol Biology"]
+  B --> D["BIOL 338<br/>Genomics"]
+  B --> E["BIOL 430<br/>Genome Evol"]
+  B --> F["BIOL 433<br/>Plant Genetics"]
+  B --> G["BIOL 436<br/>Funct Genomics"]
+  B --> H["BIOL 440<br/>Plant Genomics"]
+  B --> I["BIOL 463<br/>Gene Reg Dev"]
+  C --> J["BIOL 434<br/>Pop Genetics"]
+  C --> K["BIOL 401<br/>Evol Dynamics"]
 </div></div>
 </div>
 
 <div class="track-section" id="track-molec">
-<div class="flow-box"><h3>Molecular &amp; Cell Biology Track</h3><div class="mermaid">
+<div class="flow-box"><h3>Molecular & Cell Biology Track</h3><div class="mermaid">
 graph LR
   A["BIOL 200"] --> B["BIOL 201<br/>Biochemistry"]
-  B --> C["BIOL 403<br/>Cell Signaling"]
-  B --> D["BIOL 404<br/>Protein Trafficking"]
-  A --> E["BIOL 408<br/>Stem Cells"]
-  A --> F["BIOL 361-364<br/>Physiology Series"]
+  A --> C["BIOL 329<br/>Cell Signaling"]
+  A --> D["BIOL 340<br/>Cell Bio Lab"]
+  A --> E["BIOL 341<br/>Molecular Bio Lab"]
+  B --> F["BIOL 330<br/>Dev Biology"]
+  A --> G["BIOL 431<br/>Evol Cell Biology"]
+  A --> H["BIOL 441<br/>Adv Cell Biology"]
 </div></div>
 </div>
 
-<div class="track-section" id="track-compute">
-<div class="flow-box"><h3>Computational / Quantitative Biology Track</h3><div class="mermaid">
+<div class="track-section" id="track-physio">
+<div class="flow-box"><h3>Physiology Track</h3><div class="mermaid">
 graph LR
-  A["BIOL 200"] --> B["BIOL 300<br/>Biostatistics 3cr"]
-  B --> C["BIOL 301<br/>Biomathematics 3cr"]
-  A --> D["BIOL 335<br/>Molecular Genetics"]
-  D --> E["BIOL 425<br/>Comp Genomics"]
-  C --> F["CPSC 340<br/>Machine Learning"]
-  E --> F
+  A["BIOL 260"] --> B["BIOL 361<br/>Neural/Muscle"]
+  A --> C["BIOL 362<br/>Cellular Dynamics"]
+  A --> D["BIOL 364<br/>Cardio/Resp"]
+  A --> E["BIOL 370<br/>Muscle/Energetics"]
+  B --> F["BIOL 450<br/>Molecular Adapt"]
+  D --> G["BIOL 453<br/>Insect Phys"]
+  D --> H["BIOL 454<br/>Comp Animal Phys"]
+  D --> I["BIOL 456<br/>Comp Endocrinology"]
+  D --> J["BIOL 457<br/>Comp Env Phys"]
 </div></div>
 </div>
 
 <div class="track-section" id="track-eco">
-<div class="flow-box"><h3>Ecology &amp; Evolution Track</h3><div class="mermaid">
+<div class="flow-box"><h3>Ecology & Evolution Track</h3><div class="mermaid">
 graph LR
-  A["BIOL 121"] --> B["BIOL 230<br/>Ecology"]
-  B --> C["BIOL 300<br/>Biostatistics"]
-  C --> D["BIOL 301<br/>Biomathematics"]
-  B --> E["BIOL 302-310<br/>Field Courses"]
-  D --> F["BIOL 401-450<br/>Advanced Ecology"]
+  A["BIOL 230"] --> B["BIOL 306<br/>Advanced Ecology"]
+  B --> C["BIOL 402<br/>Aquatic Ecol"]
+  B --> D["BIOL 404<br/>Ecol Methodology"]
+  B --> E["BIOL 406<br/>Plant Ecol"]
+  B --> F["BIOL 408<br/>Applied Ecol"]
+  A --> G["BIOL 416<br/>Conservation Bio"]
+  C["BIOL 336"] --> H["BIOL 415<br/>Evol Plants"]
+  C --> I["BIOL 418<br/>Evol Ecology"]
 </div></div>
 </div>
 
-<div class="legend">
-<span class="legend-item"><span class="legend-dot" style="background:#3fb950"></span> Core 核心</span>
-<span class="legend-item"><span class="legend-dot" style="background:#58a6ff"></span> Neuro 神经</span>
-<span class="legend-item"><span class="legend-dot" style="background:#f0883e"></span> Genetics 遗传</span>
-<span class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span> Molecular 分子</span>
-<span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Computational 计算</span>
-<span class="legend-item"><span class="legend-dot" style="background:#a371f7"></span> Ecology 生态</span>
-</div>
-
-<div class="footer"><p>Data: <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/biolv" style="color:var(--ac)">UBC Calendar - BIOL</a> · 136 courses total · Showing ~50 key courses</p></div>
+<div class="footer"><p>Data: <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/biolv" style="color:var(--ac)">UBC Calendar - BIOL</a> · 136 courses total · All courses listed</p></div>
 </div>
 
 <script>
@@ -286,13 +397,15 @@ function switchYear(t){
   document.querySelectorAll('#tab-year .tab').forEach(function(b){b.classList.remove('active');});
   event.target.classList.add('active');
   document.querySelectorAll('.year-section').forEach(function(s){s.classList.remove('visible');});
-  document.getElementById('sec-'+t).classList.add('visible');
+  var el=document.getElementById('sec-'+t);
+  if(el)el.classList.add('visible');
 }
 function switchTrack(t){
   document.querySelectorAll('#tab-track .tab').forEach(function(b){b.classList.remove('active');});
   event.target.classList.add('active');
   document.querySelectorAll('.track-section').forEach(function(s){s.classList.remove('visible');});
-  document.getElementById('track-'+t).classList.add('visible');
+  var el=document.getElementById('track-'+t);
+  if(el)el.classList.add('visible');
 }
 </script>
 </body></html>
