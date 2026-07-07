@@ -1,0 +1,508 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>UBC MATH Course Map | UBC数学系课程关系图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+  :root {
+    --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+    --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
+  .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
+  .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+  .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
+  .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
+  .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
+  .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
+  .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
+  .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .prereq strong { color: #ff7b72; }
+  .coreq { font-size: 0.76rem; color: #d2a8ff; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
+  .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+  .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+
+
+/* === Design Upgrade (taste-skill + ui-ux-pro-max-skill) === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #09090b; --bg2: #0f0f12;
+  --card-bg: #131316; --border: #23232a;
+  --text: #e4e4e7; --text2: #71717a; --accent: #3b82f6;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
+}
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+.container { padding: 24px; }
+h1 { font-weight: 800; letter-spacing: -0.03em; }
+h2 { font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+.sec-desc { font-weight: 400; line-height: 1.6; }
+
+/* Cards - less boxy, more breathing room */
+.course-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  box-shadow: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 20px;
+}
+.course-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.course-code { font-weight: 800; letter-spacing: -0.02em; font-size: 1.1rem; }
+.course-title-en { font-weight: 600; line-height: 1.3; }
+.course-title-zh { font-weight: 500; }
+.desc-en, .desc-zh { line-height: 1.55; }
+.prereq { border-radius: 8px; border: 1px solid var(--border); }
+
+/* Tabs - pill style with better transitions */
+.tab {
+  font-weight: 500; letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.tab:hover { background: var(--border); color: var(--text); border-color: var(--border); }
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+}
+.tab-deps.active {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+
+/* Mode bar - cleaner */
+.mode-bar { border: 1px solid var(--border); }
+.mode-btn {
+  font-weight: 600; font-size: 0.9rem;
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+}
+.mode-btn.active { background: var(--accent); color: #fff; }
+.mode-btn:hover:not(.active) { background: var(--border); }
+
+/* Flow boxes (Mermaid diagrams) */
+.flow-box {
+  border-radius: 12px; border: 1px solid var(--border);
+  background: #fff; padding: 20px;
+  box-shadow: var(--shadow);
+}
+.flow-box h3 { font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; }
+
+/* Timetable */
+.tt-h { font-weight: 700; letter-spacing: -0.01em; }
+
+/* Legend */
+.legend { border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+.legend-item { font-weight: 500; font-size: 0.8rem; }
+
+/* Path cards */
+.path-card { border-radius: 12px; border: 1px solid var(--border); transition: border-color 0.2s; }
+.path-card:hover { border-color: var(--accent); }
+
+/* Buttons */
+.btn {
+  font-weight: 600; letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-ac { background: var(--accent); color: #fff; }
+.btn-ac:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* Summary bars */
+.sum-ok, .sum-err {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+
+/* Focus states */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Selection */
+::selection { background: rgba(59,130,246,0.3); color: #fff; }
+
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .container { padding: 12px; }
+  h1 { font-size: 1.3rem; padding: 16px 0 6px; }
+  h2 { font-size: 1.1rem; }
+  .subtitle { font-size: 0.78rem; margin-bottom: 14px; }
+
+  /* Mode bar - stacked on mobile */
+  .mode-bar { flex-direction: column; border-radius: 10px; }
+  .mode-btn { padding: 14px 16px; font-size: 0.85rem; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .mode-btn:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* Tabs - horizontally scrollable */
+  .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px 0 10px; gap: 6px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 8px 14px; font-size: 0.78rem; min-height: 36px; white-space: nowrap; }
+
+  /* Legend - stack vertically */
+  .legend { gap: 6px; font-size: 0.72rem; padding: 10px 12px; }
+  .legend-item { font-size: 0.72rem; }
+
+  /* Course grid - single column */
+  .course-grid { grid-template-columns: 1fr; gap: 10px; }
+  .course-card { padding: 14px; border-radius: 10px; }
+  .course-code { font-size: 1rem; }
+  .course-title-en { font-size: 0.82rem; }
+  .course-title-zh { font-size: 0.78rem; }
+  .desc-en, .desc-zh { font-size: 0.75rem; }
+  .prereq { font-size: 0.7rem; padding: 4px 8px; }
+
+  /* Flow boxes - full width */
+  .flow-box { padding: 10px; border-radius: 10px; overflow-x: auto; }
+  .flow-box .mermaid { min-width: 350px; }
+  .flow-grid { grid-template-columns: 1fr; }
+
+  /* Layout changes */
+  .layout, .grid2, .grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Index page */
+  .cc { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 16px; }
+  .card { padding: 20px 14px; }
+  .card-title { font-size: 1rem; }
+  .card-icon { font-size: 2rem; }
+
+  /* Timetable - compact */
+  .tt-grid { font-size: 0.6rem; }
+  .tt-h { padding: 6px 2px; font-size: 0.65rem; }
+  .tt-b { font-size: 0.55rem; padding: 2px 3px; }
+
+  /* Path cards */
+  .path-card { padding: 14px; }
+
+  /* Deps pages - track tabs */
+  .tab-deps { font-size: 0.75rem; padding: 7px 12px; }
+
+  /* Buttons - larger touch targets */
+  .btn { padding: 10px 18px; font-size: 0.85rem; min-height: 44px; }
+
+  /* Schedule page */
+  .detail { grid-template-columns: 1fr; }
+
+  /* Smooth scroll for tab bars */
+  html { scroll-behavior: smooth; }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .cc { grid-template-columns: 1fr; }
+  .tab { padding: 6px 10px; font-size: 0.72rem; }
+  h1 { font-size: 1.15rem; }
+}
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">📐 UBC 数学系课程完整依赖关系图</h1><p class="subtitle">UBC Mathematics Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/mathv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">MATH:</span> Undergraduate core courses (40 shown). 177 total courses including graduate level.</div><div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div>
+  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div>
+</div>
+<div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s100">📘 100级·一年级</div>
+<div class="tab" data-tab="s200">📗 200级·二年级</div>
+<div class="tab" data-tab="s300">📙 300级·三年级</div>
+<div class="tab" data-tab="s400">📕 400级·四年级</div>
+</div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="calc">📐 微积分序列</div>
+<div class="tab tab-deps" data-tab="linear">📊 线性代数</div>
+<div class="tab tab-deps" data-tab="diffeq">📈 微分方程</div>
+<div class="tab tab-deps" data-tab="analysis">🔬 分析学</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
+</div>
+<div class="year-section visible" id="s100">
+<h2>📘 100级·一年级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[100 Diff Calc]-->B[101 Int Calc]
+  C[120 Hon Diff]-->D[121 Hon Int]
+  E[102 Life Sci]-->F[103 Life Sci Int]
+  G[104 Commerce]-->H[105 Commerce Int]
+  I[152 Linear]
+  D-->J[200 Calc III]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus with Applications</div><div class="course-title-en">3</div><span class="course-credits">Derivatives of elementary functions, applications and modelling including graphing and optimization. 学分</span><div class="desc-en">80%+ in BC Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Integral Calculus with Applications</div><div class="course-title-en">3</div><span class="course-credits">Definite integrals, integration techniques, applications, modelling, infinite series. 学分</span><div class="desc-en">MATH 100/102/104/110/120/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus for Life Sciences</div><div class="course-title-en">3</div><span class="course-credits">Functions, derivatives, optimization, growth/decay, discrete probability. 学分</span><div class="desc-en">High-school calculus + 80%+ in Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Integral Calculus for Life Sciences</div><div class="course-title-en">3</div><span class="course-credits">Antiderivatives, definite integrals, infinite series, probability applications. 学分</span><div class="desc-en">MATH 100/102/104/110/120/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus for Commerce</div><div class="course-title-en">3</div><span class="course-credits">Derivatives, exponential/trigonometric functions, Newton method, Taylor polynomials. 学分</span><div class="desc-en">High-school calculus + 80%+ in Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Integral Calculus for Commerce</div><div class="course-title-en">3</div><span class="course-credits">Antiderivatives, definite integrals, partial derivatives, random variables. 学分</span><div class="desc-en">MATH 100/102/104/110/120/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus (6cr)</div><div class="course-title-en">6</div><span class="course-credits">Same as MATH 100 plus algebra, geometry, functions, trigonometry. 学分</span><div class="desc-en">65%+ in Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Honours Differential Calculus</div><div class="course-title-en">4</div><span class="course-credits">Limits, derivatives, Mean Value Theorem, Taylor series, approximation. For Honours. 学分</span><div class="desc-en">High-school calculus + 95%+ in Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Honours Integral Calculus</div><div class="course-title-en">4</div><span class="course-credits">Definite integrals, Fundamental Theorem, integration techniques, infinite series. 学分</span><div class="desc-en">68%+ in MATH 120 or 80%+ in MATH 100/102/104/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Linear Systems</div><div class="course-title-en">3</div><span class="course-credits">2D/3D geometry, vectors/matrices, eigenvalues, physical applications. 学分</span><div class="desc-en">MATH 101 as corequisite</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus (no prior calc)</div><div class="course-title-en">4</div><span class="course-credits">Same as MATH 100 for students without high-school calculus. 学分</span><div class="desc-en">80%+ in Pre-calculus 12</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Calculus for Commerce (no prior calc)</div><div class="course-title-en">4</div><span class="course-credits">Same as MATH 104 for students without prior calculus. 学分</span><div class="desc-en">80%+ in Pre-calculus 12</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s200">
+<h2>📗 200级·二年级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[200 Calc III]-->B[226 Adv Calc]
+  B-->C[227 Adv Calc II]
+  D[221 Matrix]-->E[223 Hon Linear]
+  F[220 Proof]-->G[319 Real Analysis]
+  H[215 DiffEq]-->I[257 PDE]
+  J[253 Multi Calc]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MATH Calculus III</div><div class="course-title-en">3</div><span class="course-credits">Partial/directional derivatives, extrema, Lagrange multipliers, multiple integrals. 学分</span><div class="desc-en">MATH 101/103/105/121</div></div>
+<div class="course-card gen"><div class="course-code">MATH Mathematical Computing</div><div class="course-title-en">3</div><span class="course-credits">Mathematical software, numerical methods, root finding, integration, ODEs, graphics. 学分</span><div class="desc-en">MATH 101/103/105/121; coreq: MATH 215/255/256/258 + MATH 152/221/223</div></div>
+<div class="course-card gen"><div class="course-code">MATH Elementary Differential Equations I</div><div class="course-title-en">3</div><span class="course-credits">First-order equations, linear systems, Laplace transforms, numerical methods. 学分</span><div class="desc-en">MATH 101/103/105/121 + MATH 152/221/223; coreq: MATH 200/217/226/253/254</div></div>
+<div class="course-card gen"><div class="course-code">MATH Multivariable and Vector Calculus</div><div class="course-title-en">4</div><span class="course-credits">Partial differentiation, multiple integration, vector fields, divergence/Stokes/Green theorems. 学分</span><div class="desc-en">68%+ in PHYS 102/108/118 + 68%+ in MATH 101/103/105/121</div></div>
+<div class="course-card gen"><div class="course-code">MATH Mathematical Proof</div><div class="course-title-en">3</div><span class="course-credits">Sets, functions, induction, cardinality, real numbers, sequences, logic and proof clarity. 学分</span><div class="desc-en">64%+ in MATH 101/103/105 or MATH 121/200/217/226/253/254</div></div>
+<div class="course-card gen"><div class="course-code">MATH Matrix Algebra</div><div class="course-title-en">3</div><span class="course-credits">Linear systems, matrices, determinants, eigenvalues/eigenvectors, diagonalization. 学分</span><div class="desc-en">MATH 100/102/104/110/120/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Honours Linear Algebra</div><div class="course-title-en">3</div><span class="course-credits">Matrices, eigenvectors, diagonalization, orthogonality. Credit exclusion with 111/152/221. 学分</span><div class="desc-en">MATH 120/121 or 80%+ in MATH 100/102/104/110/180/184</div></div>
+<div class="course-card gen"><div class="course-code">MATH Advanced Calculus I</div><div class="course-title-en">3</div><span class="course-credits">Multivariable limits/continuity/differentiability, Taylors theorem, multiple integration. 学分</span><div class="desc-en">68%+ in MATH 121 or 80%+ in MATH 101/103/105; coreq: MATH 152/221/223</div></div>
+<div class="course-card gen"><div class="course-code">MATH Advanced Calculus II</div><div class="course-title-en">3</div><span class="course-credits">Curve/surface parametrization, line/surface integrals, Green/Gauss/Stokes theorems. 学分</span><div class="desc-en">MATH 226 with 68%+</div></div>
+<div class="course-card gen"><div class="course-code">MATH Multivariable Calculus</div><div class="course-title-en">3</div><span class="course-credits">Partial derivatives, extrema, Lagrange multipliers, multiple integrals. 学分</span><div class="desc-en">MATH 101/103/105/121</div></div>
+<div class="course-card gen"><div class="course-code">MATH Multivariable Calculus for Mech Eng</div><div class="course-title-en">3</div><span class="course-credits">Partial differentiation, multiple/vector integration, divergence/Stokes theorems. 学分</span><div class="desc-en">MATH 101 + MATH 152/221/223; coreq: MECH 222+225</div></div>
+<div class="course-card gen"><div class="course-code">MATH Ordinary Differential Equations</div><div class="course-title-en">3</div><span class="course-credits">Linear systems, nonlinear equations, phase plane, Laplace transforms, numerical methods. 学分</span><div class="desc-en">MATH 101/103/105/121 + MATH 152/221/223; coreq: MATH 200/217/226/253/254</div></div>
+<div class="course-card gen"><div class="course-code">MATH Differential Equations</div><div class="course-title-en">3</div><span class="course-credits">Linear ODEs, Laplace transforms, Fourier series, separation of variables for PDEs. 学分</span><div class="desc-en">MATH 101/103/105/121 + MATH 152/221/223; coreq: MATH 200/217/226/253</div></div>
+<div class="course-card gen"><div class="course-code">MATH Partial Differential Equations</div><div class="course-title-en">3</div><span class="course-credits">Fourier series, heat/wave/potential equations, boundary-value problems, numerical methods. 学分</span><div class="desc-en">MATH 215/255/256/258</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>📙 300级·三年级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[300 Complex]-->B[440 Complex II]
+  C[302 Prob]-->D[418 Probability]
+  E[319 Real Analysis]-->F[320 Real Var]
+  G[316 DiffEq II]
+  H[340 Linear Prog]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MATH Complex Variables</div><div class="course-title-en">3</div><span class="course-credits">Complex functions, Cauchy-Riemann, Cauchy theorem, contour integration, residues. 学分</span><div class="desc-en">Coreq: MATH 217/227/254/317</div></div>
+<div class="course-card gen"><div class="course-code">MATH Introduction to Probability</div><div class="course-title-en">3</div><span class="course-credits">Basic probability, random variables, expectation, limit theorems. 学分</span><div class="desc-en">MATH 200/217/226/253/254</div></div>
+<div class="course-card gen"><div class="course-code">MATH Applied Linear Algebra</div><div class="course-title-en">3</div><span class="course-credits">Linear algebra applications in science/engineering; computer algebra use. 学分</span><div class="desc-en">MATH 152/221/223 + MATH 200/217/226/253/254</div></div>
+<div class="course-card gen"><div class="course-code">MATH Elementary Differential Equations II</div><div class="course-title-en">3</div><span class="course-credits">Power series, Bessels equation, boundary value problems, Fourier series, heat/wave/Laplace. 学分</span><div class="desc-en">MATH 215/255/256/258</div></div>
+<div class="course-card gen"><div class="course-code">MATH Calculus IV</div><div class="course-title-en">3</div><span class="course-credits">Parametrizations, inverse/implicit functions, grad/div/curl, Green/Gauss/Stokes. 学分</span><div class="desc-en">MATH 200/226/253</div></div>
+<div class="course-card gen"><div class="course-code">MATH Introduction to Real Analysis</div><div class="course-title-en">3</div><span class="course-credits">Countability, real topology, convergence, continuity, differentiability, metric spaces. 学分</span><div class="desc-en">68%+ in MATH 220 or 55%+ in MATH 223/226</div></div>
+<div class="course-card gen"><div class="course-code">MATH Real Variables I</div><div class="course-title-en">3</div><span class="course-credits">Real numbers, Euclidean n-space, open/closed/compact sets, Bolzano-Weierstrass, continuity. 学分</span><div class="desc-en">68%+ in MATH 226 or (MATH 200/217/226/253/254 + 80%+ in MATH 220)</div></div>
+<div class="course-card gen"><div class="course-code">MATH Linear Programming</div><div class="course-title-en">3</div><span class="course-credits">LP problems, dual problems, simplex algorithm, sensitivity analysis. 学分</span><div class="desc-en">MATH 152/221/223</div></div>
+<div class="course-card gen"><div class="course-code">MATH Applied Nonlinear Dynamics and Chaos</div><div class="course-title-en">3</div><span class="course-credits">Phase plane, bifurcation/stability, limit cycles, chaos for nonlinear ODEs. 学分</span><div class="desc-en">68%+ in MATH 215/255/256/258</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级·四年级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[400 Applied PDE]-->B[405 Numerical DE]
+  C[418 Probability]
+  D[420 Real Analysis I]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MATH Applied Partial Differential Equations</div><div class="course-title-en">3</div><span class="course-credits">Separation of variables, Sturm-Liouville theory, integral transform methods. 学分</span><div class="desc-en">MATH 300/305 + MATH 256/257/316/358</div></div>
+<div class="course-card gen"><div class="course-code">MATH Numerical Methods for Differential Equations</div><div class="course-title-en">3</div><span class="course-credits">Interpolation, numerical integration, numerical solution of ODEs/PDEs. 学分</span><div class="desc-en">MATH 256/257/316/358</div></div>
+<div class="course-card gen"><div class="course-code">MATH Probability</div><div class="course-title-en">3</div><span class="course-credits">Probability spaces, random variables, convergence, central limit theorem. 学分</span><div class="desc-en">MATH 321 with 68%+</div></div>
+<div class="course-card gen"><div class="course-code">MATH Real Analysis I</div><div class="course-title-en">3</div><span class="course-credits">Lebesgue measure, measurable functions, integration, convergence theorems, Lp spaces. 学分</span><div class="desc-en">MATH 321 with 68%+</div></div>
+</div>
+</div>
+
+<div class="track-section" id="calc">
+<h2>📐 微积分序列</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[100/102/104 Diff Calc]-->B[101/103/105 Int Calc]
+  B-->C[200 Calc III]
+  C-->D[253 Multi Calc]
+  D-->E[317 Calc IV]
+</div></div>
+</div>
+
+<div class="track-section" id="linear">
+<h2>📊 线性代数</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[152 Linear Systems]-->B[221 Matrix Algebra]
+  B-->C[307 Applied Linear Algebra]
+  A-->D[223 Hon Linear Algebra]
+</div></div>
+</div>
+
+<div class="track-section" id="diffeq">
+<h2>📈 微分方程</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[215 DiffEq I]-->B[255/256 ODEs]
+  B-->C[257 PDE]
+  C-->D[316 DiffEq II]
+  D-->E[400 Applied PDE]
+</div></div>
+</div>
+
+<div class="track-section" id="analysis">
+<h2>🔬 分析学</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[220 Math Proof]-->B[319 Real Analysis]
+  B-->C[320 Real Variables I]
+  C-->D[420 Real Analysis I]
+  A-->E[300 Complex Variables]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>🗺️ 全图</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Y1[100 Level]
+    A[100-105 Calc];B[120-121 Hon Calc];C[152 Linear]
+  end
+  subgraph Y2[200 Level]
+    D[200 Calc III];E[215 DiffEq];F[220 Proof];G[221 Matrix];H[253 Multi Calc]
+  end
+  subgraph Y3[300 Level]
+    I[300 Complex];J[302 Prob];K[307 Applied LinAlg];L[319 Real Anal];M[340 LP]
+  end
+  subgraph Y4[400 Level]
+    N[400 PDE];O[418 Prob];P[420 Real Anal]
+  end
+  A-->D;A-->E;C-->G;F-->L;D-->H;E-->K;L-->P;J-->O
+</div></div>
+</div>
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>39</strong> 门课程 | UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'mech';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]');
+    if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]');
+    if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});</script></body></html>

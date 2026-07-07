@@ -1,0 +1,467 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>UBC MECH Course Map | UBC机械工程系课程关系图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+  :root {
+    --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+    --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
+  .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
+  .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+  .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
+  .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
+  .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
+  .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
+  .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
+  .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .prereq strong { color: #ff7b72; }
+  .coreq { font-size: 0.76rem; color: #d2a8ff; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
+  .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+  .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+
+
+/* === Design Upgrade (taste-skill + ui-ux-pro-max-skill) === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #09090b; --bg2: #0f0f12;
+  --card-bg: #131316; --border: #23232a;
+  --text: #e4e4e7; --text2: #71717a; --accent: #3b82f6;
+  --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2);
+}
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+.container { padding: 24px; }
+h1 { font-weight: 800; letter-spacing: -0.03em; }
+h2 { font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+.sec-desc { font-weight: 400; line-height: 1.6; }
+
+/* Cards - less boxy, more breathing room */
+.course-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  box-shadow: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 20px;
+}
+.course-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.course-code { font-weight: 800; letter-spacing: -0.02em; font-size: 1.1rem; }
+.course-title-en { font-weight: 600; line-height: 1.3; }
+.course-title-zh { font-weight: 500; }
+.desc-en, .desc-zh { line-height: 1.55; }
+.prereq { border-radius: 8px; border: 1px solid var(--border); }
+
+/* Tabs - pill style with better transitions */
+.tab {
+  font-weight: 500; letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.tab:hover { background: var(--border); color: var(--text); border-color: var(--border); }
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+}
+.tab-deps.active {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+
+/* Mode bar - cleaner */
+.mode-bar { border: 1px solid var(--border); }
+.mode-btn {
+  font-weight: 600; font-size: 0.9rem;
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+}
+.mode-btn.active { background: var(--accent); color: #fff; }
+.mode-btn:hover:not(.active) { background: var(--border); }
+
+/* Flow boxes (Mermaid diagrams) */
+.flow-box {
+  border-radius: 12px; border: 1px solid var(--border);
+  background: #fff; padding: 20px;
+  box-shadow: var(--shadow);
+}
+.flow-box h3 { font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; }
+
+/* Timetable */
+.tt-h { font-weight: 700; letter-spacing: -0.01em; }
+
+/* Legend */
+.legend { border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
+.legend-item { font-weight: 500; font-size: 0.8rem; }
+
+/* Path cards */
+.path-card { border-radius: 12px; border: 1px solid var(--border); transition: border-color 0.2s; }
+.path-card:hover { border-color: var(--accent); }
+
+/* Buttons */
+.btn {
+  font-weight: 600; letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-ac { background: var(--accent); color: #fff; }
+.btn-ac:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* Summary bars */
+.sum-ok, .sum-err {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+
+/* Focus states */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Selection */
+::selection { background: rgba(59,130,246,0.3); color: #fff; }
+
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .container { padding: 12px; }
+  h1 { font-size: 1.3rem; padding: 16px 0 6px; }
+  h2 { font-size: 1.1rem; }
+  .subtitle { font-size: 0.78rem; margin-bottom: 14px; }
+
+  /* Mode bar - stacked on mobile */
+  .mode-bar { flex-direction: column; border-radius: 10px; }
+  .mode-btn { padding: 14px 16px; font-size: 0.85rem; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .mode-btn:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* Tabs - horizontally scrollable */
+  .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px 0 10px; gap: 6px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 8px 14px; font-size: 0.78rem; min-height: 36px; white-space: nowrap; }
+
+  /* Legend - stack vertically */
+  .legend { gap: 6px; font-size: 0.72rem; padding: 10px 12px; }
+  .legend-item { font-size: 0.72rem; }
+
+  /* Course grid - single column */
+  .course-grid { grid-template-columns: 1fr; gap: 10px; }
+  .course-card { padding: 14px; border-radius: 10px; }
+  .course-code { font-size: 1rem; }
+  .course-title-en { font-size: 0.82rem; }
+  .course-title-zh { font-size: 0.78rem; }
+  .desc-en, .desc-zh { font-size: 0.75rem; }
+  .prereq { font-size: 0.7rem; padding: 4px 8px; }
+
+  /* Flow boxes - full width */
+  .flow-box { padding: 10px; border-radius: 10px; overflow-x: auto; }
+  .flow-box .mermaid { min-width: 350px; }
+  .flow-grid { grid-template-columns: 1fr; }
+
+  /* Layout changes */
+  .layout, .grid2, .grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Index page */
+  .cc { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 16px; }
+  .card { padding: 20px 14px; }
+  .card-title { font-size: 1rem; }
+  .card-icon { font-size: 2rem; }
+
+  /* Timetable - compact */
+  .tt-grid { font-size: 0.6rem; }
+  .tt-h { padding: 6px 2px; font-size: 0.65rem; }
+  .tt-b { font-size: 0.55rem; padding: 2px 3px; }
+
+  /* Path cards */
+  .path-card { padding: 14px; }
+
+  /* Deps pages - track tabs */
+  .tab-deps { font-size: 0.75rem; padding: 7px 12px; }
+
+  /* Buttons - larger touch targets */
+  .btn { padding: 10px 18px; font-size: 0.85rem; min-height: 44px; }
+
+  /* Schedule page */
+  .detail { grid-template-columns: 1fr; }
+
+  /* Smooth scroll for tab bars */
+  html { scroll-behavior: smooth; }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .cc { grid-template-columns: 1fr; }
+  .tab { padding: 6px 10px; font-size: 0.72rem; }
+  h1 { font-size: 1.15rem; }
+}
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#f0883e,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">📐 UBC 机械工程系课程完整依赖关系图</h1><p class="subtitle">UBC Mechanical Engineering Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/mechv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">MECH:</span> Key undergraduate courses (30 shown). 100+ total courses including graduate and specialized electives.</div><div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div>
+  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div>
+</div>
+<div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s200">📗 200级</div>
+<div class="tab" data-tab="s300">📙 300级</div>
+<div class="tab" data-tab="s400">📕 400级</div>
+</div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="design">⚙️ 设计与制造</div>
+<div class="tab tab-deps" data-tab="fluids">🌊 流体与热</div>
+<div class="tab tab-deps" data-tab="mecha">🤖 机电与机器人</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
+</div>
+<div class="year-section visible" id="s200">
+<h2>📗 200级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[221 Eng Sci I]-->B[222 Eng Sci II]
+  C[223 Design Process]
+  D[260 Materials I]
+  E[280 Fluid I]-->F[360 Fluid II]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MECH Technical Skills Practicum</div><div class="course-title-en">4</div><span class="course-credits">Engineering graphics, spatial visualization, CAD, equipment training. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Engineering Science I</div><div class="course-title-en">12</div><span class="course-credits">Rigid body kinetics/kinematics, basic electrical circuits, materials. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Engineering Science II</div><div class="course-title-en">6</div><span class="course-credits">Fluid properties, equations of state, pressure, buoyancy, thermodynamics. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Mechanical Design Process</div><div class="course-title-en">7</div><span class="course-credits">Design methodology, synthesis and analysis, prototyping. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Integration of Concepts I</div><div class="course-title-en">1</div><span class="course-credits">Integration of theory and practice of mech eng concepts I. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Integration of Concepts II</div><div class="course-title-en">1</div><span class="course-credits">Integration of theory and practice of mech eng concepts II. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Technical Communication</div><div class="course-title-en">3</div><span class="course-credits">Written and oral communication for mechanical engineers. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Technical Skills Practicum I</div><div class="course-title-en">2</div><span class="course-credits">Engineering graphics, spatial visualization, CAD, equipment. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Technical Skills Practicum II</div><div class="course-title-en">2</div><span class="course-credits">Machine shop practice, electronic circuit construction. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Engineering Materials I</div><div class="course-title-en">3</div><span class="course-credits">Structure-property relationships, metals, ceramics, polymers. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Introduction to Fluid Mechanics</div><div class="course-title-en">3</div><span class="course-credits">Fluid statics, Bernoulli, control volume analysis, pipe flow. 学分</span><div class="desc-en">MECH 222</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>📙 300级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[305 Mechatronics]-->B[306 Lab]
+  C[325 Machine Design]-->D[326 Design II]
+  E[375 Heat Transfer]
+  F[380 Manufacturing]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MECH Introduction to Mechatronics</div><div class="course-title-en">3</div><span class="course-credits">Sensors, actuators, microcontrollers, mechatronic system design. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Data Analysis and Mechatronics Lab</div><div class="course-title-en">2</div><span class="course-credits">Experiments in mechatronics, data acquisition, analysis methods. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Machine Design</div><div class="course-title-en">4</div><span class="course-credits">Stress analysis, fatigue, bearings, gears, fasteners, welding. 学分</span><div class="desc-en">MECH 260</div></div>
+<div class="course-card gen"><div class="course-code">MECH Mechanical Design II</div><div class="course-title-en">3</div><span class="course-credits">Continuation of machine design; advanced topics. 学分</span><div class="desc-en">MECH 325</div></div>
+<div class="course-card gen"><div class="course-code">MECH Engineering Analysis</div><div class="course-title-en">3</div><span class="course-credits">Fourier series, correlation, DFT, boundary-value problems, PDEs. 学分</span><div class="desc-en">MECH 224+225</div></div>
+<div class="course-card gen"><div class="course-code">MECH Fluid Mechanics II</div><div class="course-title-en">3</div><span class="course-credits">Navier-Stokes equations, boundary layers, compressible flow. 学分</span><div class="desc-en">MECH 280</div></div>
+<div class="course-card gen"><div class="course-code">MECH Heat Transfer I</div><div class="course-title-en">3</div><span class="course-credits">Conduction, convection, radiation, heat exchangers. 学分</span><div class="desc-en">MECH 222</div></div>
+<div class="course-card gen"><div class="course-code">MECH Manufacturing Processes</div><div class="course-title-en">3</div><span class="course-credits">Casting, forming, machining, joining, additive manufacturing. 学分</span><div class="desc-en">MECH 260</div></div>
+<div class="course-card gen"><div class="course-code">MECH Manufacturing Lab</div><div class="course-title-en">2</div><span class="course-credits">Hands-on manufacturing processes and quality control. 学分</span><div class="desc-en"></div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级</h2>
+<div class="flow-box"><h3>📊 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[410 Control]-->B[470 Robotics]
+  C[420 Vibrations]
+  D[430 Fluid III]
+  E[460 FEA]
+  F[491 Capstone]
+</div></div>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">MECH Professional Practice</div><div class="course-title-en">1</div><span class="course-credits">Engineering ethics, law, professional registration. 学分</span><div class="desc-en"></div></div>
+<div class="course-card gen"><div class="course-code">MECH Control Systems</div><div class="course-title-en">3</div><span class="course-credits">Feedback control, stability, PID, state-space methods. 学分</span><div class="desc-en">MATH 255/256</div></div>
+<div class="course-card gen"><div class="course-code">MECH Vibrations</div><div class="course-title-en">3</div><span class="course-credits">Single/multi DOF systems, modal analysis, vibration control. 学分</span><div class="desc-en">MECH 221</div></div>
+<div class="course-card gen"><div class="course-code">MECH Fluid Mechanics III</div><div class="course-title-en">3</div><span class="course-credits">Turbulence, CFD, aerodynamics applications. 学分</span><div class="desc-en">MECH 360</div></div>
+<div class="course-card gen"><div class="course-code">MECH Energy Conversion</div><div class="course-title-en">3</div><span class="course-credits">Thermodynamic cycles, power plants, renewable energy. 学分</span><div class="desc-en">MECH 222</div></div>
+<div class="course-card gen"><div class="course-code">MECH Finite Element Analysis</div><div class="course-title-en">3</div><span class="course-credits">FEA methods for stress/strain/thermal analysis. 学分</span><div class="desc-en">MECH 325</div></div>
+<div class="course-card gen"><div class="course-code">MECH Robotics</div><div class="course-title-en">3</div><span class="course-credits">Kinematics, dynamics, control of robotic manipulators. 学分</span><div class="desc-en">MECH 221</div></div>
+<div class="course-card gen"><div class="course-code">MECH Capstone Design Project</div><div class="course-title-en">6</div><span class="course-credits">Team-based design, build, and test of mechanical system. 学分</span><div class="desc-en">4th year standing</div></div>
+<div class="course-card gen"><div class="course-code">MECH Engineering Project</div><div class="course-title-en">6</div><span class="course-credits">Individual or team engineering project with faculty supervision. 学分</span><div class="desc-en"></div></div>
+</div>
+</div>
+
+<div class="track-section" id="design">
+<h2>⚙️ 设计与制造</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[223 Design Process]-->B[325 Machine Design]
+  B-->C[326 Design II]
+  D[260 Materials]-->E[380 Manufacturing]
+  C-->F[460 FEA]
+</div></div>
+</div>
+
+<div class="track-section" id="fluids">
+<h2>🌊 流体与热</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[222 Eng Sci II]-->B[280 Fluid I]
+  B-->C[360 Fluid II]
+  C-->D[430 Fluid III]
+  E[375 Heat Transfer]
+  F[450 Energy]
+</div></div>
+</div>
+
+<div class="track-section" id="mecha">
+<h2>🤖 机电与机器人</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[305 Mechatronics]-->B[410 Control]
+  B-->C[470 Robotics]
+  D[420 Vibrations]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>🗺️ 全图</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Y2[200 Level]
+    A[220-231 Skills];B[221-222 Eng Sci];C[223 Design];D[260 Materials];E[280 Fluid I]
+  end
+  subgraph Y3[300 Level]
+    F[305 Mechatronics];G[325-326 Design];H[358 Analysis];I[360 Fluid II];J[375 Heat];K[380 Manuf]
+  end
+  subgraph Y4[400 Level]
+    L[410 Control];M[420 Vibration];N[430 Fluid III];O[460 FEA];P[470 Robotics];Q[491 Capstone]
+  end
+  B-->E;E-->I;D-->K;C-->G;G-->O;F-->L;L-->P;I-->N;G-->Q
+</div></div>
+</div>
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>29</strong> 门课程 | UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'mech';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]');
+    if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]');
+    if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});</script></body></html>
