@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
-<title>CPEN Computer Engineering Program | UBC 课程规划</title>
+<title>ELEC Electrical Engineering Program | UBC 课程规划</title>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
@@ -12,29 +12,21 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
 .wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
-
-/* Header */
 .header{text-align:center;padding:48px 0 36px}
 .back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.85rem;margin-bottom:18px;transition:color 0.2s}
 .back-link:hover{color:var(--ac)}
 h1{font-size:2rem;font-weight:800}
-.grad{background:linear-gradient(135deg,#58a6ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad{background:linear-gradient(135deg,#f0883e,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .sub{font-size:0.9rem;color:var(--t2);margin-top:8px}
-
-/* Program summary */
 .summary{background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:24px 28px;margin-bottom:36px}
 .summary h2{font-size:1.1rem;margin-bottom:12px;color:var(--ac)}
 .summary p{font-size:0.88rem;color:var(--t2);line-height:1.7}
-
-/* Year section */
 .year-section{margin-bottom:32px}
 .year-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .year-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
 .y2{background:#7c3aed}.y3{background:#f0883e}.y4{background:#3fb950}
 .year-title{font-size:1.25rem;font-weight:700}
 .year-credits{font-size:0.82rem;color:var(--t2);margin-left:auto}
-
-/* Term grid */
 .term-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .term-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:20px}
 .term-label{font-size:0.78rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
@@ -43,14 +35,10 @@ h1{font-size:2rem;font-weight:800}
 .course-code-inline{font-weight:700;font-size:0.9rem;color:var(--tx);white-space:nowrap;min-width:90px}
 .course-cred{font-size:0.78rem;color:var(--t2);white-space:nowrap}
 .course-name{font-size:0.82rem;color:var(--t2)}
-.elective-tag{display:inline-block;background:rgba(139,92,246,0.12);color:#a371f7;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
-
-/* Full-width rows (for courses spanning both terms) */
+.elective-tag{display:inline-block;background:rgba(240,136,62,0.12);color:#f0883e;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
 .full-row{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;margin-top:16px}
 .full-row .course-row{border-bottom:1px solid rgba(48,54,61,0.3)}
 .full-row .course-row:last-child{border-bottom:none}
-
-/* Elective section */
 .elective-section{margin-top:36px}
 .elective-section h2{font-size:1.15rem;margin-bottom:14px;color:var(--tx)}
 .elective-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -59,20 +47,14 @@ h1{font-size:2rem;font-weight:800}
 .elective-box p,.elective-box li{font-size:0.82rem;color:var(--t2);line-height:1.6}
 .elective-box ul{list-style:none;padding:0}
 .elective-box li:before{content:'• ';color:var(--ac)}
-
-/* Credit summary bar */
 .credit-bar{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:36px 0 20px}
 .credit-chip{background:var(--cbg);border:1px solid var(--bd);border-radius:24px;padding:10px 20px;text-align:center}
 .credit-chip .num{font-size:1.3rem;font-weight:800;color:var(--ac)}
 .credit-chip .lbl{font-size:0.72rem;color:var(--t2)}
-
-/* Footer */
 .footer{text-align:center;padding:32px 0;font-size:0.75rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:20px}
-
 .program-nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
 .program-nav a{padding:8px 18px;border-radius:20px;font-size:0.82rem;text-decoration:none;font-weight:600;transition:all 0.2s;border:1px solid var(--bd);color:var(--t2)}
 .program-nav a:hover,.program-nav a.active{color:var(--tx);border-color:var(--ac);background:rgba(88,166,255,0.08)}
-/* Mobile */
 @media (max-width: 768px) {
   .wrap{padding:16px 14px}
   h1{font-size:1.4rem}
@@ -89,26 +71,23 @@ h1{font-size:2rem;font-weight:800}
 </head>
 <body>
 <div class="wrap">
-
-<!-- Header -->
 <div class="header">
 <a class="back-link" href="index.html">← 返回首页</a>
 <div class="program-nav">
-<a class="active">CPEN 计算机工程</a>
-<a href="elec_program.html">ELEC 电气工程</a>
+<a href="cpen_program.html">CPEN 计算机工程</a>
+<a class="active">ELEC 电气工程</a>
 </div>
-<h1 class="grad">Computer Engineering Program</h1>
+<h1 class="grad">Electrical Engineering Program</h1>
 <p class="sub">Bachelor of Applied Science (BASc) · Department of Electrical and Computer Engineering</p>
 </div>
 
-<!-- Summary -->
 <div class="summary">
 <h2>📋 项目概览 Program Overview</h2>
-<p>计算机工程专业从大二开始（完成大一工程基础课程后）。学生将获得计算机工程应用科学学士学位。课程涵盖硬件设计、嵌入式系统、软件开发和计算机体系结构。学生可选择专注于计算机硬件设计或软件密集型计算系统方向。<br><br>
-The Computer Engineering Program begins in second year after completing the required first-year engineering courses. Students graduate with a BASc in Computer Engineering, with elective options to focus on hardware design or software-intensive systems.</p>
+<p>电气工程专业从大二开始（完成大一工程基础课程后）。学生将获得电气工程应用科学学士学位。课程涵盖电路设计、信号处理、电磁学、电力系统、控制系统和通信系统。电气工程是涵盖最广泛的工程学科之一，从纳米电子学到电力传输网络。<br><br>
+The Electrical Engineering Program begins in second year after completing the required first-year engineering courses. Students graduate with a BASc in Electrical Engineering. The curriculum spans circuit design, signal processing, electromagnetics, power systems, control systems, and communications — one of the broadest engineering disciplines.</p>
 </div>
 
-<!-- Year 1 - Foundation -->
+<!-- Year 1 -->
 <div class="year-section">
 <div class="year-header">
 <span class="year-dot" style="background:#58a6ff"></span>
@@ -140,24 +119,25 @@ The Computer Engineering Program begins in second year after completing the requ
 <div class="year-header">
 <span class="year-dot y2"></span>
 <span class="year-title">Second Year · 大二</span>
-<span class="year-credits">Total: 38 credits</span>
+<span class="year-credits">Total: 39 credits</span>
 </div>
 <div class="term-grid">
 <div class="term-box">
 <div class="term-label">📘 Term 1 · 秋季 Winter</div>
 <div class="course-row"><span class="course-code-inline">CPEN 211</span><span class="course-cred">5 cr</span><span class="course-name">Introduction to Microcomputers</span></div>
-<div class="course-row"><span class="course-code-inline">CPEN 221</span><span class="course-cred">5 cr</span><span class="course-name">Introduction to Software Construction</span></div>
-<div class="course-row"><span class="course-code-inline">CPEN 281</span><span class="course-cred">3 cr</span><span class="course-name">Professional Engineering Practice</span></div>
-<div class="course-row"><span class="course-code-inline">MATH 220</span><span class="course-cred">3 cr</span><span class="course-name">Mathematical Proof</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 259</span><span class="course-cred">4 cr</span><span class="course-name">Data Structures and Algorithms for ECE</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 201</span><span class="course-cred">4 cr</span><span class="course-name">Circuit Analysis II</span></div>
 <div class="course-row"><span class="course-code-inline">MATH 253</span><span class="course-cred">3 cr</span><span class="course-name">Multivariable Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 255</span><span class="course-cred">3 cr</span><span class="course-name">Ordinary Differential Equations</span></div>
 </div>
 <div class="term-box">
 <div class="term-label">📙 Term 2 · 春季 Spring</div>
-<div class="course-row"><span class="course-code-inline">CPEN 212</span><span class="course-cred">4 cr</span><span class="course-name">Computing Systems II</span></div>
-<div class="course-row"><span class="course-code-inline">CPSC 221</span><span class="course-cred">4 cr</span><span class="course-name">Basic Algorithms and Data Structures</span></div>
-<div class="course-row"><span class="course-code-inline">ELEC 201</span><span class="course-cred">4 cr</span><span class="course-name">Circuit Analysis II</span></div>
-<div class="course-row"><span class="course-code-inline">MATH 255</span><span class="course-cred">3 cr</span><span class="course-name">Ordinary Differential Equations</span></div>
-<div class="course-row"><span class="course-code-inline elective-tag">Elective</span><span class="course-name" style="color:var(--t2)">Humanities / Social Studies*</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 202</span><span class="course-cred">4 cr</span><span class="course-name">Circuit Analysis II</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 211</span><span class="course-cred">2 cr</span><span class="course-name">Engineering Electromagnetics</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 221</span><span class="course-cred">4 cr</span><span class="course-name">Signals and Systems</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 281</span><span class="course-cred">3 cr</span><span class="course-name">Professional Engineering Practice</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 291</span><span class="course-cred">6 cr</span><span class="course-name">Electrical Engineering Design Studio</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 264</span><span class="course-cred">1 cr</span><span class="course-name">Vector Calculus for EE</span></div>
 </div>
 </div>
 </div>
@@ -167,23 +147,26 @@ The Computer Engineering Program begins in second year after completing the requ
 <div class="year-header">
 <span class="year-dot y3"></span>
 <span class="year-title">Third Year · 大三</span>
-<span class="year-credits">Total: 38 credits</span>
+<span class="year-credits">Total: 39 credits</span>
 </div>
 <div class="term-grid">
 <div class="term-box">
 <div class="term-label">📘 Term 1 · 秋季 Winter</div>
-<div class="course-row"><span class="course-code-inline">CPEN 331</span><span class="course-cred">4 cr</span><span class="course-name">Operating Systems</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 301</span><span class="course-cred">4 cr</span><span class="course-name">Electronic Circuits</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 315</span><span class="course-cred">4 cr</span><span class="course-name">Electronic Materials and Devices</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 342</span><span class="course-cred">4 cr</span><span class="course-name">Systems and Control *</span></div>
 </div>
 <div class="term-box">
 <div class="term-label">📙 Term 2 · 春季 Spring</div>
-<div class="course-row"><span class="course-code-inline">CPEN 391</span><span class="course-cred">6 cr</span><span class="course-name">Computer Systems Design Studio</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 311</span><span class="course-cred">4 cr</span><span class="course-name">Engineering Electromagnetics II</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 341</span><span class="course-cred">4 cr</span><span class="course-name">Systems and Control *</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 391</span><span class="course-cred">6 cr</span><span class="course-name">Electrical Engineering Design Studio II</span></div>
 </div>
 </div>
 <div class="full-row">
-<div class="course-row"><span class="course-code-inline">CPSC 320</span><span class="course-cred">3 cr</span><span class="course-name">Intermediate Algorithm Design and Analysis</span></div>
-<div class="course-row"><span class="course-code-inline">— 选一</span><span class="course-cred">3 cr</span><span class="course-name">One of: MATH 318, MATH 302, or STAT 302</span></div>
-<div class="course-row"><span class="course-code-inline elective-tag">Electives</span><span class="course-cred">16 cr</span><span class="course-name">Computer Engineering Electives (department-approved list)*</span></div>
-<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">6 cr</span><span class="course-name">Complementary Studies Electives*</span></div>
+<div class="course-row"><span class="course-code-inline">— 选一</span><span class="course-cred">3 cr</span><span class="course-name">One of: MATH 302, STAT 302, or MATH 318 *</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">EE Electives</span><span class="course-cred">4 cr</span><span class="course-name">Department-approved Electrical Engineering electives *</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">6 cr</span><span class="course-name">Complementary Studies Electives *</span></div>
 </div>
 </div>
 
@@ -192,23 +175,23 @@ The Computer Engineering Program begins in second year after completing the requ
 <div class="year-header">
 <span class="year-dot y4"></span>
 <span class="year-title">Fourth Year · 大四</span>
-<span class="year-credits">Total: 38 credits</span>
+<span class="year-credits">Total: 36 credits</span>
 </div>
 <div class="full-row">
-<div class="course-row"><span class="course-code-inline">APSC 450</span><span class="course-cred">2 cr</span><span class="course-name">Professional Engineering Practice</span></div>
-<div class="course-row"><span class="course-code-inline">CPEN 481</span><span class="course-cred">3 cr</span><span class="course-name">Economic Analysis for Engineering Projects</span></div>
-<div class="course-row"><span class="course-code-inline">CPEN 491</span><span class="course-cred">10 cr</span><span class="course-name">Computer Engineering Capstone Design Project</span></div>
-<div class="course-row"><span class="course-code-inline elective-tag">Electives</span><span class="course-cred">20 cr</span><span class="course-name">Computer Engineering Electives (department-approved list)*</span></div>
-<div class="course-row"><span class="course-code-inline elective-tag">Sci. Elective</span><span class="course-cred">3 cr</span><span class="course-name">Science Elective*</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 491</span><span class="course-cred">10 cr</span><span class="course-name">Electrical Engineering Capstone Design Project</span></div>
+<div class="course-row"><span class="course-code-inline">ELEC 481</span><span class="course-cred">3 cr</span><span class="course-name">Economic Analysis for Engineering Projects</span></div>
+<div class="course-row"><span class="course-code-inline">APSC 450</span><span class="course-cred">2 cr</span><span class="course-name">Professional Engineering Practice *</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">EE Electives</span><span class="course-cred">18 cr</span><span class="course-name">Department-approved Electrical Engineering electives *</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Sci. Elective</span><span class="course-cred">3 cr</span><span class="course-name">Science Elective *</span></div>
 </div>
 </div>
 
 <!-- Credit summary -->
 <div class="credit-bar">
 <div class="credit-chip"><div class="num">28</div><div class="lbl">First Year</div></div>
-<div class="credit-chip"><div class="num">38</div><div class="lbl">Second Year</div></div>
-<div class="credit-chip"><div class="num">38</div><div class="lbl">Third Year</div></div>
-<div class="credit-chip"><div class="num">38</div><div class="lbl">Fourth Year</div></div>
+<div class="credit-chip"><div class="num">39</div><div class="lbl">Second Year</div></div>
+<div class="credit-chip"><div class="num">39</div><div class="lbl">Third Year</div></div>
+<div class="credit-chip"><div class="num">36</div><div class="lbl">Fourth Year</div></div>
 <div class="credit-chip"><div class="num">142</div><div class="lbl">Total Credits</div></div>
 </div>
 
@@ -217,65 +200,63 @@ The Computer Engineering Program begins in second year after completing the requ
 <h2>📌 选修课详情 Elective Details</h2>
 <div class="elective-grid">
 <div class="elective-box">
-<h3>💻 Computer Engineering Electives</h3>
-<p>36 credits from department-approved list:</p>
+<h3>⚡ Breadth & Advanced Electives (22 cr)</h3>
+<p><strong>Breadth Electives:</strong> Chosen to ensure broad coverage across EE sub-disciplines. Refer to program checklist.</p>
+<p style="margin-top:8px"><strong>Advanced Electives:</strong> 400-level ELEC courses (and select CPEN 400-level):</p>
 <ul>
-<li>ELEC 202 — Circuit Analysis II</li>
-<li>ELEC 221 — Signals and Systems</li>
-<li>ELEC 301 — Electronic Circuits</li>
-<li>ELEC 315 — Electronic Materials</li>
-<li>ELEC 331 — Computer Communications</li>
-<li>ELEC 341 — Systems and Control</li>
-<li>BMEG 310 — Biomedical Instrumentation</li>
+<li>ELEC 421 / ELEC 422 — (only one may count)</li>
+<li>ELEC 499 — max 3 credits toward Advanced Electives</li>
+<li>ELEC 400M, CPEN 400D — approved Advanced Electives</li>
+<li>Only some CPEN 400-level courses qualify</li>
 </ul>
-<p style="margin-top:8px;font-size:0.78rem">See full list on the <a href="https://ubcece.notion.site/Electives-CE-2023-1bb586d59b764e78863f9aaf226b30e7" style="color:var(--ac)">CPEN Elective List (Notion)</a></p>
+<p style="margin-top:8px;font-size:0.78rem">See <a href="https://ubcece.notion.site/Advanced-Electives-EE-2ce561b5b15f4945a5309cf869023a59" style="color:var(--ac)">ELEC Advanced Elective List (Notion)</a></p>
 </div>
 <div class="elective-box">
 <h3>📖 Complementary Studies (9 cr)</h3>
-<p><strong>Humanities & Social Studies (6 cr):</strong> Courses in arts, humanities, social sciences, or business. Max 3 credits in language courses.</p>
+<p><strong>Humanities & Social Studies (6 cr):</strong> Courses in arts, humanities, social sciences, or business. Max 3 credits in language courses. Typically 3 credits completed in first year.</p>
 <p style="margin-top:8px"><strong>Impact of Technology on Society (3 cr):</strong> Courses examining the relationship between technology and society.</p>
 <p style="margin-top:8px;font-size:0.78rem">See: <a href="https://academicservices.engineering.ubc.ca/degree-planning/course-planning/" style="color:var(--ac)">EAS Course Planning Page</a></p>
 </div>
 <div class="elective-box">
 <h3>🔬 Science Elective (3 cr)</h3>
-<p>3 credits from an approved science department (e.g., ASTR, BIOL, CHEM, EOSC, PHYS, STAT).</p>
+<p>3 credits from an approved science department. Designed to provide an introduction to the practice of the scientific method. See the <a href="https://ubcece.notion.site/Science-Electives-931fdccbba664a35b5267cdfc9da8ae9" style="color:var(--ac)">Science Elective Checklist</a>.</p>
 </div>
 <div class="elective-box">
-<h3>🆓 Free Electives (6 cr)</h3>
-<p>6 credits of free electives. Can be applied toward Minor requirements (e.g., Mathematics Minor, Commerce Minor). Other courses can also satisfy this.</p>
+<h3>🆓 Free Electives (3 cr)</h3>
+<p>3 credits of free electives. Can extend beyond engineering or science. May be applied toward ECE requirements and Minor requirements (e.g., Mathematics Minor, Commerce Minor).</p>
 </div>
 </div>
 </div>
 
-<!-- Course descriptions -->
+<!-- Core course highlights -->
 <div class="elective-section">
 <h2>🔑 核心课程简介 Core Course Highlights</h2>
 <div style="background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:20px 24px">
 <div style="margin-bottom:16px">
-<div style="font-weight:700;color:var(--ac);margin-bottom:4px">CPEN 211 · Introduction to Microcomputers (5 cr)</div>
-<div style="font-size:0.84rem;color:var(--t2)">学生将在 FPGA 开发板上实现自己的微处理器，能够运行 ARM 汇编语言子集。涵盖数字逻辑、计算机体系结构和硬件-软件接口的基础知识。</div>
-<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">By the end of the course, students typically implement their own microprocessor (on an FPGA board) that can run a subset of ARM assembly language.</div>
+<div style="font-weight:700;color:#f0883e;margin-bottom:4px">ELEC 201 / 202 · Circuit Analysis (4+4 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">大二核心课程，涵盖直流和交流电路分析、运算放大器、瞬态响应和频率响应。为所有后续 EE 课程奠定基础。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Core second-year sequence covering DC/AC circuit analysis, op-amps, transient and frequency response. Foundation for all subsequent EE coursework.</div>
 </div>
 <div style="margin-bottom:16px">
-<div style="font-weight:700;color:var(--ac);margin-bottom:4px">CPEN 221 · Introduction to Software Construction (5 cr)</div>
-<div style="font-size:0.84rem;color:var(--t2)">多个小型项目，涉及音频文件处理、社交网络大规模图分析、含AI元素的游戏开发。同时学习编译器开发的关键概念。</div>
-<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Mini-projects may involve processing audio files, working with large graphs that represent social networks, or a game that utilizes some AI. Also covers key ideas for developing compilers.</div>
+<div style="font-weight:700;color:#f0883e;margin-bottom:4px">ELEC 221 · Signals and Systems (4 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">信号处理入门：傅里叶分析、拉普拉斯变换、采样定理、线性时不变系统。EE 和 CPEN 的数学基础课程。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Introduction to signal processing: Fourier analysis, Laplace transforms, sampling theorem, LTI systems. Mathematical foundation for EE and CPEN.</div>
 </div>
 <div style="margin-bottom:16px">
-<div style="font-weight:700;color:var(--ac);margin-bottom:4px">CPEN 291 / 391 · Computer Systems Design Studio (6 cr)</div>
-<div style="font-size:0.84rem;color:var(--t2)">硬件与软件综合设计项目，通常涉及机器人技术和自主小车控制。</div>
-<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Projects involve hardware and software design, often relating to robotics and controlling a small autonomous vehicle.</div>
+<div style="font-weight:700;color:#f0883e;margin-bottom:4px">ELEC 291 / 391 · Design Studio (6+6 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">电气工程设计实践课程，从概念到原型，涵盖 PCB 设计、焊接、测试和项目管理。大二和大三各一次。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Hands-on design studio from concept to prototype: PCB design, soldering, testing, and project management. Offered in both second and third year.</div>
 </div>
 <div>
-<div style="font-weight:700;color:var(--ac);margin-bottom:4px">CPEN 491 · Capstone Design Project (10 cr)</div>
-<div style="font-size:0.84rem;color:var(--t2)">为期一年的毕业设计项目，综合运用所学知识完成完整的计算机工程设计。</div>
-<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Year-long comprehensive design project integrating all aspects of computer engineering.</div>
+<div style="font-weight:700;color:#f0883e;margin-bottom:4px">ELEC 491 · Capstone Design Project (10 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">为期一年的毕业设计项目，综合运用电气工程知识完成完整的系统设计。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Year-long comprehensive design project integrating all aspects of electrical engineering.</div>
 </div>
 </div>
 </div>
 
 <div class="footer">
-<p>Data source: <a href="https://ece.ubc.ca/undergraduates/programs/computer-engineering-program/" style="color:var(--ac)">UBC ECE — Computer Engineering Program</a></p>
+<p>Data source: <a href="https://ece.ubc.ca/undergraduates/programs/electrical-engineering-program/" style="color:var(--ac)">UBC ECE — Electrical Engineering Program</a></p>
 <p style="margin-top:4px">Please verify current requirements with <a href="mailto:u-advising@ece.ubc.ca" style="color:var(--ac)">ECE Advising</a> · <a href="https://workday.students.ubc.ca/" style="color:var(--ac)">Workday Student</a></p>
 </div>
 
