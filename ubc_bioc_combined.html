@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UBC BIOC Course Map</title><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+  :root {
+    --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+    --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
+  .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
+  .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+  .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
+  .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
+  .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
+  .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
+  .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
+  .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .prereq strong { color: #ff7b72; }
+  .coreq { font-size: 0.76rem; color: #d2a8ff; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
+  .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+  .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#56d4dd,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Biochemistry Course Map</h1><p class="subtitle">UBC Biochemistry & Molecular Biology · 中英双语 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/biocv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">BIOC: Biochemistry & Molecular Biology (45 courses). Core courses shown; graduate (500+) and internship courses available in full calendar.</span></div><div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s200">200 Level</div>
+<div class="tab" data-tab="s300">300 Level</div>
+<div class="tab" data-tab="s400">400 Level</div>
+</div>
+<div class="year-section visible" id="s200">
+<h2>200 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">BIOC 202</div><div class="course-title-en">Introductory Medical Biochemistry</div><div class="course-title-zh">医学基础生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Proteins, enzymes, carbohydrate metabolism, glucose homeostasis. Human biochemistry.</div><div class="desc-zh">蛋白质、酶、碳水化合物代谢、葡萄糖稳态。人体生物化学。</div><div class="prereq"><strong>Pre:</strong> CHEM 203/223/233</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 203</div><div class="course-title-en">Fundamentals of Biochemistry</div><div class="course-title-zh">生物化学基础</div><span class="course-credits">3cr</span><div class="desc-en">Amino acids, proteins, enzymology, human metabolic pathways, carbohydrate metabolism.</div><div class="desc-zh">氨基酸、蛋白质、酶学、人体代谢途径、碳水化合物代谢。</div><div class="prereq"><strong>Pre:</strong> BIOL 200 + CHEM 203/223</div><div class="coreq"><strong>Co/Note:</strong> 并修: CHEM 213</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>300 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">BIOC 301</div><div class="course-title-en">Biochemistry Laboratory</div><div class="course-title-zh">生物化学实验</div><span class="course-credits">3cr</span><div class="desc-en">Techniques for studying chemical/physical properties of cellular components.</div><div class="desc-zh">研究细胞组分化学/物理性质的技术。</div><div class="prereq"><strong>Pre:</strong> CHEM 245+三年级 或 CHEM 235+三年级</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 302/303</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 302</div><div class="course-title-en">General Biochemistry</div><div class="course-title-zh">普通生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Metabolism of lipids, steroids, amino acids, nucleotides; replication, transcription.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸代谢；复制、转录。</div><div class="prereq"><strong>Pre:</strong> BIOL 201/BIOC 202/203 + CHEM</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 303</div><div class="course-title-en">Molecular Biochemistry</div><div class="course-title-zh">分子生物化学</div><span class="course-credits">6cr</span><div class="desc-en">Structure/function/metabolism of lipids, steroids, amino acids, nucleotides; gene regulation.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸的结构/功能/代谢；基因调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 202/203/BIOL 201 + CHEM 213/233</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 304</div><div class="course-title-en">Contemporary Biochemical Research</div><div class="course-title-zh">当代生物化学研究</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical research applied to medicine and biotechnology via experimental case studies.</div><div class="desc-zh">通过实验案例研究应用于医学和生物技术的生物化学研究。</div><div class="prereq"><strong>Pre:</strong> CHEM 213</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 303</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 306</div><div class="course-title-en">Quantitative Methods in Biochemistry</div><div class="course-title-zh">生物化学定量方法</div><span class="course-credits">3cr</span><div class="desc-en">Quantitative/computational methods: bioinformatics, high-throughput data.</div><div class="desc-zh">定量/计算方法：生物信息学、高通量数据。</div><div class="prereq"><strong>Pre:</strong> BIOC 203(+303) 或 BIOC 202/BIOL 201(+302)</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>400 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">BIOC 402</div><div class="course-title-en">Proteins: Structure and Function</div><div class="course-title-zh">蛋白质：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Protein structure, classification, purification, peptide synthesis, X-ray crystallography.</div><div class="desc-zh">蛋白质结构、分类、纯化、肽合成、X射线晶体学。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303/BIOT 380</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 403</div><div class="course-title-en">Enzymology</div><div class="course-title-zh">酶学</div><span class="course-credits">3cr</span><div class="desc-en">Kinetic analysis, catalytic mechanisms, transition state stabilization, regulation.</div><div class="desc-zh">动力学分析、催化机制、过渡态稳定、调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 402</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 404</div><div class="course-title-en">Biochemical Methods</div><div class="course-title-zh">生物化学方法</div><span class="course-credits">3cr</span><div class="desc-en">Theory and application of classical and emerging biochemical technologies.</div><div class="desc-zh">经典与新兴生物化学技术的理论与应用。</div><div class="prereq"><strong>Pre:</strong> 荣誉生或教师许可</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 410</div><div class="course-title-en">Nucleic Acids-Structure and Function</div><div class="course-title-zh">核酸：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Chemical/physical/biological properties of nucleic acids; gene expression.</div><div class="desc-zh">核酸的化学/物理/生物学性质；基因表达。</div><div class="prereq"><strong>Pre:</strong> BIOC 303+BIOL 335 或 BIOT 380</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 420</div><div class="course-title-en">Advanced Biochemical Techniques</div><div class="course-title-zh">高级生物化学技术</div><span class="course-credits">3cr</span><div class="desc-en">Multi-week experiments in contemporary biochemistry; experimental design.</div><div class="desc-zh">当代生物化学多周实验；实验设计。</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 404/FSCT 480</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 421</div><div class="course-title-en">Recombinant DNA Techniques</div><div class="course-title-zh">重组DNA技术</div><span class="course-credits">3cr</span><div class="desc-en">Contemporary nucleic acid research, cloning, recombinant protein engineering.</div><div class="desc-zh">当代核酸研究、克隆、重组蛋白工程。</div><div class="prereq"><strong>Pre:</strong> BIOC 301+410</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 440</div><div class="course-title-en">Concepts in Molecular Biology</div><div class="course-title-zh">分子生物学概念</div><span class="course-credits">3cr</span><div class="desc-en">Signal transduction, model eukaryotes, gene expression regulation.</div><div class="desc-zh">信号转导、模式真核生物、基因表达调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 448</div><div class="course-title-en">Directed Studies</div><div class="course-title-zh">指导研究</div><span class="course-credits">3-6cr</span><div class="desc-en">Library or lab project on specific topic agreed by faculty and student.</div><div class="desc-zh">师生商定主题的图书馆或实验项目。</div><div class="prereq"><strong>Pre:</strong> 系主任许可</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 449</div><div class="course-title-en">Honours Thesis</div><div class="course-title-zh">荣誉论文</div><span class="course-credits">3-6cr</span><div class="desc-en">Research problem under direction of faculty member.</div><div class="desc-zh">教师指导下的研究问题。</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 450</div><div class="course-title-en">Membrane Biochemistry</div><div class="course-title-zh">膜生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Biochemistry of membranes, membrane proteins, fusion, electrical signaling.</div><div class="desc-zh">膜与膜蛋白生物化学、膜融合、电信号。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
+<div class="course-card gen"><div class="course-code">BIOC 470</div><div class="course-title-en">Biochemistry & Society</div><div class="course-title-zh">生物化学与社会</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical basis of global challenges; critical evaluation of primary literature.</div><div class="desc-zh">全球挑战的生物化学基础；原始文献批判性评估。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303</div></div>
+</div>
+</div>
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">18 courses | UBC Vancouver Academic Calendar</p></div><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K9QJVJJ7SH');
+</script></body></html>

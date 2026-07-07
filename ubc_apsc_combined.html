@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UBC APSC Course Map</title><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+  :root {
+    --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+    --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
+    --mech: #f97583; --emag: #ffab70; --quant: #79c0ff;
+    --therm: #ff7b72; --lab: #7ee787; --comp: #c297ff;
+    --eng: #f2cc60; --bio: #56d4dd; --gen: #8b949e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+  .container { max-width: 1500px; margin: 0 auto; padding: 20px; }
+  h1 { text-align: center; font-size: 2rem; padding: 30px 0 10px; background: linear-gradient(135deg, #58a6ff, #c297ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { text-align: center; color: var(--text2); margin-bottom: 30px; font-size: 0.95rem; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; position: sticky; top: 0; background: var(--bg); padding: 12px 0; z-index: 100; border-bottom: 1px solid var(--border); }
+  .tab { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: var(--card-bg); color: var(--text2); transition: all 0.2s; white-space: nowrap; }
+  .tab:hover, .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; padding: 14px 18px; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--border); font-size: 0.82rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  .section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .section.active { visibility: visible; position: static; height: auto; overflow: visible; }
+
+  h2 { margin-bottom: 8px; font-size: 1.4rem; }
+  .sec-desc { color: var(--text2); margin-bottom: 20px; font-size: 0.9rem; }
+
+  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 20px; margin-bottom: 30px; }
+  .flow-box { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid var(--border); overflow-x: auto; }
+  .flow-box h3 { color: #333; font-size: 0.95rem; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #eee; }
+  .flow-box.full { grid-column: 1 / -1; }
+
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 14px; margin-top: 20px; }
+  .course-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-left: 4px solid var(--accent); transition: transform 0.15s; }
+  .course-card:hover { transform: translateY(-2px); }
+  .course-card.mech { border-left-color: var(--mech); } .course-card.emag { border-left-color: var(--emag); }
+  .course-card.quant { border-left-color: var(--quant); } .course-card.therm { border-left-color: var(--therm); }
+  .course-card.lab { border-left-color: var(--lab); } .course-card.comp { border-left-color: var(--comp); }
+  .course-card.eng { border-left-color: var(--eng); } .course-card.bio { border-left-color: var(--bio); }
+
+  .course-code { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+  .course-title-en { font-size: 0.9rem; color: var(--text); margin: 3px 0; }
+  .course-title-zh { font-size: 0.85rem; color: var(--text2); margin-bottom: 3px; }
+  .course-credits { font-size: 0.75rem; color: var(--text2); background: rgba(255,255,255,0.05); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .course-field { display: inline-block; font-size: 0.7rem; padding: 2px 7px; border-radius: 4px; margin-left: 5px; }
+  .field-mech { background: rgba(249,117,131,0.15); color: var(--mech); } .field-emag { background: rgba(255,171,112,0.15); color: var(--emag); }
+  .field-quant { background: rgba(121,192,255,0.15); color: var(--quant); } .field-therm { background: rgba(255,123,114,0.15); color: var(--therm); }
+  .field-lab { background: rgba(126,231,135,0.15); color: var(--lab); } .field-comp { background: rgba(194,151,255,0.15); color: var(--comp); }
+  .field-eng { background: rgba(242,204,96,0.15); color: var(--eng); } .field-bio { background: rgba(86,212,221,0.15); color: var(--bio); }
+
+  .desc-en, .desc-zh { font-size: 0.8rem; margin-top: 6px; }
+  .desc-en { color: var(--text); } .desc-zh { color: var(--text2); }
+  .prereq { font-size: 0.76rem; margin-top: 6px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 6px; }
+  .prereq strong { color: #ff7b72; }
+  .coreq { font-size: 0.76rem; color: #d2a8ff; }
+
+  .path-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }
+  .path-card h4 { font-size: 1rem; margin-bottom: 8px; }
+  .path-card p { font-size: 0.85rem; color: var(--text2); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 30px 0; }
+
+  @media (max-width: 768px) {
+    .course-grid, .flow-grid { grid-template-columns: 1fr; }
+    .tabs { gap: 4px; } .tab { padding: 6px 12px; font-size: 0.75rem; }
+  }
+
+  .mode-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .mode-btn { flex: 1; text-align: center; padding: 12px 20px; cursor: pointer; font-size: 1rem; font-weight: 600; background: var(--card-bg); color: var(--text2); transition: all 0.2s; }
+  .mode-btn:first-child { border-right: 1px solid var(--border); }
+  .mode-btn.active { background: var(--accent); color: #fff; }
+  .mode-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+  .tab-deps { font-size: 0.82rem; }
+  .tab-deps.active { background: #7c3aed !important; border-color: #7c3aed !important; }
+  .year-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .year-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+  .track-section { visibility: hidden; position: absolute; height: 0; overflow: hidden; }
+  .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
+
+</style></head><body><div class="container">
+<h1 style="background:linear-gradient(135deg,#f97316,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Applied Science Course Map</h1><p class="subtitle">UBC Applied Science · 中英双语 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/apscv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">APSC: Applied Science core courses for all engineering students.</span></div><div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s100">100 Level</div>
+<div class="tab" data-tab="s200">200 Level</div>
+<div class="tab" data-tab="s300">300 Level</div>
+<div class="tab" data-tab="s400">400+ Level</div>
+</div>
+<div class="year-section visible" id="s100">
+<h2>100 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">APSC 100</div><div class="course-title-en">Intro to Engineering I</div><div class="course-title-zh">工程导论I</div><span class="course-credits">3cr</span><div class="desc-en">Roles and responsibilities of the engineer, engineering disciplines.</div><div class="desc-zh">工程师角色与职责、工程学科。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 101</div><div class="course-title-en">Intro to Engineering II</div><div class="course-title-zh">工程导论II</div><span class="course-credits">3cr</span><div class="desc-en">Engineering design process, sustainability, prototype testing.</div><div class="desc-zh">工程设计过程、可持续性、原型测试。</div><div class="prereq"><strong>Pre:</strong> APSC 100</div></div>
+<div class="course-card gen"><div class="course-code">APSC 150</div><div class="course-title-en">Engineering Case Studies</div><div class="course-title-zh">工程案例研究</div><span class="course-credits">5cr</span><div class="desc-en">Application of scientific principles to practical problems.</div><div class="desc-zh">科学原理在实践问题中的应用。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 151</div><div class="course-title-en">Computer-Aided Engineering Graphics</div><div class="course-title-zh">计算机辅助工程制图</div><span class="course-credits">3cr</span><div class="desc-en">Orthographic projection, technical sketching, 3D visualization.</div><div class="desc-zh">正交投影、技术草图、三维可视化。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 160</div><div class="course-title-en">Intro to Computation in Engineering Design</div><div class="course-title-zh">工程设计计算导论</div><span class="course-credits">3cr</span><div class="desc-en">Analysis and simulation, data acquisition, measurement interfaces.</div><div class="desc-zh">分析与仿真、数据采集、测量接口。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 172</div><div class="course-title-en">Engineering Analysis I</div><div class="course-title-zh">工程分析I</div><span class="course-credits">3cr</span><div class="desc-en">Functions, limits, differentiation, applications of derivatives, integration.</div><div class="desc-zh">函数、极限、微分、导数应用、积分。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 173</div><div class="course-title-en">Engineering Analysis II</div><div class="course-title-zh">工程分析II</div><span class="course-credits">3cr</span><div class="desc-en">Integrals, transcendental functions, integration techniques, polar coordinates.</div><div class="desc-zh">积分、超越函数、积分技巧、极坐标。</div><div class="prereq"><strong>Pre:</strong> APSC 172</div></div>
+<div class="course-card gen"><div class="course-code">APSC 176</div><div class="course-title-en">Engineering Communication</div><div class="course-title-zh">工程沟通</div><span class="course-credits">3cr</span><div class="desc-en">Purpose, audience, content, format, team-based report writing.</div><div class="desc-zh">目的、受众、内容、格式、团队报告写作。</div><div class="prereq"><strong>Pre:</strong> LPI level 5</div></div>
+<div class="course-card gen"><div class="course-code">APSC 178</div><div class="course-title-en">Electricity, Magnetism, and Waves</div><div class="course-title-zh">电磁学与波</div><span class="course-credits">4cr</span><div class="desc-en">Coulomb law, electric/Gauss law, DC circuits, magnetic fields, EM induction, waves.</div><div class="desc-zh">库仑定律、高斯定律、直流电路、磁场、电磁感应、波。</div><div class="prereq"><strong>Pre:</strong> APSC 172</div><div class="coreq"><strong>Co/Note:</strong> 并修: APSC 173</div></div>
+<div class="course-card gen"><div class="course-code">APSC 179</div><div class="course-title-en">Linear Algebra for Engineers</div><div class="course-title-zh">工程师线性代数</div><span class="course-credits">3cr</span><div class="desc-en">Linear equations, Gaussian elimination, matrix operations.</div><div class="desc-zh">线性方程、高斯消元、矩阵运算。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 180</div><div class="course-title-en">Statics</div><div class="course-title-zh">静力学</div><span class="course-credits">3cr</span><div class="desc-en">Force vectors, free body diagram, equilibrium of particles.</div><div class="desc-zh">力向量、自由体图、质点平衡。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 182</div><div class="course-title-en">Matter and Energy I</div><div class="course-title-zh">物质与能量I</div><span class="course-credits">3cr</span><div class="desc-en">Thermometry, states of matter, 1st and 2nd laws of thermodynamics.</div><div class="desc-zh">测温学、物质状态、热力学第一/第二定律。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 183</div><div class="course-title-en">Matter and Energy II</div><div class="course-title-zh">物质与能量II</div><span class="course-credits">3cr</span><div class="desc-en">Atomic structures, bonding, solid crystals, chemical equilibrium.</div><div class="desc-zh">原子结构、键合、固体晶体、化学平衡。</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s200">
+<h2>200 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">APSC 201</div><div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div><span class="course-credits">3cr</span><div class="desc-en">Written and oral communication in engineering.</div><div class="desc-zh">工程书面与口头沟通。</div><div class="prereq"><strong>Pre:</strong> APSC 176/ENGL/WRDS 150</div></div>
+<div class="course-card gen"><div class="course-code">APSC 261</div><div class="course-title-en">Technology and Society I</div><div class="course-title-zh">技术与社会I</div><span class="course-credits">3cr</span><div class="desc-en">Influence of technology on social, political, economic, environmental aspects.</div><div class="desc-zh">技术对社会、政治、经济、环境方面的影响。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 262</div><div class="course-title-en">Technology and Society II</div><div class="course-title-zh">技术与社会II</div><span class="course-credits">3cr</span><div class="desc-en">Continuation of technology-society themes.</div><div class="desc-zh">技术-社会主题续篇。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 278</div><div class="course-title-en">Engineering Materials</div><div class="course-title-zh">工程材料</div><span class="course-credits">3cr</span><div class="desc-en">Atomic bonding, crystal structures, properties of metals/ceramics/polymers.</div><div class="desc-zh">原子键合、晶体结构、金属/陶瓷/聚合物性质。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 279</div><div class="course-title-en">Engineering Materials Laboratory</div><div class="course-title-zh">工程材料实验</div><span class="course-credits">1cr</span><div class="desc-en">Lab complement to APSC 278.</div><div class="desc-zh">APSC 278 配套实验。</div><div class="coreq"><strong>Co/Note:</strong> 并修: APSC 278</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s300">
+<h2>300 Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">APSC 364</div><div class="course-title-en">Applied Sustainability</div><div class="course-title-zh">应用可持续性</div><span class="course-credits">3cr</span><div class="desc-en">Role of common infrastructures, impact of technological solutions.</div><div class="desc-zh">基础设施角色、技术方案影响。</div><div class="prereq"><strong>Pre:</strong> 三年级</div></div>
+<div class="course-card gen"><div class="course-code">APSC 366</div><div class="course-title-en">The Art of the Possible: Engineering for Non-Engineers</div><div class="course-title-zh">工程入门(非工科)</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to engineering for non-specialists via case studies.</div><div class="desc-zh">通过案例研究为非专业人士介绍工程。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 367</div><div class="course-title-en">Humanitarian Engineering</div><div class="course-title-zh">人道主义工程</div><span class="course-credits">3cr</span><div class="desc-en">Best practice, politics, ethics of technical solutions to humanitarian assistance.</div><div class="desc-zh">人道主义援助技术方案的最佳实践、政治与伦理。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 377</div><div class="course-title-en">Nuclear Weapons and Arms Control</div><div class="course-title-zh">核武器与军备控制</div><span class="course-credits">3cr</span><div class="desc-en">Evolution and significance of nuclear weapons and arms control.</div><div class="desc-zh">核武器与军备控制的演变与意义。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 380</div><div class="course-title-en">Introduction to Microcomputers</div><div class="course-title-zh">微机导论</div><span class="course-credits">3cr</span><div class="desc-en">Microcomputers in real-time or non-computational engineering applications.</div><div class="desc-zh">实时或非计算工程应用中的微机。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 383</div><div class="course-title-en">Prototyping</div><div class="course-title-zh">原型设计</div><span class="course-credits">3cr</span><div class="desc-en">Systematic use of tools for prototyping with software, electronics, physical components.</div><div class="desc-zh">使用软件、电子、物理组件进行原型设计的系统方法。</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>400+ Level</h2>
+<div class="course-grid">
+<div class="course-card gen"><div class="course-code">APSC 402</div><div class="course-title-en">Living Language: Science and Society</div><div class="course-title-zh">科学与社会的活语言</div><span class="course-credits">3cr</span><div class="desc-en">Multi-disciplinary: examine, integrate and apply subject-specific knowledge.</div><div class="desc-zh">多学科：审视、整合和应用学科知识。</div><div class="prereq"><strong>Pre:</strong> 四年级</div></div>
+<div class="course-card gen"><div class="course-code">APSC 440</div><div class="course-title-en">Management Fundamentals for Tech Product Marketing</div><div class="course-title-zh">技术产品营销管理基础</div><span class="course-credits">3cr</span><div class="desc-en">Project management, marketing planning, product development, quality management.</div><div class="desc-zh">项目管理、营销规划、产品开发、质量管理。</div><div class="prereq"><strong>Pre:</strong> 工程四年级</div></div>
+<div class="course-card gen"><div class="course-code">APSC 450</div><div class="course-title-en">Professional Engineering Practice</div><div class="course-title-zh">专业工程实践</div><span class="course-credits">2cr</span><div class="desc-en">Legislation, ethical principles, management of engineering enterprises.</div><div class="desc-zh">法规、伦理原则、工程企业管理。</div><div class="prereq"><strong>Pre:</strong> 工程毕业年级</div></div>
+<div class="course-card gen"><div class="course-code">APSC 461</div><div class="course-title-en">Global Engineering Leadership</div><div class="course-title-zh">全球工程领导力</div><span class="course-credits">3cr</span><div class="desc-en">Concepts, theory, practice of engineering leadership.</div><div class="desc-zh">工程领导力的概念、理论与实践。</div><div class="prereq"><strong>Pre:</strong> 完成三年级</div></div>
+<div class="course-card gen"><div class="course-code">APSC 486</div><div class="course-title-en">New Venture Design</div><div class="course-title-zh">新创企业设计</div><span class="course-credits">6cr</span><div class="desc-en">Teams create business plan and prototype/engineering solution.</div><div class="desc-zh">团队创建商业计划和原型/工程方案。</div></div>
+<div class="course-card gen"><div class="course-code">APSC 496</div><div class="course-title-en">Interdisciplinary Engineering Design Project</div><div class="course-title-zh">跨学科工程设计项目</div><span class="course-credits">1-9cr</span><div class="desc-en">Projects involving students from several departments.</div><div class="desc-zh">涉及多个系学生的项目。</div></div>
+</div>
+</div>
+<hr>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">30 courses | UBC Vancouver Academic Calendar</p></div><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K9QJVJJ7SH');
+</script></body></html>
