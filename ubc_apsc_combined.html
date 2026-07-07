@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UBC APSC Course Map</title><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+<title>UBC APSC Course Map | UBC应用科学系课程关系图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
   :root {
     --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
     --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
@@ -80,105 +81,117 @@
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
 
 </style></head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#f97316,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Society Course Map</h1><p class="subtitle">UBC Faculty of Applied Science · Bilingual (EN/ZH) · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/apscv" style="color:var(--accent)">UBC Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">Legend:</span>
-<div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>Core</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--design)"></div>Design</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--comp)"></div>Computation</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--comm)"></div>Communication</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--math)"></div>Math</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--lab)"></div>Lab</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--mgmt)"></div>Management</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--soc)"></div>Society</div>
+<h1 style="background:linear-gradient(135deg,#f97316,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🔌 UBC 应用科学系课程完整依赖关系图</h1><p class="subtitle">UBC Applied Science Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/apscv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">图例:</span>
+<div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>核心</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--design)"></div>设计</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--comp)"></div>计算</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--comm)"></div>沟通</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--math)"></div>数学</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--lab)"></div>实验</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--mgmt)"></div>管理</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--soc)"></div>社会</div>
 </div><div class="mode-bar">
-  <div class="mode-btn active" data-mode="year">📘 By Year Level</div>
-  <div class="mode-btn" data-mode="track">🔗 By Subject Track</div>
+  <div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div>
+  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div>
 </div>
 <div class="tabs tab-year" id="tabYear">
-<div class="tab active" data-tab="s100">100 Level</div>
-<div class="tab" data-tab="s200">200 Level</div>
-<div class="tab" data-tab="s300">300+ Level</div>
+<div class="tab active" data-tab="s100">📘 100级 · 一年级</div>
+<div class="tab" data-tab="s200">📗 200级 · 二年级</div>
+<div class="tab" data-tab="s300">📙 300级 · 三年级</div>
+<div class="tab" data-tab="s400">📕 400级 · 四年级</div>
 </div>
 <div class="tabs tab-track" id="tabTrack" style="display:none;">
-<div class="tab tab-deps active" data-tab="core">Core Engineering</div>
-<div class="tab tab-deps" data-tab="design">Design & Prototyping</div>
-<div class="tab tab-deps" data-tab="comp">Computation</div>
-<div class="tab tab-deps" data-tab="comm">Communication & Society</div>
-<div class="tab tab-deps" data-tab="mgmt">Management & Leadership</div>
-<div class="tab tab-deps" data-tab="full">Overview</div>
+<div class="tab tab-deps active" data-tab="core">⚙️ 核心工程课</div>
+<div class="tab tab-deps" data-tab="design">🎨 设计与原型</div>
+<div class="tab tab-deps" data-tab="comp">💻 计算</div>
+<div class="tab tab-deps" data-tab="comm">📝 沟通与社会</div>
+<div class="tab tab-deps" data-tab="mgmt">📊 管理与领导力</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
 </div>
 <div class="year-section visible" id="s100">
-<h2>100 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📘 100级 · 一年级</h2>
+<div class="flow-box"><h3>📊 📘 100级 · 一年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[100 Intro I]-->B[101 Intro II]
   C[172 Analysis I]-->D[173 Analysis II]
   E[178 EM Waves]
   F[160 Computation]
   G[150 Case Studies]
-  H[151 CAD Graphics]
 </div></div>
 <div class="course-grid">
-<div class="course-card core"><div class="course-code">APSC 100</div><div class="course-title-en">Intro to Engineering I</div><div class="course-title-zh">工程导论I</div><span class="course-credits">3cr</span><div class="desc-en">Roles and responsibilities of the engineer, engineering disciplines.</div><div class="desc-zh">工程师角色与职责、工程学科。</div></div>
-<div class="course-card core"><div class="course-code">APSC 101</div><div class="course-title-en">Intro to Engineering II</div><div class="course-title-zh">工程导论II</div><span class="course-credits">3cr</span><div class="desc-en">Engineering design process, sustainability, prototype testing.</div><div class="desc-zh">工程设计过程、可持续性、原型测试。</div><div class="prereq"><strong>Pre:</strong> APSC 100</div></div>
-<div class="course-card core"><div class="course-code">APSC 150</div><div class="course-title-en">Engineering Case Studies</div><div class="course-title-zh">工程案例研究</div><span class="course-credits">5cr</span><div class="desc-en">Application of scientific principles and technical knowledge to practical problems.</div><div class="desc-zh">科学原理和技术知识在实践问题中的应用。</div></div>
-<div class="course-card design"><div class="course-code">APSC 151</div><div class="course-title-en">Computer-Aided Engineering Graphics</div><div class="course-title-zh">计算机辅助工程制图</div><span class="course-credits">3cr</span><div class="desc-en">Orthographic projection, technical sketching, 3D visualization.</div><div class="desc-zh">正交投影、技术草图、三维可视化。</div></div>
-<div class="course-card comp"><div class="course-code">APSC 160</div><div class="course-title-en">Intro to Computation in Engineering Design</div><div class="course-title-zh">工程设计计算导论</div><span class="course-credits">3cr</span><div class="desc-en">Analysis and simulation, data acquisition, measurement interfaces, engineering tools.</div><div class="desc-zh">分析与仿真、数据采集、测量接口、工程工具。</div></div>
-<div class="course-card math"><div class="course-code">APSC 172</div><div class="course-title-en">Engineering Analysis I</div><div class="course-title-zh">工程分析I</div><span class="course-credits">3cr</span><div class="desc-en">Functions, limits, differentiation, applications of derivatives, integration.</div><div class="desc-zh">函数、极限、微分、导数应用、积分。</div></div>
-<div class="course-card math"><div class="course-code">APSC 173</div><div class="course-title-en">Engineering Analysis II</div><div class="course-title-zh">工程分析II</div><span class="course-credits">3cr</span><div class="desc-en">Integrals, transcendental functions, techniques of integration, polar coordinates.</div><div class="desc-zh">积分、超越函数、积分技巧、极坐标。</div><div class="prereq"><strong>Pre:</strong> APSC 172</div></div>
-<div class="course-card comm"><div class="course-code">APSC 176</div><div class="course-title-en">Engineering Communication</div><div class="course-title-zh">工程沟通</div><span class="course-credits">3cr</span><div class="desc-en">Purpose, audience, content, format, team-based report writings and presentations.</div><div class="desc-zh">目的、受众、内容、格式、团队报告写作与演示。</div><div class="prereq"><strong>Pre:</strong> LPI level 5</div></div>
-<div class="course-card core"><div class="course-code">APSC 178</div><div class="course-title-en">Electricity, Magnetism, and Waves</div><div class="course-title-zh">电磁学与波</div><span class="course-credits">4cr</span><div class="desc-en">Coulomb law, Gauss law, DC circuits, magnetic fields, EM induction, waves, optics.</div><div class="desc-zh">库仑定律、高斯定律、直流电路、磁场、电磁感应、波、光学。</div><div class="prereq"><strong>Pre:</strong> APSC 172</div><div class="coreq"><strong>Co/Note:</strong> Co: APSC 173</div></div>
-<div class="course-card math"><div class="course-code">APSC 179</div><div class="course-title-en">Linear Algebra for Engineers</div><div class="course-title-zh">工程师线性代数</div><span class="course-credits">3cr</span><div class="desc-en">Systems of linear equations, Gaussian elimination, matrix operations, special matrices.</div><div class="desc-zh">线性方程组、高斯消元、矩阵运算、特殊矩阵。</div></div>
-<div class="course-card core"><div class="course-code">APSC 180</div><div class="course-title-en">Statics</div><div class="course-title-zh">静力学</div><span class="course-credits">3cr</span><div class="desc-en">Force vectors, Cartesian coordinates, free body diagram, equilibrium of particles.</div><div class="desc-zh">力向量、笛卡尔坐标系、自由体图、质点平衡。</div></div>
-<div class="course-card core"><div class="course-code">APSC 182</div><div class="course-title-en">Matter and Energy I</div><div class="course-title-zh">物质与能量I</div><span class="course-credits">3cr</span><div class="desc-en">Thermometry, states of matter, ideal/real gases, 1st/2nd laws of thermodynamics.</div><div class="desc-zh">测温学、物质状态、理想/实际气体、热力学第一/第二定律。</div></div>
-<div class="course-card core"><div class="course-code">APSC 183</div><div class="course-title-en">Matter and Energy II</div><div class="course-title-zh">物质与能量II</div><span class="course-credits">3cr</span><div class="desc-en">Atomic structures and bonding, solid crystals, chemical equilibrium, reactions.</div><div class="desc-zh">原子结构与键合、固体晶体、化学平衡、反应。</div></div>
+<div class="course-card core"><div class="course-code">APSC 100</div><div class="course-title-en">Intro to Engineering I</div><div class="course-title-zh">工程导论I</div><span class="course-credits">3 学分</span><div class="desc-en">Roles and responsibilities of the engineer, engineering disciplines.</div><div class="desc-zh">工程师角色与职责、工程学科。</div></div>
+<div class="course-card core"><div class="course-code">APSC 101</div><div class="course-title-en">Intro to Engineering II</div><div class="course-title-zh">工程导论II</div><span class="course-credits">3 学分</span><div class="desc-en">Engineering design process, sustainability, prototype testing.</div><div class="desc-zh">工程设计过程、可持续性、原型测试。</div><div class="prereq"><strong>前置:</strong> APSC 100</div></div>
+<div class="course-card core"><div class="course-code">APSC 150</div><div class="course-title-en">Engineering Case Studies</div><div class="course-title-zh">工程案例研究</div><span class="course-credits">5 学分</span><div class="desc-en">Application of scientific principles and technical knowledge to practical problems.</div><div class="desc-zh">科学原理和技术知识在实践问题中的应用。</div></div>
+<div class="course-card design"><div class="course-code">APSC 151</div><div class="course-title-en">Computer-Aided Engineering Graphics</div><div class="course-title-zh">计算机辅助工程制图</div><span class="course-credits">3 学分</span><div class="desc-en">Orthographic projection, technical sketching, 3D visualization.</div><div class="desc-zh">正交投影、技术草图、三维可视化。</div></div>
+<div class="course-card comp"><div class="course-code">APSC 160</div><div class="course-title-en">Intro to Computation in Engineering Design</div><div class="course-title-zh">工程设计计算导论</div><span class="course-credits">3 学分</span><div class="desc-en">Analysis and simulation, data acquisition, measurement interfaces, engineering tools.</div><div class="desc-zh">分析与仿真、数据采集、测量接口、工程工具。</div></div>
+<div class="course-card math"><div class="course-code">APSC 172</div><div class="course-title-en">Engineering Analysis I</div><div class="course-title-zh">工程分析I</div><span class="course-credits">3 学分</span><div class="desc-en">Functions, limits, differentiation, applications of derivatives, integration.</div><div class="desc-zh">函数、极限、微分、导数应用、积分。</div></div>
+<div class="course-card math"><div class="course-code">APSC 173</div><div class="course-title-en">Engineering Analysis II</div><div class="course-title-zh">工程分析II</div><span class="course-credits">3 学分</span><div class="desc-en">Integrals, transcendental functions, techniques of integration, polar coordinates.</div><div class="desc-zh">积分、超越函数、积分技巧、极坐标。</div><div class="prereq"><strong>前置:</strong> APSC 172</div></div>
+<div class="course-card comm"><div class="course-code">APSC 176</div><div class="course-title-en">Engineering Communication</div><div class="course-title-zh">工程沟通</div><span class="course-credits">3 学分</span><div class="desc-en">Purpose, audience, content, format, team-based report writings and presentations.</div><div class="desc-zh">目的、受众、内容、格式、团队报告写作与演示。</div><div class="prereq"><strong>前置:</strong> LPI level 5</div></div>
+<div class="course-card core"><div class="course-code">APSC 178</div><div class="course-title-en">Electricity, Magnetism, and Waves</div><div class="course-title-zh">电磁学与波</div><span class="course-credits">4 学分</span><div class="desc-en">Coulomb law, Gauss law, DC circuits, magnetic fields, EM induction, waves, optics.</div><div class="desc-zh">库仑定律、高斯定律、直流电路、磁场、电磁感应、波、光学。</div><div class="prereq"><strong>前置:</strong> APSC 172</div><div class="coreq"><strong>并修/注意:</strong> 并修: APSC 173</div></div>
+<div class="course-card math"><div class="course-code">APSC 179</div><div class="course-title-en">Linear Algebra for Engineers</div><div class="course-title-zh">工程师线性代数</div><span class="course-credits">3 学分</span><div class="desc-en">Systems of linear equations, Gaussian elimination, matrix operations.</div><div class="desc-zh">线性方程组、高斯消元、矩阵运算。</div></div>
+<div class="course-card core"><div class="course-code">APSC 180</div><div class="course-title-en">Statics</div><div class="course-title-zh">静力学</div><span class="course-credits">3 学分</span><div class="desc-en">Force vectors, Cartesian coordinates, free body diagram, equilibrium of particles.</div><div class="desc-zh">力向量、笛卡尔坐标系、自由体图、质点平衡。</div></div>
+<div class="course-card core"><div class="course-code">APSC 182</div><div class="course-title-en">Matter and Energy I</div><div class="course-title-zh">物质与能量I</div><span class="course-credits">3 学分</span><div class="desc-en">Thermometry, states of matter, ideal/real gases, 1st/2nd laws of thermodynamics.</div><div class="desc-zh">测温学、物质状态、理想/实际气体、热力学第一/第二定律。</div></div>
+<div class="course-card core"><div class="course-code">APSC 183</div><div class="course-title-en">Matter and Energy II</div><div class="course-title-zh">物质与能量II</div><span class="course-credits">3 学分</span><div class="desc-en">Atomic structures and bonding, solid crystals, chemical equilibrium, reactions.</div><div class="desc-zh">原子结构与键合、固体晶体、化学平衡、反应。</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s200">
-<h2>200 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📗 200级 · 二年级</h2>
+<div class="flow-box"><h3>📊 📗 200级 · 二年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[201 Tech Comm]-->B[261 Tech Society]
   C[278 Materials]-->D[279 Materials Lab]
   B-->E[262 Society II]
 </div></div>
 <div class="course-grid">
-<div class="course-card comm"><div class="course-code">APSC 201</div><div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div><span class="course-credits">3cr</span><div class="desc-en">Written and oral communication in engineering. Report preparation, business correspondence.</div><div class="desc-zh">工程书面与口头沟通。报告撰写、商务信函。</div><div class="prereq"><strong>Pre:</strong> APSC 176/ENGL/WRDS 150</div></div>
-<div class="course-card soc"><div class="course-code">APSC 261</div><div class="course-title-en">Technology and Society I</div><div class="course-title-zh">技术与社会I</div><span class="course-credits">3cr</span><div class="desc-en">Influence of technology on social, political, economic, and environmental aspects.</div><div class="desc-zh">技术对社会、政治、经济和环境方面的影响。</div></div>
-<div class="course-card soc"><div class="course-code">APSC 262</div><div class="course-title-en">Technology and Society II</div><div class="course-title-zh">技术与社会II</div><span class="course-credits">3cr</span><div class="desc-en">Continuation of technology-society themes.</div><div class="desc-zh">技术-社会主题续篇。</div></div>
-<div class="course-card core"><div class="course-code">APSC 278</div><div class="course-title-en">Engineering Materials</div><div class="course-title-zh">工程材料</div><span class="course-credits">3cr</span><div class="desc-en">Atomic bonding, crystal structures, properties of metals/ceramics/polymers/wood/concrete.</div><div class="desc-zh">原子键合、晶体结构、金属/陶瓷/聚合物/木材/混凝土性质。</div></div>
-<div class="course-card lab"><div class="course-code">APSC 279</div><div class="course-title-en">Engineering Materials Laboratory</div><div class="course-title-zh">工程材料实验</div><span class="course-credits">1cr</span><div class="desc-en">Lab complement to APSC 278: material properties, corrosion, mechanical testing.</div><div class="desc-zh">APSC 278配套实验：材料性质、腐蚀、力学测试。</div><div class="coreq"><strong>Co/Note:</strong> Co: APSC 278</div></div>
+<div class="course-card comm"><div class="course-code">APSC 201</div><div class="course-title-en">Technical Communication</div><div class="course-title-zh">技术沟通</div><span class="course-credits">3 学分</span><div class="desc-en">Written and oral communication in engineering. Report preparation, business correspondence.</div><div class="desc-zh">工程书面与口头沟通。报告撰写、商务信函。</div><div class="prereq"><strong>前置:</strong> APSC 176/ENGL/WRDS 150</div></div>
+<div class="course-card soc"><div class="course-code">APSC 261</div><div class="course-title-en">Technology and Society I</div><div class="course-title-zh">技术与社会I</div><span class="course-credits">3 学分</span><div class="desc-en">Influence of technology on social, political, economic, and environmental aspects.</div><div class="desc-zh">技术对社会、政治、经济和环境方面的影响。</div></div>
+<div class="course-card soc"><div class="course-code">APSC 262</div><div class="course-title-en">Technology and Society II</div><div class="course-title-zh">技术与社会II</div><span class="course-credits">3 学分</span><div class="desc-en">Continuation of technology-society themes.</div><div class="desc-zh">技术-社会主题续篇。</div></div>
+<div class="course-card core"><div class="course-code">APSC 278</div><div class="course-title-en">Engineering Materials</div><div class="course-title-zh">工程材料</div><span class="course-credits">3 学分</span><div class="desc-en">Atomic bonding, crystal structures, properties of metals/ceramics/polymers/wood/concrete.</div><div class="desc-zh">原子键合、晶体结构、金属/陶瓷/聚合物/木材/混凝土性质。</div></div>
+<div class="course-card lab"><div class="course-code">APSC 279</div><div class="course-title-en">Engineering Materials Laboratory</div><div class="course-title-zh">工程材料实验</div><span class="course-credits">1 学分</span><div class="desc-en">Lab complement to APSC 278: material properties, corrosion, mechanical testing.</div><div class="desc-zh">APSC 278配套实验：材料性质、腐蚀、力学测试。</div><div class="coreq"><strong>并修/注意:</strong> 并修: APSC 278</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s300">
-<h2>300+ Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📙 300级 · 三年级</h2>
+<div class="flow-box"><h3>📊 📙 300级 · 三年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[364 Sustainability]-->B[366 Eng for Non-Eng]
   C[367 Humanitarian]
-  D[383 Prototyping]-->E[486 New Venture]
-  F[440 Management]-->G[450 Prof Practice]
-  H[461 Leadership]
+  D[383 Prototyping]
+  E[380 Microcomputers]
 </div></div>
 <div class="course-grid">
-<div class="course-card soc"><div class="course-code">APSC 364</div><div class="course-title-en">Applied Sustainability</div><div class="course-title-zh">应用可持续性</div><span class="course-credits">3cr</span><div class="desc-en">Role of common infrastructures, impact of technological solutions on people/economy/environment.</div><div class="desc-zh">基础设施角色、技术方案对人/经济/环境的影响。</div><div class="prereq"><strong>Pre:</strong> Third-year</div></div>
-<div class="course-card soc"><div class="course-code">APSC 366</div><div class="course-title-en">The Art of the Possible: Engineering for Non-Engineers</div><div class="course-title-zh">工程入门(非工科)</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to engineering for non-specialists via case studies from sustainability.</div><div class="desc-zh">通过可持续性案例研究为非专业人士介绍工程。</div></div>
-<div class="course-card soc"><div class="course-code">APSC 367</div><div class="course-title-en">Humanitarian Engineering</div><div class="course-title-zh">人道主义工程</div><span class="course-credits">3cr</span><div class="desc-en">Best practice, politics, ethics of technical solutions to humanitarian assistance.</div><div class="desc-zh">人道主义援助技术方案的最佳实践、政治与伦理。</div></div>
-<div class="course-card soc"><div class="course-code">APSC 377</div><div class="course-title-en">Nuclear Weapons and Arms Control</div><div class="course-title-zh">核武器与军备控制</div><span class="course-credits">3cr</span><div class="desc-en">Evolution and contemporary significance of nuclear weapons and arms control.</div><div class="desc-zh">核武器与军备控制的演变与当代意义。</div></div>
-<div class="course-card comp"><div class="course-code">APSC 380</div><div class="course-title-en">Introduction to Microcomputers</div><div class="course-title-zh">微机导论</div><span class="course-credits">3cr</span><div class="desc-en">Microcomputers in real-time or non-computational engineering applications.</div><div class="desc-zh">实时或非计算工程应用中的微机。</div></div>
-<div class="course-card design"><div class="course-code">APSC 383</div><div class="course-title-en">Prototyping</div><div class="course-title-zh">原型设计</div><span class="course-credits">3cr</span><div class="desc-en">Systematic approach and use of tools for prototyping with software, electronics, physical components.</div><div class="desc-zh">使用软件、电子、物理组件进行系统化原型设计。</div></div>
-<div class="course-card comm"><div class="course-code">APSC 402</div><div class="course-title-en">Living Language: Science and Society</div><div class="course-title-zh">科学与社会的活语言</div><span class="course-credits">3cr</span><div class="desc-en">Multi-disciplinary: examine, integrate and apply subject-specific knowledge.</div><div class="desc-zh">多学科：审视、整合和应用学科知识。</div><div class="prereq"><strong>Pre:</strong> Fourth-year</div></div>
-<div class="course-card mgmt"><div class="course-code">APSC 440</div><div class="course-title-en">Management Fundamentals for Tech Product Marketing</div><div class="course-title-zh">技术产品营销管理基础</div><span class="course-credits">3cr</span><div class="desc-en">Project management, marketing planning, product development, quality management.</div><div class="desc-zh">项目管理、营销规划、产品开发、质量管理。</div><div class="prereq"><strong>Pre:</strong> Fourth-year Eng</div></div>
-<div class="course-card mgmt"><div class="course-code">APSC 450</div><div class="course-title-en">Professional Engineering Practice</div><div class="course-title-zh">专业工程实践</div><span class="course-credits">2cr</span><div class="desc-en">Legislation, ethical principles, management of engineering enterprises.</div><div class="desc-zh">法规、伦理原则、工程企业管理。</div><div class="prereq"><strong>Pre:</strong> Final year Eng</div></div>
-<div class="course-card mgmt"><div class="course-code">APSC 461</div><div class="course-title-en">Global Engineering Leadership</div><div class="course-title-zh">全球工程领导力</div><span class="course-credits">3cr</span><div class="desc-en">Concepts, theory, and practice of engineering leadership.</div><div class="desc-zh">工程领导力的概念、理论与实践。</div><div class="prereq"><strong>Pre:</strong> Completed 3rd year</div></div>
-<div class="course-card design"><div class="course-code">APSC 486</div><div class="course-title-en">New Venture Design</div><div class="course-title-zh">新创企业设计</div><span class="course-credits">6cr</span><div class="desc-en">Teams create a business plan and a prototype or engineering solution.</div><div class="desc-zh">团队创建商业计划和原型/工程方案。</div></div>
-<div class="course-card design"><div class="course-code">APSC 496</div><div class="course-title-en">Interdisciplinary Engineering Design Project</div><div class="course-title-zh">跨学科工程设计项目</div><span class="course-credits">1-9cr</span><div class="desc-en">Projects involving students from several departments.</div><div class="desc-zh">涉及多个系学生的项目。</div></div>
+<div class="course-card soc"><div class="course-code">APSC 364</div><div class="course-title-en">Applied Sustainability</div><div class="course-title-zh">应用可持续性</div><span class="course-credits">3 学分</span><div class="desc-en">Role of common infrastructures, impact of technological solutions.</div><div class="desc-zh">基础设施角色、技术方案影响。</div><div class="prereq"><strong>前置:</strong> 三年级以上</div></div>
+<div class="course-card soc"><div class="course-code">APSC 366</div><div class="course-title-en">The Art of the Possible: Engineering for Non-Engineers</div><div class="course-title-zh">工程入门(非工科)</div><span class="course-credits">3 学分</span><div class="desc-en">Introduction to engineering for non-specialists via case studies.</div><div class="desc-zh">通过案例研究为非专业人士介绍工程。</div></div>
+<div class="course-card soc"><div class="course-code">APSC 367</div><div class="course-title-en">Humanitarian Engineering</div><div class="course-title-zh">人道主义工程</div><span class="course-credits">3 学分</span><div class="desc-en">Best practice, politics, ethics of technical solutions to humanitarian assistance.</div><div class="desc-zh">人道主义援助技术方案的最佳实践、政治与伦理。</div></div>
+<div class="course-card soc"><div class="course-code">APSC 377</div><div class="course-title-en">Nuclear Weapons and Arms Control</div><div class="course-title-zh">核武器与军备控制</div><span class="course-credits">3 学分</span><div class="desc-en">Evolution and contemporary significance of nuclear weapons and arms control.</div><div class="desc-zh">核武器与军备控制的演变与当代意义。</div></div>
+<div class="course-card comp"><div class="course-code">APSC 380</div><div class="course-title-en">Introduction to Microcomputers</div><div class="course-title-zh">微机导论</div><span class="course-credits">3 学分</span><div class="desc-en">Microcomputers in real-time or non-computational engineering applications.</div><div class="desc-zh">实时或非计算工程应用中的微机。</div></div>
+<div class="course-card design"><div class="course-code">APSC 383</div><div class="course-title-en">Prototyping</div><div class="course-title-zh">原型设计</div><span class="course-credits">3 学分</span><div class="desc-en">Systematic use of tools for prototyping with software, electronics, physical components.</div><div class="desc-zh">使用软件、电子、物理组件进行系统化原型设计。</div></div>
+</div>
+</div>
+
+<div class="year-section " id="s400">
+<h2>📕 400级 · 四年级</h2>
+<div class="flow-box"><h3>📊 📕 400级 · 四年级 课程关系图</h3><div class="mermaid">
+flowchart LR
+  A[440 Management]-->B[450 Prof Practice]
+  C[461 Leadership]
+  D[486 New Venture]
+  E[496 Interdisciplinary]
+</div></div>
+<div class="course-grid">
+<div class="course-card comm"><div class="course-code">APSC 402</div><div class="course-title-en">Living Language: Science and Society</div><div class="course-title-zh">科学与社会的活语言</div><span class="course-credits">3 学分</span><div class="desc-en">Multi-disciplinary: examine, integrate and apply subject-specific knowledge.</div><div class="desc-zh">多学科：审视、整合和应用学科知识。</div><div class="prereq"><strong>前置:</strong> 四年级以上</div></div>
+<div class="course-card mgmt"><div class="course-code">APSC 440</div><div class="course-title-en">Management Fundamentals for Tech Product Marketing</div><div class="course-title-zh">技术产品营销管理基础</div><span class="course-credits">3 学分</span><div class="desc-en">Project management, marketing planning, product development, quality management.</div><div class="desc-zh">项目管理、营销规划、产品开发、质量管理。</div><div class="prereq"><strong>前置:</strong> 工程四年级</div></div>
+<div class="course-card mgmt"><div class="course-code">APSC 450</div><div class="course-title-en">Professional Engineering Practice</div><div class="course-title-zh">专业工程实践</div><span class="course-credits">2 学分</span><div class="desc-en">Legislation, ethical principles, management of engineering enterprises.</div><div class="desc-zh">法规、伦理原则、工程企业管理。</div><div class="prereq"><strong>前置:</strong> 工程毕业年级</div></div>
+<div class="course-card mgmt"><div class="course-code">APSC 461</div><div class="course-title-en">Global Engineering Leadership</div><div class="course-title-zh">全球工程领导力</div><span class="course-credits">3 学分</span><div class="desc-en">Concepts, theory, and practice of engineering leadership.</div><div class="desc-zh">工程领导力的概念、理论与实践。</div><div class="prereq"><strong>前置:</strong> 完成三年级</div></div>
+<div class="course-card design"><div class="course-code">APSC 486</div><div class="course-title-en">New Venture Design</div><div class="course-title-zh">新创企业设计</div><span class="course-credits">6 学分</span><div class="desc-en">Teams create a business plan and a prototype or engineering solution.</div><div class="desc-zh">团队创建商业计划和原型/工程方案。</div></div>
+<div class="course-card design"><div class="course-code">APSC 496</div><div class="course-title-en">Interdisciplinary Engineering Design Project</div><div class="course-title-zh">跨学科工程设计项目</div><span class="course-credits">1-9 学分</span><div class="desc-en">Projects involving students from several departments.</div><div class="desc-zh">涉及多个系学生的项目。</div></div>
 </div>
 </div>
 
 <div class="track-section" id="core">
-<h2>Core Engineering</h2>
+<h2>⚙️ 核心工程课</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[100 Intro I]-->B[101 Intro II]
@@ -191,7 +204,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="design">
-<h2>Design & Prototyping</h2>
+<h2>🎨 设计与原型</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[151 CAD Graphics]-->B[383 Prototyping]
@@ -201,7 +214,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="comp">
-<h2>Computation</h2>
+<h2>💻 计算</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[160 Computation]-->B[380 Microcomputers]
@@ -209,7 +222,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="comm">
-<h2>Communication & Society</h2>
+<h2>📝 沟通与社会</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[176 Eng Comm]-->B[201 Tech Comm]
@@ -219,7 +232,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="mgmt">
-<h2>Management & Leadership</h2>
+<h2>📊 管理与领导力</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[440 Management]-->B[450 Prof Practice]
@@ -228,7 +241,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="full">
-<h2>Overview</h2>
+<h2>🗺️ 全图</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart TD
   subgraph Y1[100 Level]
@@ -244,7 +257,7 @@ flowchart TD
 </div></div>
 </div>
 <hr>
-<p style="text-align:center;color:var(--text2);font-size:0.82rem;">30 courses · UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>30</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
 
 var currentMode = 'year';
 var currentYearTab = 's100';

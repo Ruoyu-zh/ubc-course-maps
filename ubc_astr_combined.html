@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UBC ASTR Course Map</title><script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
+<title>UBC ASTR Course Map | UBC天文系课程关系图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script><style>
   :root {
     --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
     --text: #c9d1d9; --text2: #8b949e; --accent: #58a6ff;
@@ -80,90 +81,90 @@
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
 
 </style></head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#79c0ff,#a371f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Thesis Course Map</h1><p class="subtitle">UBC Physics & Astronomy · Bilingual (EN/ZH) · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/astrv" style="color:var(--accent)">UBC Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">Legend:</span>
-<div class="legend-item"><div class="legend-dot" style="background:var(--intro)"></div>Intro</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>Core</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--pop)"></div>Popular</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--adv)"></div>Advanced</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--lab)"></div>Lab</div>
-<div class="legend-item"><div class="legend-dot" style="background:var(--thesis)"></div>Thesis</div>
+<h1 style="background:linear-gradient(135deg,#79c0ff,#a371f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🔌 UBC 天文系课程完整依赖关系图</h1><p class="subtitle">UBC Astronomy Course Dependency Map · 中英双语详解 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/astrv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">图例:</span>
+<div class="legend-item"><div class="legend-dot" style="background:var(--intro)"></div>入门</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>核心</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--pop)"></div>通识</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--adv)"></div>高级</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--lab)"></div>实验</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--thesis)"></div>论文</div>
 </div><div class="mode-bar">
-  <div class="mode-btn active" data-mode="year">📘 By Year Level</div>
-  <div class="mode-btn" data-mode="track">🔗 By Subject Track</div>
+  <div class="mode-btn active" data-mode="year">📘 按年级查看课程 (By Year Level)</div>
+  <div class="mode-btn" data-mode="track">🔗 按学科线查看前置关系 (By Subject Track)</div>
 </div>
 <div class="tabs tab-year" id="tabYear">
-<div class="tab active" data-tab="s100">100 Level</div>
-<div class="tab" data-tab="s200">200 Level</div>
-<div class="tab" data-tab="s300">300 Level</div>
-<div class="tab" data-tab="s400">400 Level</div>
+<div class="tab active" data-tab="s100">📘 100级 · 一年级</div>
+<div class="tab" data-tab="s200">📗 200级 · 二年级</div>
+<div class="tab" data-tab="s300">📙 300级 · 三年级</div>
+<div class="tab" data-tab="s400">📕 400级 · 四年级</div>
 </div>
 <div class="tabs tab-track" id="tabTrack" style="display:none;">
-<div class="tab tab-deps active" data-tab="core">Core Sequence</div>
-<div class="tab tab-deps" data-tab="planetary">Planetary</div>
-<div class="tab tab-deps" data-tab="obs">Observational</div>
-<div class="tab tab-deps" data-tab="full">Overview</div>
+<div class="tab tab-deps active" data-tab="core">⚛️ 核心序列</div>
+<div class="tab tab-deps" data-tab="planetary">🪐 行星科学</div>
+<div class="tab tab-deps" data-tab="obs">🔭 观测</div>
+<div class="tab tab-deps" data-tab="full">🗺️ 全图</div>
 </div>
 <div class="year-section visible" id="s100">
-<h2>100 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📘 100级 · 一年级</h2>
+<div class="flow-box"><h3>📊 📘 100级 · 一年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[101 Solar System]-->B[200 Frontiers]
   C[102 Stars & Galaxies]-->B
 </div></div>
 <div class="course-grid">
-<div class="course-card intro"><div class="course-code">ASTR 101</div><div class="course-title-en">Intro to the Solar System</div><div class="course-title-zh">太阳系导论</div><span class="course-credits">3cr</span><div class="desc-en">Celestial sphere, laws of motion/light, optics, telescopes, Sun and Solar System.</div><div class="desc-zh">天球、运动/光定律、光学、望远镜、太阳和太阳系。</div><div class="prereq"><strong>Pre:</strong> PHYS 11/12/100 + Math 12</div></div>
-<div class="course-card intro"><div class="course-code">ASTR 102</div><div class="course-title-en">Intro to Stars and Galaxies</div><div class="course-title-zh">恒星与星系导论</div><span class="course-credits">3cr</span><div class="desc-en">Stars, stellar evolution, black holes, galaxies, quasars, cosmology.</div><div class="desc-zh">恒星、恒星演化、黑洞、星系、类星体、宇宙学。</div><div class="prereq"><strong>Pre:</strong> PHYS 11/12/100 + Math 12</div></div>
+<div class="course-card intro"><div class="course-code">ASTR 101</div><div class="course-title-en">Intro to the Solar System</div><div class="course-title-zh">太阳系导论</div><span class="course-credits">3 学分</span><div class="desc-en">Celestial sphere, laws of motion/light, optics, telescopes, Sun and Solar System.</div><div class="desc-zh">天球、运动/光定律、光学、望远镜、太阳和太阳系。</div><div class="prereq"><strong>前置:</strong> PHYS 11/12/100 + Math 12</div></div>
+<div class="course-card intro"><div class="course-code">ASTR 102</div><div class="course-title-en">Intro to Stars and Galaxies</div><div class="course-title-zh">恒星与星系导论</div><span class="course-credits">3 学分</span><div class="desc-en">Stars, stellar evolution, black holes, galaxies, quasars, cosmology.</div><div class="desc-zh">恒星、恒星演化、黑洞、星系、类星体、宇宙学。</div><div class="prereq"><strong>前置:</strong> PHYS 11/12/100 + Math 12</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s200">
-<h2>200 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📗 200级 · 二年级</h2>
+<div class="flow-box"><h3>📊 📗 200级 · 二年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[200 Frontiers]-->B[205 Stars & Populations]
   B-->C[300 Galaxies]
 </div></div>
 <div class="course-grid">
-<div class="course-card core"><div class="course-code">ASTR 200</div><div class="course-title-en">Frontiers of Astrophysics</div><div class="course-title-zh">天体物理前沿</div><span class="course-credits">3cr</span><div class="desc-en">Stellar masses/evolution, white dwarfs, neutron stars, black holes, dark matter.</div><div class="desc-zh">恒星质量/演化、白矮星、中子星、黑洞、暗物质。</div><div class="prereq"><strong>Pre:</strong> PHYS 101+ & MATH 101+ or SCIE 001</div></div>
-<div class="course-card core"><div class="course-code">ASTR 205</div><div class="course-title-en">Stars and Stellar Populations</div><div class="course-title-zh">恒星与星族</div><span class="course-credits">3cr</span><div class="desc-en">Positions, motions, distances, stellar spectra, HR diagram, chemical composition.</div><div class="desc-zh">位置、运动、距离、恒星光谱、HR图、化学组成。</div><div class="prereq"><strong>Pre:</strong> ASTR 200 + PHYS 210/CPSC</div></div>
+<div class="course-card core"><div class="course-code">ASTR 200</div><div class="course-title-en">Frontiers of Astrophysics</div><div class="course-title-zh">天体物理前沿</div><span class="course-credits">3 学分</span><div class="desc-en">Stellar masses/evolution, white dwarfs, neutron stars, black holes, dark matter.</div><div class="desc-zh">恒星质量/演化、白矮星、中子星、黑洞、暗物质。</div><div class="prereq"><strong>前置:</strong> PHYS 101+ & MATH 101+ or SCIE 001</div></div>
+<div class="course-card core"><div class="course-code">ASTR 205</div><div class="course-title-en">Stars and Stellar Populations</div><div class="course-title-zh">恒星与星族</div><span class="course-credits">3 学分</span><div class="desc-en">Positions, motions, distances, stellar spectra, HR diagram, chemical composition.</div><div class="desc-zh">位置、运动、距离、恒星光谱、HR图、化学组成。</div><div class="prereq"><strong>前置:</strong> ASTR 200 + PHYS 210/CPSC</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s300">
-<h2>300 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📙 300级 · 三年级</h2>
+<div class="flow-box"><h3>📊 📙 300级 · 三年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[300 Galaxies]-->B[403 Cosmology]
   C[333 Exoplanets]
 </div></div>
 <div class="course-grid">
-<div class="course-card core"><div class="course-code">ASTR 300</div><div class="course-title-en">Galaxies</div><div class="course-title-zh">星系</div><span class="course-credits">3cr</span><div class="desc-en">Structure/kinematics of our galaxy, spiral arms, dynamics, active galaxies, quasars.</div><div class="desc-zh">银河系结构/运动学、旋臂、动力学、活动星系、类星体。</div><div class="prereq"><strong>Pre:</strong> ASTR 205 + PHYS 210/CPSC</div><div class="coreq"><strong>Co/Note:</strong> Co: MATH 217/227/317</div></div>
-<div class="course-card pop"><div class="course-code">ASTR 310</div><div class="course-title-en">Exploring the Universe: Solar System</div><div class="course-title-zh">探索宇宙：太阳系</div><span class="course-credits">3cr</span><div class="desc-en">Recent discoveries about planets, solar system objects, exoplanets. For non-majors.</div><div class="desc-zh">行星、太阳系天体、系外行星最新发现。非天文专业。</div><div class="prereq"><strong>Pre:</strong> Not 1st year; not for ASTR credit</div></div>
-<div class="course-card pop"><div class="course-code">ASTR 311</div><div class="course-title-en">Exploring the Universe: Stars and Galaxies</div><div class="course-title-zh">探索宇宙：恒星与星系</div><span class="course-credits">3cr</span><div class="desc-en">Stars, pulsars, black holes, galaxies, quasars, origin of Universe. For non-majors.</div><div class="desc-zh">恒星、脉冲星、黑洞、星系、类星体、宇宙起源。非天文专业。</div><div class="prereq"><strong>Pre:</strong> Not 1st year; not for ASTR credit</div></div>
-<div class="course-card core"><div class="course-code">ASTR 333</div><div class="course-title-en">Exoplanets and Astrobiology</div><div class="course-title-zh">系外行星与天体生物学</div><span class="course-credits">3cr</span><div class="desc-en">Characteristics of extrasolar planets, formation, evolution, potential for life.</div><div class="desc-zh">系外行星特征、形成、演化、生命潜力。</div><div class="prereq"><strong>Pre:</strong> PHYS 101+ + MATH 200/STAT+</div></div>
+<div class="course-card core"><div class="course-code">ASTR 300</div><div class="course-title-en">Galaxies</div><div class="course-title-zh">星系</div><span class="course-credits">3 学分</span><div class="desc-en">Structure/kinematics of our galaxy, spiral arms, dynamics, active galaxies, quasars.</div><div class="desc-zh">银河系结构/运动学、旋臂、动力学、活动星系、类星体。</div><div class="prereq"><strong>前置:</strong> ASTR 205 + PHYS 210/CPSC</div><div class="coreq"><strong>并修/注意:</strong> 并修: MATH 217/227/317</div></div>
+<div class="course-card pop"><div class="course-code">ASTR 310</div><div class="course-title-en">Exploring the Universe: Solar System</div><div class="course-title-zh">探索宇宙:太阳系</div><span class="course-credits">3 学分</span><div class="desc-en">Recent discoveries about planets, solar system objects, exoplanets. For non-majors.</div><div class="desc-zh">行星、太阳系天体、系外行星最新发现。非天文专业。</div><div class="prereq"><strong>前置:</strong> 非大一; 天文专业不计学分</div></div>
+<div class="course-card pop"><div class="course-code">ASTR 311</div><div class="course-title-en">Exploring the Universe: Stars and Galaxies</div><div class="course-title-zh">探索宇宙:恒星与星系</div><span class="course-credits">3 学分</span><div class="desc-en">Stars, pulsars, black holes, galaxies, quasars, origin of Universe. For non-majors.</div><div class="desc-zh">恒星、脉冲星、黑洞、星系、类星体、宇宙起源。非天文专业。</div><div class="prereq"><strong>前置:</strong> 非大一; 天文专业不计学分</div></div>
+<div class="course-card core"><div class="course-code">ASTR 333</div><div class="course-title-en">Exoplanets and Astrobiology</div><div class="course-title-zh">系外行星与天体生物学</div><span class="course-credits">3 学分</span><div class="desc-en">Characteristics of extrasolar planets, formation, evolution, potential for life.</div><div class="desc-zh">系外行星特征、形成、演化、生命潜力。</div><div class="prereq"><strong>前置:</strong> PHYS 101+ + MATH 200/STAT+</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s400">
-<h2>400 Level</h2>
-<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+<h2>📕 400级 · 四年级</h2>
+<div class="flow-box"><h3>📊 📕 400级 · 四年级 课程关系图</h3><div class="mermaid">
 flowchart LR
   A[403 Cosmology]-->B[406 High-Energy]
   C[404 Measurements]-->D[405 Lab]
   E[407 Planetary]
 </div></div>
 <div class="course-grid">
-<div class="course-card adv"><div class="course-code">ASTR 403</div><div class="course-title-en">Cosmology</div><div class="course-title-zh">宇宙学</div><span class="course-credits">3cr</span><div class="desc-en">Hot Big Bang model, nucleosynthesis, CMB, large-scale structure, galaxy formation.</div><div class="desc-zh">热大爆炸模型、核合成、CMB、大尺度结构、星系形成。</div><div class="prereq"><strong>Pre:</strong> PHYS 200/250; ASTR 300 rec.</div></div>
-<div class="course-card adv"><div class="course-code">ASTR 404</div><div class="course-title-en">Astronomical Measurements</div><div class="course-title-zh">天文测量</div><span class="course-credits">3cr</span><div class="desc-en">Instrumentation for ground/space observations, imaging, interferometry, spectroscopy.</div><div class="desc-zh">地面/空间观测仪器、成像、干涉测量、光谱学。</div><div class="prereq"><strong>Pre:</strong> PHYS 210+408 + PHYS 312/MATH 316</div></div>
-<div class="course-card lab"><div class="course-code">ASTR 405</div><div class="course-title-en">Astronomical Laboratory</div><div class="course-title-zh">天文实验室</div><span class="course-credits">3cr</span><div class="desc-en">Experiments with 40-cm reflector, spectrograph, electronic detectors.</div><div class="desc-zh">40cm反射镜、光谱仪、电子探测器实验。</div><div class="prereq"><strong>Pre:</strong> ASTR 404</div></div>
-<div class="course-card adv"><div class="course-code">ASTR 406</div><div class="course-title-en">High-Energy Astrophysics</div><div class="course-title-zh">高能天体物理</div><span class="course-credits">3cr</span><div class="desc-en">Radiative processes, white dwarfs, neutron stars, black holes, gamma-ray bursts.</div><div class="desc-zh">辐射过程、白矮星、中子星、黑洞、伽马射线暴。</div><div class="prereq"><strong>Pre:</strong> PHYS 203+301+MATH 215+ASTR 300</div></div>
-<div class="course-card adv"><div class="course-code">ASTR 407</div><div class="course-title-en">Planetary Science</div><div class="course-title-zh">行星科学</div><span class="course-credits">3cr</span><div class="desc-en">Planetary systems, interiors, formation, atmospheres, meteoritics, impact cratering.</div><div class="desc-zh">行星系统、内部、形成、大气、陨石学、撞击坑。</div><div class="prereq"><strong>Pre:</strong> PHYS 210+ASTR 200 + MATH + PHYS</div></div>
-<div class="course-card thesis"><div class="course-code">ASTR 449</div><div class="course-title-en">Honours Thesis</div><div class="course-title-zh">荣誉论文</div><span class="course-credits">6cr</span><div class="desc-en">Research project in astronomy, culminating in thesis.</div><div class="desc-zh">天文学研究项目，完成论文。</div></div>
+<div class="course-card adv"><div class="course-code">ASTR 403</div><div class="course-title-en">Cosmology</div><div class="course-title-zh">宇宙学</div><span class="course-credits">3 学分</span><div class="desc-en">Hot Big Bang model, nucleosynthesis, CMB, large-scale structure, galaxy formation.</div><div class="desc-zh">热大爆炸模型、核合成、CMB、大尺度结构、星系形成。</div><div class="prereq"><strong>前置:</strong> PHYS 200/250; 推荐 ASTR 300</div></div>
+<div class="course-card adv"><div class="course-code">ASTR 404</div><div class="course-title-en">Astronomical Measurements</div><div class="course-title-zh">天文测量</div><span class="course-credits">3 学分</span><div class="desc-en">Instrumentation for ground/space observations, imaging, interferometry, spectroscopy.</div><div class="desc-zh">地面/空间观测仪器、成像、干涉测量、光谱学。</div><div class="prereq"><strong>前置:</strong> PHYS 210+408 + PHYS 312/MATH 316</div></div>
+<div class="course-card lab"><div class="course-code">ASTR 405</div><div class="course-title-en">Astronomical Laboratory</div><div class="course-title-zh">天文实验室</div><span class="course-credits">3 学分</span><div class="desc-en">Experiments with 40-cm reflector, spectrograph, electronic detectors.</div><div class="desc-zh">40cm反射镜、光谱仪、电子探测器实验。</div><div class="prereq"><strong>前置:</strong> ASTR 404</div></div>
+<div class="course-card adv"><div class="course-code">ASTR 406</div><div class="course-title-en">High-Energy Astrophysics</div><div class="course-title-zh">高能天体物理</div><span class="course-credits">3 学分</span><div class="desc-en">Radiative processes, white dwarfs, neutron stars, black holes, gamma-ray bursts.</div><div class="desc-zh">辐射过程、白矮星、中子星、黑洞、伽马射线暴。</div><div class="prereq"><strong>前置:</strong> PHYS 203+301+MATH 215+ASTR 300</div></div>
+<div class="course-card adv"><div class="course-code">ASTR 407</div><div class="course-title-en">Planetary Science</div><div class="course-title-zh">行星科学</div><span class="course-credits">3 学分</span><div class="desc-en">Planetary systems, interiors, formation, atmospheres, meteoritics, impact cratering.</div><div class="desc-zh">行星系统、内部、形成、大气、陨石学、撞击坑。</div><div class="prereq"><strong>前置:</strong> PHYS 210+ASTR 200 + MATH + PHYS</div></div>
+<div class="course-card thesis"><div class="course-code">ASTR 449</div><div class="course-title-en">Honours Thesis</div><div class="course-title-zh">荣誉论文</div><span class="course-credits">6 学分</span><div class="desc-en">Research project in astronomy, culminating in thesis.</div><div class="desc-zh">天文学研究项目，完成论文。</div></div>
 </div>
 </div>
 
 <div class="track-section" id="core">
-<h2>Core Sequence</h2>
+<h2>⚛️ 核心序列</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[101/102 Intro]-->B[200 Frontiers]
@@ -175,7 +176,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="planetary">
-<h2>Planetary</h2>
+<h2>🪐 行星科学</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[200 Frontiers]-->B[333 Exoplanets]
@@ -184,7 +185,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="obs">
-<h2>Observational</h2>
+<h2>🔭 观测</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart LR
   A[300 Galaxies]-->B[404 Measurements]
@@ -193,7 +194,7 @@ flowchart LR
 </div>
 
 <div class="track-section" id="full">
-<h2>Overview</h2>
+<h2>🗺️ 全图</h2>
 <div class="flow-box"><div class="mermaid">
 flowchart TD
   subgraph Y1[100 Level]
@@ -209,7 +210,7 @@ flowchart TD
 </div></div>
 </div>
 <hr>
-<p style="text-align:center;color:var(--text2);font-size:0.82rem;">14 courses · UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">共 <strong>14</strong> 门课程 | 数据来源: UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
 
 var currentMode = 'year';
 var currentYearTab = 's100';
