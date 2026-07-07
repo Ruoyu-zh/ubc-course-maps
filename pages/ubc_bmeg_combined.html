@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>UBC BMEG Course Map | 生物医学工程课程关系图</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--grn:#3fb950;--org:#f0883e;--pur:#8b5cf6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+h1{font-size:1.8rem;text-align:center;font-weight:800;padding:24px 0 8px}
+.grad{background:linear-gradient(135deg,#3fb950,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{text-align:center;font-size:0.88rem;color:var(--t2);margin-bottom:20px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.82rem;margin:0 0 12px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+
+.mode-bar{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden;width:fit-content;margin:0 auto 16px}
+.mode-btn{padding:10px 24px;font-size:0.85rem;font-weight:600;cursor:pointer;background:transparent;border:none;color:var(--t2);transition:all 0.15s}
+.mode-btn:first-child{border-right:1px solid var(--bd)}
+.mode-btn.active{background:var(--ac);color:#fff}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:8px 0 16px}
+.tab{padding:8px 16px;border-radius:20px;font-size:0.8rem;font-weight:600;cursor:pointer;border:1px solid var(--bd);color:var(--t2);background:transparent;transition:all 0.15s}
+.tab.active{background:var(--ac);color:#fff;border-color:var(--ac)}
+
+.year-section,.track-section{visibility:hidden;position:absolute;height:0;overflow:hidden}
+.year-section.visible,.track-section.visible{visibility:visible;position:static;height:auto;overflow:visible}
+
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-bottom:24px}
+.course-card{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:16px;transition:all 0.15s}
+.course-card:hover{border-color:var(--ac)}
+.course-code{font-weight:800;font-size:1.05rem;color:var(--ac);margin-bottom:2px}
+.course-title-en{font-size:0.82rem;color:var(--tx);margin-bottom:2px}
+.course-title-zh{font-size:0.78rem;color:var(--grn);margin-bottom:4px}
+.course-credits{font-size:0.72rem;color:var(--t2);display:inline-block;background:rgba(88,166,255,0.1);padding:2px 8px;border-radius:8px;margin-bottom:4px}
+.desc-en{font-size:0.75rem;color:var(--t2);line-height:1.5;margin-bottom:4px}
+.prereq{font-size:0.7rem;color:var(--org);line-height:1.4}
+.prereq strong{color:var(--org)}
+
+.flow-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px;overflow-x:auto}
+.flow-box h3{font-size:0.9rem;color:var(--ac);margin-bottom:10px}
+.flow-box .mermaid{min-width:400px}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:12px;font-size:0.75rem;color:var(--t2)}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+.footer{text-align:center;padding:24px 0;font-size:0.72rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:24px}
+
+@media (max-width: 768px) {
+  .wrap{padding:12px}
+  h1{font-size:1.3rem}
+  .course-grid{grid-template-columns:1fr}
+  .tab{padding:6px 12px;font-size:0.74rem}
+  .mode-btn{padding:8px 16px;font-size:0.78rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back-link" href="subjects.html">Back to Subjects</a>
+<h1 class="grad">BMEG Course Map</h1>
+<p class="sub">Biomedical Engineering · 38 Courses · School of Biomedical Engineering</p>
+
+<div class="mode-bar">
+<button class="mode-btn active" onclick="switchMode('year')">By Year Level</button>
+<button class="mode-btn" onclick="switchMode('track')">By Subject Track</button>
+</div>
+
+<div class="tabs" id="tab-year">
+<button class="tab active" onclick="switchYear('s100')">100 Level</button>
+<button class="tab" onclick="switchYear('s200')">200 Level</button>
+<button class="tab" onclick="switchYear('s300')">300 Level</button>
+<button class="tab" onclick="switchYear('s400')">400 Level</button>
+</div>
+<div class="tabs" id="tab-track" style="display:none">
+<button class="tab" onclick="switchTrack('core')">Core 核心基础</button>
+<button class="tab" onclick="switchTrack('design')">Design 设计序列</button>
+<button class="tab" onclick="switchTrack('biomech')">Biomechanics 生物力学</button>
+<button class="tab" onclick="switchTrack('bioinfo')">Bioinformatics 生物信息</button>
+<button class="tab" onclick="switchTrack('instrum')">Instrumentation 仪器</button>
+<button class="tab" onclick="switchTrack('cellular')">Cellular 细胞工程</button>
+<button class="tab" onclick="switchTrack('elective')">Electives 专业选修</button>
+</div>
+
+<!-- ===== 100 LEVEL ===== -->
+<div class="year-section visible" id="sec-s100">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">100-Level · 入门课程</h2>
+
+<div class="flow-box"><h3>BMEG First-Year Entry</h3><div class="mermaid">
+graph LR
+  A["APSC 100<br/>Intro to Eng"] --> B["BMEG 101<br/>Intro to BME 3cr"]
+  C["PHYS 12/100"] --> D["BMEG 102<br/>BME Lab 2cr"]
+  B -.->|coreq| D
+  E["APSC 101 + PHYS 159"] --> F["BMEG 200<br/>BME Bridge 1cr"]
+</div></div>
+
+<div class="course-grid">
+<div class="course-card"><div class="course-code">BMEG 101</div><div class="course-title-en">Introduction to Biomedical Engineering</div><div class="course-title-zh">生物医学工程导论</div><span class="course-credits">3 学分</span><div class="desc-en">Sensors, instrumentation, biosignals, physiological modeling, biomechanics, biomaterials, cellular engineering, regenerative medicine, and engineering design.</div><div class="prereq"><strong>前置:</strong> APSC 100 | <strong>同修:</strong> BMEG 102</div></div>
+<div class="course-card"><div class="course-code">BMEG 102</div><div class="course-title-en">Biomedical Engineering Lab</div><div class="course-title-zh">生物医学工程实验</div><span class="course-credits">2 学分</span><div class="desc-en">Hydrogel design, genetic engineering of bacteria, bioinformatics pipeline construction, electrical instrumentation, bioreactor design.</div><div class="prereq"><strong>前置:</strong> PHYS 12/PHYS 100 | <strong>同修:</strong> BMEG 101</div></div>
+<div class="course-card"><div class="course-code">BMEG 200</div><div class="course-title-en">Biomedical Engineering Bridge Module</div><div class="course-title-zh">生物医学工程桥接模块</div><span class="course-credits">1 学分</span><div class="desc-en">Core BME concepts: biomechanics analysis, biomaterials signals and systems, bioinformatics, cellular bioengineering.</div><div class="prereq"><strong>前置:</strong> APSC 101, PHYS 159</div></div>
+</div>
+</div>
+
+<!-- ===== 200 LEVEL ===== -->
+<div class="year-section" id="sec-s200">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">200-Level · 基础课程</h2>
+
+<div class="flow-box"><h3>Year 2 Core Prerequisites</h3><div class="mermaid">
+graph TD
+  A["CHEM 12/100"] --> B["BMEG 245<br/>Cells to Systems 4cr"]
+  B --> C["BMEG 250<br/>Cellular Physiology 4cr"]
+  C --> D["BMEG 350<br/>Human Structure 4cr"]
+  E["PHYS 157"] --> F["BMEG 210<br/>Thermodynamics 3cr"]
+  G["PHYS 158 + MATH 253 + 256"] --> H["BMEG 220<br/>Circuits & EM 4cr"]
+  I["BMEG 101+102"] --> J["BMEG 257<br/>Design I 4cr"]
+  J --> K["BMEG 201<br/>Tech Comm 3cr"]
+  K -.->|coreq| J
+</div></div>
+
+<div class="course-grid">
+<div class="course-card"><div class="course-code">BMEG 201</div><div class="course-title-en">Technical Communication for Biomedical Engineers</div><div class="course-title-zh">生物医学工程专业沟通</div><span class="course-credits">3 学分</span><div class="desc-en">Report preparation, business correspondence, and oral presentation in biomedical engineering contexts.</div><div class="prereq"><strong>前置:</strong> WRDS 150/ENGL 112 | <strong>同修:</strong> BMEG 257</div></div>
+<div class="course-card"><div class="course-code">BMEG 210</div><div class="course-title-en">Thermodynamics in Biomedical Engineering</div><div class="course-title-zh">生物医学工程热力学</div><span class="course-credits">3 学分</span><div class="desc-en">Work, heat, energy balances, first/second laws, entropy, reversibility. Biomedical system applications.</div><div class="prereq"><strong>前置:</strong> PHYS 157</div></div>
+<div class="course-card"><div class="course-code">BMEG 220</div><div class="course-title-en">Circuits and Electromagnetics in BME</div><div class="course-title-zh">生物医学电路与电磁学</div><span class="course-credits">4 学分</span><div class="desc-en">EM phenomena in the body, bioinstrumentation, electrostatic/EM fields, modeling physiological systems.</div><div class="prereq"><strong>前置:</strong> PHYS 158, MATH 253, MATH 256 | <strong>同修:</strong> MATH 264</div></div>
+<div class="course-card"><div class="course-code">BMEG 230</div><div class="course-title-en">Biomechanics I</div><div class="course-title-zh">生物力学 I</div><span class="course-credits">4 学分</span><div class="desc-en">2D movement of animals/humans, forces on biomechanical structures (bones, ligaments, tendons, muscles, joints).</div><div class="prereq"><strong>前置:</strong> BMEG 101+PHYS 170 或 APSC 101+BMEG 200+PHYS 170</div></div>
+<div class="course-card"><div class="course-code">BMEG 245</div><div class="course-title-en">The Fundamental Units of Life: Cells to Systems</div><div class="course-title-zh">生命基本单元：从细胞到系统</div><span class="course-credits">4 学分</span><div class="desc-en">Structure and function of cells and how they organize to generate tissues and organ systems.</div><div class="prereq"><strong>前置:</strong> CHEM 12/CHEM 100</div></div>
+<div class="course-card"><div class="course-code">BMEG 250</div><div class="course-title-en">Cellular Physiology and Biophysics</div><div class="course-title-zh">细胞生理与生物物理</div><span class="course-credits">4 学分</span><div class="desc-en">Cellular structure, membrane transport, signal transduction, muscle mechanochemistry, neurotransmission.</div><div class="prereq"><strong>前置:</strong> BMEG 245, MATH 256</div></div>
+<div class="course-card"><div class="course-code">BMEG 257</div><div class="course-title-en">Biomedical Engineering Design I</div><div class="course-title-zh">生物医学工程设计 I</div><span class="course-credits">4 学分</span><div class="desc-en">Engineering design process for biomedical tech: CAD, electronic circuits, programming, rapid prototyping.</div><div class="prereq"><strong>前置:</strong> BMEG 101+102 或 APSC 101+BMEG 200+PHYS 159 | <strong>同修:</strong> BMEG 201</div></div>
+</div>
+</div>
+
+<!-- ===== 300 LEVEL ===== -->
+<div class="year-section" id="sec-s300">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">300-Level · 中级课程</h2>
+
+<div class="flow-box"><h3>Year 3 Streams</h3><div class="mermaid">
+graph TD
+  subgraph Bioinformatics
+    A["BMEG 245"] --> B["BMEG 310<br/>Bioinformatics 4cr"]
+    B --> C["BMEG 424<br/>Genome Informatics"]
+    D["BMEG 310 + 321"] --> E["BMEG 428<br/>Wearable Tech"]
+  end
+  subgraph Biomechanics
+    F["BMEG 230"] --> G["BMEG 330<br/>Biomechanics II 3cr"]
+  end
+  subgraph Instrumentation
+    H["BMEG 220"] --> I["BMEG 321<br/>Instrumentation 3cr"]
+    I --> J["BMEG 425<br/>Biomedical Robotics"]
+    H --> K["BMEG 320<br/>Feedback Systems 3cr"]
+  end
+  subgraph Design
+    L["BMEG 257"] --> M["BMEG 357<br/>Design II 3cr"]
+  end
+</div></div>
+
+<div class="course-grid">
+<div class="course-card"><div class="course-code">BMEG 310</div><div class="course-title-en">Introduction to Bioinformatics</div><div class="course-title-zh">生物信息学导论</div><span class="course-credits">4 学分</span><div class="desc-en">Bioinformatics methods, databases and tools for genomics, proteomics, structural biology, and evolutionary biology.</div><div class="prereq"><strong>前置:</strong> BMEG 245, CPEN 221/223</div></div>
+<div class="course-card"><div class="course-code">BMEG 320</div><div class="course-title-en">Bioengineering Feedback Systems and Controls</div><div class="course-title-zh">生物工程反馈系统与控制</div><span class="course-credits">3 学分</span><div class="desc-en">Dynamic system modeling, state space, linearization, feedback, stability, control design with biological examples.</div><div class="prereq"><strong>前置:</strong> BMEG 220 或 (ELEC 221+201+202)</div></div>
+<div class="course-card"><div class="course-code">BMEG 321</div><div class="course-title-en">Biomedical Instrumentation</div><div class="course-title-zh">生物医学仪器</div><span class="course-credits">3 学分</span><div class="desc-en">Medical instruments for nervous, respiratory, circulatory systems; biopotential signals, medical imaging, robotic surgery.</div><div class="prereq"><strong>前置:</strong> MATH 256 + (BMEG 220 或 (ELEC 211+ELEC 201))</div></div>
+<div class="course-card"><div class="course-code">BMEG 330</div><div class="course-title-en">Biomechanics II</div><div class="course-title-zh">生物力学 II</div><span class="course-credits">3 学分</span><div class="desc-en">Sports, orthopaedic, injury, and cellular biomechanics. Performance improvement, implant design, cancer cell identification.</div><div class="prereq"><strong>前置:</strong> BMEG 230</div></div>
+<div class="course-card"><div class="course-code">BMEG 350</div><div class="course-title-en">Human Structure/Function from Cells to Systems</div><div class="course-title-zh">人体结构与功能</div><span class="course-credits">4 学分</span><div class="desc-en">Human anatomy, histology, and physiology. Anatomical compartmentation, homeostatic control, intercellular communication.</div><div class="prereq"><strong>前置:</strong> BMEG 245, BMEG 250</div></div>
+<div class="course-card"><div class="course-code">BMEG 357</div><div class="course-title-en">Biomedical Engineering Design II</div><div class="course-title-zh">生物医学工程设计 II</div><span class="course-credits">3 学分</span><div class="desc-en">Creating biomedical technology innovations through supervised design for clinical clients. Prototype building and testing.</div><div class="prereq"><strong>前置:</strong> BMEG 257</div></div>
+<div class="course-card"><div class="course-code">BMEG 371</div><div class="course-title-en">Transport Phenomena within Cells and Tissues</div><div class="course-title-zh">细胞与组织输运现象</div><span class="course-credits">3 学分</span><div class="desc-en">Fluid flow and mass transport in healthy/diseased cells/tissues. Drug delivery, tissue engineering applications.</div><div class="prereq"><strong>前置:</strong> MATH 253, MATH 256</div></div>
+<div class="course-card"><div class="course-code">BMEG 372</div><div class="course-title-en">Biomedical Materials and Drug Delivery</div><div class="course-title-zh">生物医学材料与药物递送</div><span class="course-credits">3 学分</span><div class="desc-en">Biomaterials science for drug delivery. Biocompatibility, degradation, nanocarriers, liposomes, nucleic acid delivery.</div><div class="prereq"><strong>前置:</strong> BMEG 250, CHEM 123</div></div>
+<div class="course-card"><div class="course-code">BMEG 373</div><div class="course-title-en">Microfluidics</div><div class="course-title-zh">微流控</div><span class="course-credits">3 学分</span><div class="desc-en">Miniaturizing complex fluid flow processes. Liquid flow manipulation, electrophoresis, integrated platforms.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 374</div><div class="course-title-en">Cellular Bioengineering Laboratory</div><div class="course-title-zh">细胞生物工程实验</div><span class="course-credits">3 学分</span><div class="desc-en">Fundamental genetic, molecular, and tissue engineering techniques. Design of experiments for cellular bioengineering.</div><div class="prereq"><strong>前置:</strong> BMEG 245</div></div>
+</div>
+</div>
+
+<!-- ===== 400 LEVEL ===== -->
+<div class="year-section" id="sec-s400">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">400-Level · 高级课程</h2>
+
+<div class="flow-box"><h3>Year 4 Capstone & Advanced</h3><div class="mermaid">
+graph TD
+  A["BMEG 350 + 357"] --> B["BMEG 457<br/>Capstone Design 6cr"]
+  C["BMEG 310"] --> D["BMEG 424<br/>Genome Informatics 3cr"]
+  E["BMEG 321 + (ELEC 221/BMEG 320)"] --> F["BMEG 425<br/>Biomedical Robotics 3cr"]
+  G["BMEG 310 + 321"] --> H["BMEG 428<br/>Wearable Tech 3cr"]
+  I["BMEG 220/250 + 321/ELEC 371"] --> J["BMEG 420<br/>Medical Imaging 3cr"]
+  K["BMEG 373"] --> L["BMEG 429<br/>Exp. Microfluidics 3cr"]
+</div></div>
+
+<div class="course-grid">
+<div class="course-card"><div class="course-code">BMEG 401</div><div class="course-title-en">Economics of Healthcare Solutions</div><div class="course-title-zh">医疗解决方案经济学</div><span class="course-credits">3 学分</span><div class="desc-en">Engineering economics in BME and healthcare. Cost estimation, risk assessment, regulatory frameworks, commercialization.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 402</div><div class="course-title-en">Impact of BME on Society, Sustainability and Environment</div><div class="course-title-zh">BME对社会/可持续/环境的影响</div><span class="course-credits">3 学分</span><div class="desc-en">Impact of BME on health, safety, political, cultural, economical, and environmental implications of design.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 410</div><div class="course-title-en">Biomedical Equipment, Physiology, and Anatomy</div><div class="course-title-zh">生物医学设备与生理学</div><span class="course-credits">3 学分</span><div class="desc-en">Biomedical equipment for cardiovascular, respiratory, renal dialysis, endoscopy, surgery, and imaging systems.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 420</div><div class="course-title-en">Medical Imaging</div><div class="course-title-zh">医学成像</div><span class="course-credits">3 学分</span><div class="desc-en">Ultrasound, MRI, CT, X-ray, molecular imaging. Physical principles for diagnostics, therapeutics, interventions.</div><div class="prereq"><strong>前置:</strong> BMEG 220/250 + (BMEG 321/ELEC 371)</div></div>
+<div class="course-card"><div class="course-code">BMEG 421</div><div class="course-title-en">Linear Systems in Optics</div><div class="course-title-zh">光学线性系统</div><span class="course-credits">3 学分</span><div class="desc-en">Linear system theory, Fourier Optics, wave propagation and image quality in optical systems.</div><div class="prereq"><strong>前置:</strong> ELEC 221</div></div>
+<div class="course-card"><div class="course-code">BMEG 422</div><div class="course-title-en">Modern Biomedical Optical Imaging</div><div class="course-title-zh">现代生物医学光学成像</div><span class="course-credits">3 学分</span><div class="desc-en">Advanced multimodal optical imaging, OCT theories and technologies, clinical OCT applications.</div><div class="prereq"><strong>前置:</strong> BMEG 421</div></div>
+<div class="course-card"><div class="course-code">BMEG 423</div><div class="course-title-en">Clinical Informatics</div><div class="course-title-zh">临床信息学</div><span class="course-credits">3 学分</span><div class="desc-en">Clinical information systems, decision support, mobile health, patient health information management.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 424</div><div class="course-title-en">Genome Informatics</div><div class="course-title-zh">基因组信息学</div><span class="course-credits">3 学分</span><div class="desc-en">Genomics data analysis: genome architecture, ChIP-seq, histone modifications, single cell, GWAS.</div><div class="prereq"><strong>前置:</strong> BMEG 310</div></div>
+<div class="course-card"><div class="course-code">BMEG 425</div><div class="course-title-en">Biomedical Robotics</div><div class="course-title-zh">生物医学机器人</div><span class="course-credits">3 学分</span><div class="desc-en">Biomedical robotics: kinematics, dynamics and control of robots operated by human operators.</div><div class="prereq"><strong>前置:</strong> MATH 152, BMEG 321</div></div>
+<div class="course-card"><div class="course-code">BMEG 426</div><div class="course-title-en">Synthetic Biology Intensive</div><div class="course-title-zh">合成生物学强化</div><span class="course-credits">3 学分</span><div class="desc-en">DNA device engineering, molecular biology, mammalian cell culture, self-led experimental work.</div><div class="prereq"><strong>前置:</strong> BMEG 245</div></div>
+<div class="course-card"><div class="course-code">BMEG 427</div><div class="course-title-en">ImmunoEngineering</div><div class="course-title-zh">免疫工程</div><span class="course-credits">3 学分</span><div class="desc-en">Applying BME principles to immunology. Immune system's role in biomedical challenges and engineering.</div><div class="prereq"><strong>前置:</strong> BIOC 202 + BMEG 371 或 CHBE 381</div></div>
+<div class="course-card"><div class="course-code">BMEG 428</div><div class="course-title-en">Wearable Technology in Clinical Care</div><div class="course-title-zh">可穿戴医疗技术</div><span class="course-credits">3 学分</span><div class="desc-en">Wearable health sensing, computational techniques, signal processing, ML, and clinical validation.</div><div class="prereq"><strong>前置:</strong> BMEG 310, BMEG 321</div></div>
+<div class="course-card"><div class="course-code">BMEG 429</div><div class="course-title-en">Experimental Microfluidics for Bioanalytical Applications</div><div class="course-title-zh">实验微流控生物分析</div><span class="course-credits">3 学分</span><div class="desc-en">Microfluidic fabrication, flow control, analysis. Hands-on lab in biomedicine, materials, and chemistry.</div><div class="prereq"><strong>前置:</strong> BMEG 373</div></div>
+<div class="course-card"><div class="course-code">BMEG 455</div><div class="course-title-en">Professionalism and Ethics in Biomedical Engineering</div><div class="course-title-zh">生物医学工程专业伦理</div><span class="course-credits">3 学分</span><div class="desc-en">Ethics, equity, diversity, and professionalism in BME practice. Medical and research ethics case studies.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 456</div><div class="course-title-en">Clinical and Industrial Biomedical Engineering</div><div class="course-title-zh">临床与工业生物医学工程</div><span class="course-credits">3 学分</span><div class="desc-en">Clinical practice, Canadian healthcare, medical diagnosis, ethics and regulations for clinical trials.</div><div class="prereq"><strong>前置:</strong> 无</div></div>
+<div class="course-card"><div class="course-code">BMEG 457</div><div class="course-title-en">Biomedical Engineering Design Project</div><div class="course-title-zh">生物医学工程设计项目</div><span class="course-credits">6 学分</span><div class="desc-en">Capstone design of a practical biomedical device or system. Projects from local industry and research labs.</div><div class="prereq"><strong>前置:</strong> BMEG 350, BMEG 357</div></div>
+<div class="course-card"><div class="course-code">BMEG 470</div><div class="course-title-en">Cellular Responses to Forces and Biomaterials</div><div class="course-title-zh">细胞对力与生物材料的响应</div><span class="course-credits">3 学分</span><div class="desc-en">Mechanical forces and biomaterials regulating cellular functions in tissue development, regeneration and repair.</div><div class="prereq"><strong>前置:</strong> BMEG 245, BMEG 250, BMEG 350</div></div>
+<div class="course-card"><div class="course-code">BMEG 474</div><div class="course-title-en">Stem Cells and Regenerative Medicine</div><div class="course-title-zh">干细胞与再生医学</div><span class="course-credits">3 学分</span><div class="desc-en">Stem cell biology and applications in regenerative medicine. Disease modeling, regulatory/commercialization.</div><div class="prereq"><strong>前置:</strong> BMEG 245, BMEG 250, BMEG 350</div></div>
+<div class="course-card"><div class="course-code">BMEG 490</div><div class="course-title-en">Introduction to Academic Research</div><div class="course-title-zh">学术研究导论</div><span class="course-credits">3-6 学分</span><div class="desc-en">Research project directed by a faculty member in Biomedical Engineering. Fourth-year standing required.</div><div class="prereq"><strong>前置:</strong> Competitive GPA + instructor permission</div></div>
+<div class="course-card"><div class="course-code">BMEG 495</div><div class="course-title-en">Biomaterials</div><div class="course-title-zh">生物材料</div><span class="course-credits">3 学分</span><div class="desc-en">Engineered materials in medical applications. Material properties, functionality, design, and biological response.</div><div class="prereq"><strong>前置:</strong> APSC 278</div></div>
+</div>
+</div>
+
+<!-- ===== TRACK VIEWS ===== -->
+<div class="track-section" id="track-core">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Core Foundation 核心基础</h2>
+<div class="flow-box"><h3>Core BMEG Prerequisites</h3><div class="mermaid">
+graph TD
+  BMEG101["BMEG 101<br/>Intro to BME"] --> BMEG257["BMEG 257<br/>Design I"]
+  BMEG245["BMEG 245<br/>Cells to Systems"] --> BMEG250["BMEG 250<br/>Cellular Physiology"]
+  BMEG250 --> BMEG350["BMEG 350<br/>Human Structure"]
+  BMEG210["BMEG 210<br/>Thermodynamics"] --> BMEG371["BMEG 371<br/>Transport"]
+  BMEG220["BMEG 220<br/>Circuits & EM"] --> BMEG321["BMEG 321<br/>Instrumentation"]
+  BMEG220 --> BMEG320["BMEG 320<br/>Feedback"]
+  BMEG257 --> BMEG357["BMEG 357<br/>Design II"]
+  BMEG350 --> BMEG457["BMEG 457<br/>Capstone"]
+  BMEG357 --> BMEG457
+</div></div>
+</div>
+
+<div class="track-section" id="track-design">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Design Stream 设计序列</h2>
+<div class="flow-box"><h3>Design Sequence</h3><div class="mermaid">
+graph LR
+  A["BMEG 101+102"] --> B["BMEG 257<br/>Design I 4cr"]
+  B --> C["BMEG 357<br/>Design II 3cr"]
+  C --> D["BMEG 457<br/>Capstone 6cr"]
+  D --> E["BMEG 490<br/>Research"]
+</div></div>
+</div>
+
+<div class="track-section" id="track-biomech">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Biomechanics 生物力学</h2>
+<div class="flow-box"><h3>Biomechanics Track</h3><div class="mermaid">
+graph LR
+  A["BMEG 230<br/>Biomechanics I 4cr"] --> B["BMEG 330<br/>Biomechanics II 3cr"]
+  B --> C["BMEG 470<br/>Cellular Forces"]
+  B --> D["BMEG 495<br/>Biomaterials"]
+</div></div>
+</div>
+
+<div class="track-section" id="track-bioinfo">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Bioinformatics 生物信息学</h2>
+<div class="flow-box"><h3>Bioinformatics Track</h3><div class="mermaid">
+graph LR
+  A["BMEG 245"] --> B["BMEG 310<br/>Bioinformatics 4cr"]
+  B --> C["BMEG 424<br/>Genome Informatics"]
+  B --> D["BMEG 428<br/>Wearable Tech"]
+  C --> E["BMEG 490<br/>Research"]
+</div></div>
+</div>
+
+<div class="track-section" id="track-instrum">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Instrumentation 生物医学仪器</h2>
+<div class="flow-box"><h3>Instrumentation Track</h3><div class="mermaid">
+graph LR
+  A["BMEG 220<br/>Circuits & EM"] --> B["BMEG 321<br/>Instrumentation 3cr"]
+  A --> C["BMEG 320<br/>Feedback Systems"]
+  B --> D["BMEG 425<br/>Biomedical Robotics"]
+  B --> E["BMEG 420<br/>Medical Imaging"]
+  B --> F["BMEG 428<br/>Wearable Tech"]
+</div></div>
+</div>
+
+<div class="track-section" id="track-cellular">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Cellular Engineering 细胞工程</h2>
+<div class="flow-box"><h3>Cellular Track</h3><div class="mermaid">
+graph LR
+  A["BMEG 245"] --> B["BMEG 250<br/>Cellular Physiology"]
+  B --> C["BMEG 350<br/>Human Structure"]
+  C --> D["BMEG 470<br/>Cellular Forces"]
+  C --> E["BMEG 474<br/>Stem Cells"]
+  A --> F["BMEG 374<br/>Cellular Lab"]
+  A --> G["BMEG 426<br/>Synthetic Biology"]
+</div></div>
+</div>
+
+<div class="track-section" id="track-elective">
+<h2 style="font-size:1rem;margin-bottom:12px;color:var(--ac)">Professional Electives 专业选修</h2>
+<div class="flow-box"><h3>Elective Options</h3><div class="mermaid">
+graph LR
+  A["No Prerequisites"] --> B["BMEG 401<br/>Healthcare Econ"]
+  A --> C["BMEG 402<br/>BME & Society"]
+  A --> D["BMEG 410<br/>Biomed Equipment"]
+  A --> E["BMEG 423<br/>Clinical Informatics"]
+  A --> F["BMEG 455<br/>Ethics"]
+  A --> G["BMEG 456<br/>Clinical BME"]
+</div></div>
+</div>
+
+<div class="legend">
+<span class="legend-item"><span class="legend-dot" style="background:#3fb950"></span> Core 核心</span>
+<span class="legend-item"><span class="legend-dot" style="background:#58a6ff"></span> Design 设计</span>
+<span class="legend-item"><span class="legend-dot" style="background:#f0883e"></span> Biomechanics 生物力学</span>
+<span class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span> Bioinformatics 生物信息</span>
+<span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Instrumentation 仪器</span>
+<span class="legend-item"><span class="legend-dot" style="background:#a371f7"></span> Cellular 细胞工程</span>
+</div>
+
+<div class="footer"><p>Data: <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/bmegv" style="color:var(--ac)">UBC Calendar - BMEG</a></p></div>
+</div>
+
+<script>
+mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis'}});
+var currentMode='year',currentYearTab='s100',currentTrackTab='core';
+function switchMode(mode){
+  currentMode=mode;
+  document.querySelectorAll('.mode-btn')[0].classList.toggle('active',mode==='year');
+  document.querySelectorAll('.mode-btn')[1].classList.toggle('active',mode==='track');
+  document.getElementById('tab-year').style.display=mode==='year'?'flex':'none';
+  document.getElementById('tab-track').style.display=mode==='track'?'flex':'none';
+  document.querySelectorAll('.year-section').forEach(function(s){s.classList.remove('visible');});
+  document.querySelectorAll('.track-section').forEach(function(s){s.classList.remove('visible');});
+  if(mode==='year'){switchYear(currentYearTab);}else{switchTrack(currentTrackTab);}
+}
+function switchYear(tab){
+  currentYearTab=tab;
+  document.querySelectorAll('#tab-year .tab').forEach(function(t){t.classList.toggle('active',t.textContent.includes({'s100':'100','s200':'200','s300':'300','s400':'400'}[tab]));});
+  document.querySelectorAll('.year-section').forEach(function(s){s.classList.remove('visible');});
+  var el=document.getElementById('sec-'+tab);
+  if(el)el.classList.add('visible');
+}
+function switchTrack(tab){
+  currentTrackTab=tab;
+  document.querySelectorAll('#tab-track .tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.track-section').forEach(function(s){s.classList.remove('visible');});
+  var el=document.getElementById('track-'+tab);
+  if(el){el.classList.add('visible');event.target.classList.add('active');}
+  else{e.target.classList.add('active');}
+}
+</script>
+</body>
+</html>
