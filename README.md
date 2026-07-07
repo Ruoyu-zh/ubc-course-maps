@@ -8,8 +8,14 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 |------------|---------|----------|
 | 🎓 [PHYS (Physics)](ubc_phys_combined.html) | 116 courses | 31 flowcharts |
 | 💻 [CPSC (Computer Science)](ubc_cpsc_combined.html) | 112 courses | 18 flowcharts |
-| 🔌 [ELEC (Electrical Engineering)](ubc_elec_combined.html) | 57 courses | 8 flowcharts |
-| 🖥️ [CPEN (Computer Engineering)](ubc_cpen_combined.html) | 29 courses | 6 flowcharts |
+| 🔌 [ELEC (Electrical Engineering)](ubc_elec_combined.html) | 57 courses | 11 flowcharts |
+| 🖥️ [CPEN (Computer Engineering)](ubc_cpen_combined.html) | 29 courses | 9 flowcharts |
+| 🔧 [APSC (Applied Science)](ubc_apsc_combined.html) | 30 courses | — |
+| 🔭 [ASTR (Astronomy)](ubc_astr_combined.html) | 15 courses | — |
+| 🤖 [AI (Artificial Intelligence)](ubc_ai_combined.html) | 5 courses | — |
+| 🧬 [BIOC (Biochemistry)](ubc_bioc_combined.html) | 18 courses | — |
+| 🏛️ [ARCH (Architecture)](ubc_arch_combined.html) | 20 courses | — |
+| 📅 [Course Scheduler](ubc_scheduler.html) | 2026W Term 1 | interactive timetable |
 
 ## ✨ Features
 
@@ -28,4 +34,4 @@ Visit **[https://ruoyu-zh.github.io/ubc-course-maps/](https://ruoyu-zh.github.io
 
 ---
 
-**314 courses across 4 departments**, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
+**400+ courses across 9 departments** + course scheduler, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
