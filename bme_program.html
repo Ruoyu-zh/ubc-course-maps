@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>BME Biomedical Engineering Program | UBC 课程规划</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--grn:#3fb950;--org:#f0883e;--pur:#8b5cf6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.header{text-align:center;padding:48px 0 36px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.85rem;margin-bottom:18px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+h1{font-size:2rem;font-weight:800}
+.grad{background:linear-gradient(135deg,#3fb950,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:0.9rem;color:var(--t2);margin-top:8px}
+.summary{background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:24px 28px;margin-bottom:36px}
+.summary h2{font-size:1.1rem;margin-bottom:12px;color:var(--ac)}
+.summary p{font-size:0.88rem;color:var(--t2);line-height:1.7}
+.year-section{margin-bottom:32px}
+.year-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.year-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.y2{background:#7c3aed}.y3{background:#3fb950}.y4{background:#58a6ff}
+.year-title{font-size:1.25rem;font-weight:700}
+.year-credits{font-size:0.82rem;color:var(--t2);margin-left:auto}
+.term-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.term-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.term-label{font-size:0.78rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
+.course-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(48,54,61,0.4);gap:10px}
+.course-row:last-child{border-bottom:none}
+.course-code-inline{font-weight:700;font-size:0.9rem;color:var(--tx);white-space:nowrap;min-width:110px}
+.course-cred{font-size:0.78rem;color:var(--t2);white-space:nowrap}
+.course-name{font-size:0.82rem;color:var(--t2)}
+.elective-tag{display:inline-block;background:rgba(63,185,80,0.12);color:#3fb950;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.full-row{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;margin-top:16px}
+.full-row .course-row{border-bottom:1px solid rgba(48,54,61,0.3)}
+.full-row .course-row:last-child{border-bottom:none}
+.course-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.elective-section{margin-top:36px}
+.elective-section h2{font-size:1.15rem;margin-bottom:14px;color:var(--tx)}
+.elective-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.elective-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:18px}
+.elective-box h3{font-size:0.85rem;font-weight:700;margin-bottom:8px;color:var(--ac)}
+.elective-box p,.elective-box li{font-size:0.82rem;color:var(--t2);line-height:1.6}
+.elective-box ul{list-style:none;padding:0}
+.elective-box li:before{content:'• ';color:var(--ac)}
+.credit-bar{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:36px 0 20px}
+.credit-chip{background:var(--cbg);border:1px solid var(--bd);border-radius:24px;padding:10px 20px;text-align:center}
+.credit-chip .num{font-size:1.3rem;font-weight:800;color:#3fb950}
+.credit-chip .lbl{font-size:0.72rem;color:var(--t2)}
+.footer{text-align:center;padding:32px 0;font-size:0.75rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:20px}
+.program-nav{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.program-nav a{padding:8px 18px;border-radius:20px;font-size:0.82rem;text-decoration:none;font-weight:600;transition:all 0.2s;border:1px solid var(--bd);color:var(--t2)}
+.program-nav a:hover,.program-nav a.active{color:var(--tx);border-color:#3fb950;background:rgba(63,185,80,0.08)}
+@media (max-width: 768px) {
+  .wrap{padding:16px 14px}
+  h1{font-size:1.4rem}
+  .course-grid,.elective-grid{grid-template-columns:1fr;gap:12px}
+  .year-header{flex-wrap:wrap}
+  .course-code-inline{min-width:90px;font-size:0.82rem}
+  .course-name{font-size:0.75rem}
+  .credit-bar{gap:10px}
+  .credit-chip{padding:8px 14px}
+  .credit-chip .num{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+<a class="back-link" href="index.html">← 返回首页</a>
+<div class="program-nav">
+<a href="cpen_program.html">CPEN 计算机工程</a>
+<a href="elec_program.html">ELEC 电气工程</a>
+<a class="active">BME 生物医学工程</a>
+</div>
+<h1 class="grad">Biomedical Engineering Program</h1>
+<p class="sub">Bachelor of Applied Science (BASc) · School of Biomedical Engineering (SBME)</p>
+</div>
+
+<div class="summary">
+<h2>📋 项目概览 Program Overview</h2>
+<p>生物医学工程是 UBC 工程学院的独立本科专业，由生物医学工程学院（SBME）管理。该专业已获得加拿大工程认证委员会（CEAB）全面认证。课程涵盖生物力学、生物仪器、生物信息学、细胞工程和医疗设备设计，培养能够将工程原理应用于医学和生命科学的跨学科人才。<br><br>
+The Biomedical Engineering program is a standalone BASc degree administered by the School of Biomedical Engineering (SBME), fully accredited by the Canadian Engineering Accreditation Board. The curriculum spans biomechanics, bioinstrumentation, bioinformatics, cellular engineering, and medical device design.</p>
+</div>
+
+<!-- Year 1 -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot" style="background:#58a6ff"></span>
+<span class="year-title">First Year · 工程基础年</span>
+<span class="year-credits">Engineering Foundation</span>
+</div>
+<div class="course-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">APSC 100</span><span class="course-cred">3 cr</span><span class="course-name">Introduction to Engineering I</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 154</span><span class="course-cred">3 cr</span><span class="course-name">Chemistry for Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 100</span><span class="course-cred">3 cr</span><span class="course-name">Differential Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 157</span><span class="course-cred">3 cr</span><span class="course-name">Physics for Engineers I</span></div>
+<div class="course-row"><span class="course-code-inline">WRDS 150</span><span class="course-cred">3 cr</span><span class="course-name">Writing and Research</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">APSC 101</span><span class="course-cred">3 cr</span><span class="course-name">Introduction to Engineering II</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 101</span><span class="course-cred">3 cr</span><span class="course-name">Integral Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 152</span><span class="course-cred">3 cr</span><span class="course-name">Linear Systems</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 158</span><span class="course-cred">3 cr</span><span class="course-name">Physics for Engineers II</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 159</span><span class="course-cred">1 cr</span><span class="course-name">Physics Lab</span></div>
+</div>
+</div>
+</div>
+
+<!-- Year 2 -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y2"></span>
+<span class="year-title">Second Year · 大二</span>
+<span class="year-credits">Total: 37 credits</span>
+</div>
+<div class="term-box">
+<div class="term-label">📘 Full Year · 全年课程</div>
+<div class="course-grid">
+<div style="display:contents">
+<div class="course-row"><span class="course-code-inline">BMEG 201</span><span class="course-cred">3 cr</span><span class="course-name">Technical Communication for Biomedical Engineers</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 210</span><span class="course-cred">3 cr</span><span class="course-name">Thermodynamics in Biomedical Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 220</span><span class="course-cred">4 cr</span><span class="course-name">Circuits & Electromagnetics with BME Applications</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 230</span><span class="course-cred">4 cr</span><span class="course-name">Biomechanics I</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 345</span><span class="course-cred">4 cr</span><span class="course-name">The Fundamental Units of Life: Cells to Systems</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 250</span><span class="course-cred">4 cr</span><span class="course-name">Cellular Physiology and Biophysics</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 257</span><span class="course-cred">4 cr</span><span class="course-name">Biomedical Engineering Design I</span></div>
+<div class="course-row"><span class="course-code-inline">CPEN 221/223</span><span class="course-cred">4 cr</span><span class="course-name">Principles of Software Construction / Software Design for Eng</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 253</span><span class="course-cred">3 cr</span><span class="course-name">Multivariable Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 256</span><span class="course-cred">3 cr</span><span class="course-name">Differential Equations</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 264</span><span class="course-cred">1 cr</span><span class="course-name">Vector Calculus for Electrical Engineering</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Year 3 -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y3"></span>
+<span class="year-title">Third Year · 大三</span>
+<span class="year-credits">Total: 36 credits</span>
+</div>
+<div class="term-box">
+<div class="term-label">📘 Full Year · 全年课程</div>
+<div class="course-grid">
+<div style="display:contents">
+<div class="course-row"><span class="course-code-inline">BIOC 202</span><span class="course-cred">3 cr</span><span class="course-name">Introductory Medical Biochemistry</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 310</span><span class="course-cred">4 cr</span><span class="course-name">Introduction to Bioinformatics</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 321</span><span class="course-cred">3 cr</span><span class="course-name">Biomedical Instrumentation</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 350</span><span class="course-cred">4 cr</span><span class="course-name">Human Structure/Function from Cells to Systems</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 357</span><span class="course-cred">3 cr</span><span class="course-name">Biomedical Engineering Design II</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 371</span><span class="course-cred">3 cr</span><span class="course-name">Transport Phenomena within Cells and Tissues</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 233</span><span class="course-cred">3 cr</span><span class="course-name">Organic Chemistry for Biological Sciences</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 235</span><span class="course-cred">1 cr</span><span class="course-name">Organic Chemistry Laboratory</span></div>
+<div class="course-row"><span class="course-code-inline">STAT 251</span><span class="course-cred">3 cr</span><span class="course-name">Elementary Statistics</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Tech Elect.</span><span class="course-cred">6 cr</span><span class="course-name">Technical Electives (from approved list)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">3 cr</span><span class="course-name">Complementary Studies Electives</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Year 4 -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y4"></span>
+<span class="year-title">Fourth Year · 大四</span>
+<span class="year-credits">Total: 36 credits</span>
+</div>
+<div class="term-box">
+<div class="term-label">📘 Full Year · 全年课程</div>
+<div class="course-grid">
+<div style="display:contents">
+<div class="course-row"><span class="course-code-inline">BMEG 401</span><span class="course-cred">3 cr</span><span class="course-name">Economics of Health Care Solutions</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 455</span><span class="course-cred">3 cr</span><span class="course-name">Professionalism and Ethics in BME</span></div>
+<div class="course-row"><span class="course-code-inline">BMEG 457</span><span class="course-cred">6 cr</span><span class="course-name">Biomedical Engineering Design Project (Capstone)</span></div>
+<div class="course-row"><span class="course-code-inline">STAT 300</span><span class="course-cred">3 cr</span><span class="course-name">Intermediate Statistics for Applications</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Tech Elect.</span><span class="course-cred">15 cr</span><span class="course-name">Technical Electives (from approved list)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">6 cr</span><span class="course-name">Complementary Studies Electives</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Credit summary -->
+<div class="credit-bar">
+<div class="credit-chip"><div class="num">28</div><div class="lbl">First Year</div></div>
+<div class="credit-chip"><div class="num">37</div><div class="lbl">Second Year</div></div>
+<div class="credit-chip"><div class="num">36</div><div class="lbl">Third Year</div></div>
+<div class="credit-chip"><div class="num">36</div><div class="lbl">Fourth Year</div></div>
+<div class="credit-chip"><div class="num">137</div><div class="lbl">Total Credits</div></div>
+</div>
+
+<!-- Technical Electives -->
+<div class="elective-section">
+<h2>📌 技术选修课 Technical Electives (21 credits)</h2>
+<div style="background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:20px 24px;margin-bottom:16px">
+<p style="font-size:0.84rem;color:var(--t2);line-height:1.7">
+<strong>Requirements (CEAB Accredited):</strong> At least 21 credits from the approved list. Minimum 180 Accreditation Units (AU). Max 8 credits at 100/200 level. Minimum 9 credits at 400 level.
+</p>
+</div>
+<div class="elective-grid">
+<div class="elective-box">
+<h3>🧬 BMEG Technical Electives</h3>
+<ul>
+<li><strong>BMEG 320</strong> (3 cr) — Bioengineering Feedback Systems</li>
+<li><strong>BMEG 330</strong> (3 cr) — Biomechanics II</li>
+<li><strong>BMEG 372</strong> (3 cr) — Biomedical Materials & Drug Delivery</li>
+<li><strong>BMEG 373</strong> (3 cr) — Microfluidics</li>
+<li><strong>BMEG 374</strong> (3 cr) — Cellular Bioengineering Lab</li>
+<li><strong>BMEG 400M</strong> (3 cr) — Protein Engineering</li>
+<li><strong>BMEG 400P</strong> (3 cr) — (Special Topics)</li>
+<li><strong>BMEG 400Q</strong> (3 cr) — (Special Topics)</li>
+<li><strong>BMEG 400R</strong> (3 cr) — (Special Topics)</li>
+</ul>
+</div>
+<div class="elective-box">
+<h3>🔧 APSC & Other Electives</h3>
+<ul>
+<li><strong>APSC 278</strong> (3 cr) — Engineering Materials</li>
+<li><strong>APSC 279</strong> (1 cr) — Engineering Materials Lab</li>
+<li><strong>APSC 486</strong> (6 cr) — New Venture Design</li>
+</ul>
+</div>
+<div class="elective-box">
+<h3>📖 Complementary Studies (9 cr)</h3>
+<p><strong>Humanities & Social Studies (6 cr):</strong> Arts, humanities, social sciences, or business.</p>
+<p style="margin-top:8px"><strong>Impact of Technology on Society (3 cr).</strong></p>
+<p style="margin-top:8px;font-size:0.78rem">Year 3: 3 cr | Year 4: 6 cr</p>
+</div>
+<div class="elective-box">
+<h3>⚠️ Registration Notes</h3>
+<p style="font-size:0.8rem">• Not all courses available each year; SBME cannot guarantee seats in non-BMEG courses.</p>
+<p style="font-size:0.8rem;margin-top:4px">• For graduate school, additional 400-level courses may be needed.</p>
+<p style="font-size:0.8rem;margin-top:4px">• Seats available in BMEG courses (may have pre-reqs or limitations).</p>
+</div>
+</div>
+</div>
+
+<!-- Core course highlights -->
+<div class="elective-section">
+<h2>🔑 核心课程简介 Core Course Highlights</h2>
+<div style="background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:20px 24px">
+<div style="margin-bottom:16px">
+<div style="font-weight:700;color:#3fb950;margin-bottom:4px">BMEG 257 · Biomedical Engineering Design I (4 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">首个生物医学工程设计课程：从需求识别到原型开发，涵盖设计方法论、团队协作和医疗设备开发流程。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">First design course: from need identification to prototyping — design methodology, teamwork, and medical device development process.</div>
+</div>
+<div style="margin-bottom:16px">
+<div style="font-weight:700;color:#3fb950;margin-bottom:4px">BMEG 321 · Biomedical Instrumentation (3 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">医疗仪器原理：传感器技术、生物信号采集、信号调理电路和医疗设备安全标准。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Medical instrument principles: sensor technology, biosignal acquisition, signal conditioning, and safety standards.</div>
+</div>
+<div style="margin-bottom:16px">
+<div style="font-weight:700;color:#3fb950;margin-bottom:4px">BMEG 350 · Human Structure/Function (4 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">从细胞到系统的人体结构与功能，为工程师提供必要的解剖学和生理学基础。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Human structure and function from cells to systems — essential anatomy and physiology foundation for engineers.</div>
+</div>
+<div>
+<div style="font-weight:700;color:#3fb950;margin-bottom:4px">BMEG 457 · Capstone Design Project (6 cr)</div>
+<div style="font-size:0.84rem;color:var(--t2)">生物医学工程毕业设计项目，与行业合作完成从概念到原型的完整工程设计。</div>
+<div style="font-size:0.8rem;color:var(--t2);margin-top:2px">Capstone design project with <a href="https://bme.ubc.ca/education/current-undergraduate-students/capstone/capstone-industry-projects/" style="color:var(--ac)">industry partners</a> — complete engineering design from concept to prototype.</div>
+</div>
+</div>
+</div>
+
+<!-- Comparison note -->
+<div class="elective-section">
+<div style="background:var(--cbg);border:1px solid var(--bd);border-left:3px solid #3fb950;border-radius:0 12px 12px 0;padding:16px 20px">
+<p style="font-size:0.84rem;color:var(--t2)">
+💡 <strong style="color:var(--tx)">与 ELEC Biomedical Option 的区别：</strong>BME 是独立的 BASc 学位（SBME 管理），课程更侧重于生物医学核心知识（生物学、化学、生物力学）。ELEC Biomedical Option 是电气工程学位下的一个方向（ECE 管理），保留更多 EE 核心课程。<br><br>
+<span style="font-size:0.78rem"><strong>Difference from ELEC Biomedical Option:</strong> BME is a standalone BASc degree (SBME-administered) with greater emphasis on biomedical core (biology, chemistry, biomechanics). The ELEC Biomedical Option is a concentration within the Electrical Engineering degree (ECE-administered), retaining more EE core courses.</span>
+</p>
+</div>
+</div>
+
+<div class="footer">
+<p>Data source: <a href="https://bme.ubc.ca/education/undergraduate-program-entry/2021w-after/" style="color:var(--ac)">UBC SBME — Undergraduate Program (2021W & After)</a></p>
+<p style="margin-top:4px">Verify with SBME: <a href="https://bme.ubc.ca/education/" style="color:var(--ac)">bme.ubc.ca/education</a></p>
+</div>
+
+</div>
+</body>
+</html>
