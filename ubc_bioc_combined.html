@@ -80,50 +80,200 @@
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
 
 </style></head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#56d4dd,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Biochemistry Course Map</h1><p class="subtitle">UBC Biochemistry & Molecular Biology · 中英双语 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/biocv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">BIOC: Biochemistry & Molecular Biology (45 courses). Core courses shown; graduate (500+) and internship courses available in full calendar.</span></div><div class="tabs tab-year" id="tabYear">
+<h1 style="background:linear-gradient(135deg,#56d4dd,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Research Course Map</h1><p class="subtitle">UBC Biochemistry & Molecular Biology · Bilingual (EN/ZH) · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/biocv" style="color:var(--accent)">UBC Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">Legend:</span>
+<div class="legend-item"><div class="legend-dot" style="background:var(--intro)"></div>Intro</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--core)"></div>Core</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--lab)"></div>Lab</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--prot)"></div>Protein</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--na)"></div>Nucleic Acids</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--comp)"></div>Computational</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--lit)"></div>Literature/Society</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--thesis)"></div>Research</div>
+</div><div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 By Year Level</div>
+  <div class="mode-btn" data-mode="track">🔗 By Subject Track</div>
+</div>
+<div class="tabs tab-year" id="tabYear">
 <div class="tab active" data-tab="s200">200 Level</div>
 <div class="tab" data-tab="s300">300 Level</div>
 <div class="tab" data-tab="s400">400 Level</div>
 </div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="core">Core Sequence</div>
+<div class="tab tab-deps" data-tab="prot">Protein Stream</div>
+<div class="tab tab-deps" data-tab="na">Nucleic Acids Stream</div>
+<div class="tab tab-deps" data-tab="lab">Lab & Research</div>
+<div class="tab tab-deps" data-tab="full">Overview</div>
+</div>
 <div class="year-section visible" id="s200">
 <h2>200 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[202 Medical Biochem]-->B[302 General Biochem]
+  C[203 Fundamentals]-->D[303 Molecular Biochem]
+  C-->B
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">BIOC 202</div><div class="course-title-en">Introductory Medical Biochemistry</div><div class="course-title-zh">医学基础生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Proteins, enzymes, carbohydrate metabolism, glucose homeostasis. Human biochemistry.</div><div class="desc-zh">蛋白质、酶、碳水化合物代谢、葡萄糖稳态。人体生物化学。</div><div class="prereq"><strong>Pre:</strong> CHEM 203/223/233</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 203</div><div class="course-title-en">Fundamentals of Biochemistry</div><div class="course-title-zh">生物化学基础</div><span class="course-credits">3cr</span><div class="desc-en">Amino acids, proteins, enzymology, human metabolic pathways, carbohydrate metabolism.</div><div class="desc-zh">氨基酸、蛋白质、酶学、人体代谢途径、碳水化合物代谢。</div><div class="prereq"><strong>Pre:</strong> BIOL 200 + CHEM 203/223</div><div class="coreq"><strong>Co/Note:</strong> 并修: CHEM 213</div></div>
+<div class="course-card intro"><div class="course-code">BIOC 202</div><div class="course-title-en">Introductory Medical Biochemistry</div><div class="course-title-zh">医学基础生化</div><span class="course-credits">3cr</span><div class="desc-en">Proteins, enzymes, carbohydrate metabolism, glucose homeostasis. Human biochemistry.</div><div class="desc-zh">蛋白质、酶、碳水化合物代谢、葡萄糖稳态。人体生物化学。</div><div class="prereq"><strong>Pre:</strong> CHEM 203/223/233</div></div>
+<div class="course-card core"><div class="course-code">BIOC 203</div><div class="course-title-en">Fundamentals of Biochemistry</div><div class="course-title-zh">生物化学基础</div><span class="course-credits">3cr</span><div class="desc-en">Amino acids, proteins, enzymology, human metabolic pathways, carbohydrate metabolism.</div><div class="desc-zh">氨基酸、蛋白质、酶学、人体代谢途径、碳水化合物代谢。</div><div class="prereq"><strong>Pre:</strong> BIOL 200 + CHEM 203/223</div><div class="coreq"><strong>Co/Note:</strong> Co: CHEM 213</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s300">
 <h2>300 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[301 Lab]-->B[302/303 Core]
+  C[304 Research]-->D[306 Quant Methods]
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">BIOC 301</div><div class="course-title-en">Biochemistry Laboratory</div><div class="course-title-zh">生物化学实验</div><span class="course-credits">3cr</span><div class="desc-en">Techniques for studying chemical/physical properties of cellular components.</div><div class="desc-zh">研究细胞组分化学/物理性质的技术。</div><div class="prereq"><strong>Pre:</strong> CHEM 245+三年级 或 CHEM 235+三年级</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 302/303</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 302</div><div class="course-title-en">General Biochemistry</div><div class="course-title-zh">普通生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Metabolism of lipids, steroids, amino acids, nucleotides; replication, transcription.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸代谢；复制、转录。</div><div class="prereq"><strong>Pre:</strong> BIOL 201/BIOC 202/203 + CHEM</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 303</div><div class="course-title-en">Molecular Biochemistry</div><div class="course-title-zh">分子生物化学</div><span class="course-credits">6cr</span><div class="desc-en">Structure/function/metabolism of lipids, steroids, amino acids, nucleotides; gene regulation.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸的结构/功能/代谢；基因调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 202/203/BIOL 201 + CHEM 213/233</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 304</div><div class="course-title-en">Contemporary Biochemical Research</div><div class="course-title-zh">当代生物化学研究</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical research applied to medicine and biotechnology via experimental case studies.</div><div class="desc-zh">通过实验案例研究应用于医学和生物技术的生物化学研究。</div><div class="prereq"><strong>Pre:</strong> CHEM 213</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 303</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 306</div><div class="course-title-en">Quantitative Methods in Biochemistry</div><div class="course-title-zh">生物化学定量方法</div><span class="course-credits">3cr</span><div class="desc-en">Quantitative/computational methods: bioinformatics, high-throughput data.</div><div class="desc-zh">定量/计算方法：生物信息学、高通量数据。</div><div class="prereq"><strong>Pre:</strong> BIOC 203(+303) 或 BIOC 202/BIOL 201(+302)</div></div>
+<div class="course-card lab"><div class="course-code">BIOC 301</div><div class="course-title-en">Biochemistry Laboratory</div><div class="course-title-zh">生物化学实验</div><span class="course-credits">3cr</span><div class="desc-en">Techniques for studying chemical and physical properties of cellular components.</div><div class="desc-zh">研究细胞组分化学和物理性质的技术。</div><div class="prereq"><strong>Pre:</strong> CHEM 245/235 + 3rd year</div><div class="coreq"><strong>Co/Note:</strong> Co: BIOC 302/303</div></div>
+<div class="course-card core"><div class="course-code">BIOC 302</div><div class="course-title-en">General Biochemistry</div><div class="course-title-zh">普通生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Metabolism of lipids, steroids, amino acids, nucleotides; replication, transcription, translation.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸代谢；复制、转录、翻译。</div><div class="prereq"><strong>Pre:</strong> BIOL 201/BIOC 202/203 + CHEM</div></div>
+<div class="course-card core"><div class="course-code">BIOC 303</div><div class="course-title-en">Molecular Biochemistry</div><div class="course-title-zh">分子生物化学</div><span class="course-credits">6cr</span><div class="desc-en">Structure, function and metabolism of lipids, steroids, amino acids, nucleotides; gene regulation.</div><div class="desc-zh">脂类/类固醇/氨基酸/核苷酸的结构/功能/代谢；基因调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 202/203/BIOL 201 + CHEM 213/233</div></div>
+<div class="course-card lit"><div class="course-code">BIOC 304</div><div class="course-title-en">Contemporary Biochemical Research</div><div class="course-title-zh">当代生化研究</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical research applied to medicine and biotechnology via experimental case studies.</div><div class="desc-zh">通过实验案例研究应用于医学和生物技术的生化研究。</div><div class="prereq"><strong>Pre:</strong> CHEM 213</div><div class="coreq"><strong>Co/Note:</strong> Co: BIOC 303</div></div>
+<div class="course-card comp"><div class="course-code">BIOC 306</div><div class="course-title-en">Quantitative Methods in Biochemistry</div><div class="course-title-zh">生化定量方法</div><span class="course-credits">3cr</span><div class="desc-en">Quantitative and computational methods: bioinformatics, computational biology, high-throughput data.</div><div class="desc-zh">定量与计算方法：生物信息学、计算生物学、高通量数据。</div><div class="prereq"><strong>Pre:</strong> BIOC 203(+303) or BIOC 202/BIOL 201(+302)</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s400">
 <h2>400 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[402 Proteins]-->B[403 Enzymology]
+  A-->C[450 Membranes]
+  D[410 Nucleic Acids]-->E[421 Recombinant DNA]
+  D-->F[440 Molecular Bio]
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">BIOC 402</div><div class="course-title-en">Proteins: Structure and Function</div><div class="course-title-zh">蛋白质：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Protein structure, classification, purification, peptide synthesis, X-ray crystallography.</div><div class="desc-zh">蛋白质结构、分类、纯化、肽合成、X射线晶体学。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303/BIOT 380</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 403</div><div class="course-title-en">Enzymology</div><div class="course-title-zh">酶学</div><span class="course-credits">3cr</span><div class="desc-en">Kinetic analysis, catalytic mechanisms, transition state stabilization, regulation.</div><div class="desc-zh">动力学分析、催化机制、过渡态稳定、调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 402</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 404</div><div class="course-title-en">Biochemical Methods</div><div class="course-title-zh">生物化学方法</div><span class="course-credits">3cr</span><div class="desc-en">Theory and application of classical and emerging biochemical technologies.</div><div class="desc-zh">经典与新兴生物化学技术的理论与应用。</div><div class="prereq"><strong>Pre:</strong> 荣誉生或教师许可</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 410</div><div class="course-title-en">Nucleic Acids-Structure and Function</div><div class="course-title-zh">核酸：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Chemical/physical/biological properties of nucleic acids; gene expression.</div><div class="desc-zh">核酸的化学/物理/生物学性质；基因表达。</div><div class="prereq"><strong>Pre:</strong> BIOC 303+BIOL 335 或 BIOT 380</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 420</div><div class="course-title-en">Advanced Biochemical Techniques</div><div class="course-title-zh">高级生物化学技术</div><span class="course-credits">3cr</span><div class="desc-en">Multi-week experiments in contemporary biochemistry; experimental design.</div><div class="desc-zh">当代生物化学多周实验；实验设计。</div><div class="coreq"><strong>Co/Note:</strong> 并修: BIOC 404/FSCT 480</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 421</div><div class="course-title-en">Recombinant DNA Techniques</div><div class="course-title-zh">重组DNA技术</div><span class="course-credits">3cr</span><div class="desc-en">Contemporary nucleic acid research, cloning, recombinant protein engineering.</div><div class="desc-zh">当代核酸研究、克隆、重组蛋白工程。</div><div class="prereq"><strong>Pre:</strong> BIOC 301+410</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 440</div><div class="course-title-en">Concepts in Molecular Biology</div><div class="course-title-zh">分子生物学概念</div><span class="course-credits">3cr</span><div class="desc-en">Signal transduction, model eukaryotes, gene expression regulation.</div><div class="desc-zh">信号转导、模式真核生物、基因表达调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 448</div><div class="course-title-en">Directed Studies</div><div class="course-title-zh">指导研究</div><span class="course-credits">3-6cr</span><div class="desc-en">Library or lab project on specific topic agreed by faculty and student.</div><div class="desc-zh">师生商定主题的图书馆或实验项目。</div><div class="prereq"><strong>Pre:</strong> 系主任许可</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 449</div><div class="course-title-en">Honours Thesis</div><div class="course-title-zh">荣誉论文</div><span class="course-credits">3-6cr</span><div class="desc-en">Research problem under direction of faculty member.</div><div class="desc-zh">教师指导下的研究问题。</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 450</div><div class="course-title-en">Membrane Biochemistry</div><div class="course-title-zh">膜生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Biochemistry of membranes, membrane proteins, fusion, electrical signaling.</div><div class="desc-zh">膜与膜蛋白生物化学、膜融合、电信号。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
-<div class="course-card gen"><div class="course-code">BIOC 470</div><div class="course-title-en">Biochemistry & Society</div><div class="course-title-zh">生物化学与社会</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical basis of global challenges; critical evaluation of primary literature.</div><div class="desc-zh">全球挑战的生物化学基础；原始文献批判性评估。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303</div></div>
+<div class="course-card prot"><div class="course-code">BIOC 402</div><div class="course-title-en">Proteins: Structure and Function</div><div class="course-title-zh">蛋白质：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Protein structure, classification, purification, peptide synthesis, X-ray crystallography, NMR.</div><div class="desc-zh">蛋白质结构、分类、纯化、肽合成、X射线晶体学、NMR。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303/BIOT 380</div></div>
+<div class="course-card prot"><div class="course-code">BIOC 403</div><div class="course-title-en">Enzymology</div><div class="course-title-zh">酶学</div><span class="course-credits">3cr</span><div class="desc-en">Kinetic analysis, catalytic mechanisms, transition state stabilization, regulation of activity.</div><div class="desc-zh">动力学分析、催化机制、过渡态稳定、活性调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 402</div></div>
+<div class="course-card lit"><div class="course-code">BIOC 404</div><div class="course-title-en">Biochemical Methods</div><div class="course-title-zh">生化方法</div><span class="course-credits">3cr</span><div class="desc-en">Theory and application of classical and emerging technologies in biochemical research.</div><div class="desc-zh">经典与新兴技术在生化研究中的理论与应用。</div><div class="prereq"><strong>Pre:</strong> Honours or instructor perm.</div></div>
+<div class="course-card na"><div class="course-code">BIOC 410</div><div class="course-title-en">Nucleic Acids: Structure and Function</div><div class="course-title-zh">核酸：结构与功能</div><span class="course-credits">3cr</span><div class="desc-en">Chemical, physical and biological properties of nucleic acids; gene expression regulation.</div><div class="desc-zh">核酸的化学、物理和生物学性质；基因表达调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 303+BIOL 335 or BIOT 380</div></div>
+<div class="course-card lab"><div class="course-code">BIOC 420</div><div class="course-title-en">Advanced Biochemical Techniques</div><div class="course-title-zh">高级生化技术</div><span class="course-credits">3cr</span><div class="desc-en">Multi-week experiments in contemporary biochemistry; experimental design, critical data analysis.</div><div class="desc-zh">当代生物化学多周实验；实验设计、批判性数据分析。</div><div class="coreq"><strong>Co/Note:</strong> Co: BIOC 404/FSCT 480</div></div>
+<div class="course-card na"><div class="course-code">BIOC 421</div><div class="course-title-en">Recombinant DNA Techniques</div><div class="course-title-zh">重组DNA技术</div><span class="course-credits">3cr</span><div class="desc-en">Contemporary nucleic acid research, cloning, recombinant protein engineering.</div><div class="desc-zh">当代核酸研究、克隆、重组蛋白工程。</div><div class="prereq"><strong>Pre:</strong> BIOC 301+410</div></div>
+<div class="course-card na"><div class="course-code">BIOC 440</div><div class="course-title-en">Concepts in Molecular Biology</div><div class="course-title-zh">分子生物学概念</div><span class="course-credits">3cr</span><div class="desc-en">Signal transduction, model eukaryotes, gene expression regulation.</div><div class="desc-zh">信号转导、模式真核生物、基因表达调控。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
+<div class="course-card thesis"><div class="course-code">BIOC 448</div><div class="course-title-en">Directed Studies</div><div class="course-title-zh">指导研究</div><span class="course-credits">3-6cr</span><div class="desc-en">Library or lab project on specific topic agreed upon by faculty and student.</div><div class="desc-zh">师生商定主题的图书馆或实验室项目。</div><div class="prereq"><strong>Pre:</strong> Dept Head permission</div></div>
+<div class="course-card thesis"><div class="course-code">BIOC 449</div><div class="course-title-en">Honours Thesis</div><div class="course-title-zh">荣誉论文</div><span class="course-credits">3-6cr</span><div class="desc-en">Research problem under direction of faculty member.</div><div class="desc-zh">教师指导下的研究问题。</div></div>
+<div class="course-card prot"><div class="course-code">BIOC 450</div><div class="course-title-en">Membrane Biochemistry</div><div class="course-title-zh">膜生物化学</div><span class="course-credits">3cr</span><div class="desc-en">Biochemistry of membranes, membrane proteins, membrane fusion, electrical signaling.</div><div class="desc-zh">膜与膜蛋白生物化学、膜融合、电信号。</div><div class="prereq"><strong>Pre:</strong> BIOC 303/BIOT 380+402+410</div></div>
+<div class="course-card lit"><div class="course-code">BIOC 470</div><div class="course-title-en">Biochemistry & Society</div><div class="course-title-zh">生化与社会</div><span class="course-credits">3cr</span><div class="desc-en">Biochemical basis of global challenges; critical evaluation of primary literature.</div><div class="desc-zh">全球挑战的生化基础；原始文献批判性评估。</div><div class="prereq"><strong>Pre:</strong> BIOC 302/303</div></div>
 </div>
+</div>
+
+<div class="track-section" id="core">
+<h2>Core Sequence</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[202/203 Intro]-->B[302/303 Core Biochem]
+  B-->C[301 Lab]
+  B-->D[402 Proteins]
+  D-->E[403 Enzymology]
+  B-->F[410 Nucleic Acids]
+</div></div>
+</div>
+
+<div class="track-section" id="prot">
+<h2>Protein Stream</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[302/303 Core]-->B[402 Proteins]
+  B-->C[403 Enzymology]
+  B-->D[450 Membranes]
+</div></div>
+</div>
+
+<div class="track-section" id="na">
+<h2>Nucleic Acids Stream</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[303 Molecular]-->B[410 Nucleic Acids]
+  B-->C[421 Recombinant DNA]
+  B-->D[440 Molecular Bio]
+</div></div>
+</div>
+
+<div class="track-section" id="lab">
+<h2>Lab & Research</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[301 Lab]-->B[420 Advanced Lab]
+  C[404 Methods]-->D[448/449 Research]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>Overview</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Y2[200 Level]
+    A[202 Medical]; B[203 Fundamentals]
+  end
+  subgraph Y3[300 Level]
+    C[302 General]; D[303 Molecular]; E[301 Lab]
+  end
+  subgraph Y4[400 Level]
+    F[402 Proteins]; G[403 Enzymes]; H[410 Nucleic Acids]; I[420 Advanced Lab]; J[449 Thesis]
+  end
+  A-->C; B-->D; D-->F; F-->G; D-->H; E-->I; F-->J
+</div></div>
 </div>
 <hr>
-<p style="text-align:center;color:var(--text2);font-size:0.82rem;">18 courses | UBC Vancouver Academic Calendar</p></div><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-K9QJVJJ7SH');
-</script></body></html>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">18 courses · UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'mech';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]');
+    if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]');
+    if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});</script></body></html>

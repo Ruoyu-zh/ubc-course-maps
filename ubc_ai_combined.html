@@ -80,37 +80,131 @@
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
 
 </style></head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#c297ff,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Artificial Intelligence Course Map</h1><p class="subtitle">UBC Artificial Intelligence · 中英双语 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/aiv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">AI: Artificial Intelligence (5 courses). Part of the Computer Science curriculum.</span></div><div class="tabs tab-year" id="tabYear">
-<div class="tab active" data-tab="s100">100/200 Level</div>
-<div class="tab" data-tab="s300">300 Level</div>
-<div class="tab" data-tab="s400">400 Level</div>
+<h1 style="background:linear-gradient(135deg,#c297ff,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Deep Learning Course Map</h1><p class="subtitle">UBC Computer Science · Bilingual (EN/ZH) · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/aiv" style="color:var(--accent)">UBC Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">Legend:</span>
+<div class="legend-item"><div class="legend-dot" style="background:var(--intro)"></div>Intro</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--ml)"></div>Machine Learning</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--ai)"></div>AI Core</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--dl)"></div>Deep Learning</div>
+</div><div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 By Year Level</div>
+  <div class="mode-btn" data-mode="track">🔗 By Subject Track</div>
+</div>
+<div class="tabs tab-year" id="tabYear">
+<div class="tab active" data-tab="s100">100-200 Level</div>
+<div class="tab" data-tab="s300">300-400 Level</div>
+</div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="ai">AI Track</div>
+<div class="tab tab-deps" data-tab="full">Full Sequence</div>
 </div>
 <div class="year-section visible" id="s100">
-<h2>100/200 Level</h2>
+<h2>100-200 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[100 Intro AI]-->B[240 Intro ML]
+  B-->C[322 Foundations]
+  B-->D[360 Deep Learning]
+</div></div>
 <div class="course-grid">
-<div class="course-card ai"><div class="course-code">AI 100</div><div class="course-title-en">Intro to Artificial Intelligence</div><div class="course-title-zh">人工智能导论</div><span class="course-credits">3cr</span><div class="desc-en">Core AI paradigms, strengths/weaknesses, social/economic/cultural/political impacts.</div><div class="desc-zh">核心AI范式、优缺点、社会/经济/文化/政治影响。</div></div>
-<div class="course-card ai"><div class="course-code">AI 240</div><div class="course-title-en">Intro to Machine Learning</div><div class="course-title-zh">机器学习导论</div><span class="course-credits">4cr</span><div class="desc-en">Core ML paradigms, supervised/unsupervised learning, deep learning with differentiable programming.</div><div class="desc-zh">核心ML范式、监督/无监督学习、可微编程深度学习。</div><div class="prereq"><strong>Pre:</strong> CPSC 107/110 + MATH 111/131/152/221/223</div></div>
+<div class="course-card intro"><div class="course-code">AI 100</div><div class="course-title-en">Intro to AI</div><div class="course-title-zh">AI导论</div><span class="course-credits">3cr</span><div class="desc-en">Core AI paradigms, strengths/weaknesses, social impacts across economic/cultural/scientific/political dimensions.</div><div class="desc-zh">核心AI范式、优缺点、经济/文化/科学/政治维度的社会影响。</div></div>
+<div class="course-card ml"><div class="course-code">AI 240</div><div class="course-title-en">Intro to Machine Learning</div><div class="course-title-zh">机器学习导论</div><span class="course-credits">4cr</span><div class="desc-en">Core ML paradigms, supervised/unsupervised learning, deep learning with differentiable programming.</div><div class="desc-zh">核心ML范式、监督/无监督学习、可微编程深度学习。</div><div class="prereq"><strong>Pre:</strong> CPSC 107/110 + MATH 111/131/152/221/223</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s300">
-<h2>300 Level</h2>
+<h2>300-400 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[322 Foundations]-->B[422 Intelligent Systems]
+  C[360 Deep Learning]-->B
+</div></div>
 <div class="course-grid">
-<div class="course-card ai"><div class="course-code">AI 322</div><div class="course-title-en">Foundations of AI</div><div class="course-title-zh">AI基础</div><span class="course-credits">3cr</span><div class="desc-en">Search, planning, logic, probabilistic models, MDPs, reinforcement learning.</div><div class="desc-zh">搜索、规划、逻辑、概率模型、MDP、强化学习。</div><div class="prereq"><strong>Pre:</strong> CPSC 340 或 (AI 240/CPSC 330+CPSC 221+STAT)</div></div>
-<div class="course-card ai"><div class="course-code">AI 360</div><div class="course-title-en">Deep Learning</div><div class="course-title-zh">深度学习</div><span class="course-credits">3cr</span><div class="desc-en">Advanced ML: deep learning, generative modeling, reinforcement learning, hands-on design.</div><div class="desc-zh">高级ML：深度学习、生成建模、强化学习、动手设计。</div><div class="prereq"><strong>Pre:</strong> CPSC 340 或 (AI 240/CPEN 355+MATH 200+STAT)</div></div>
+<div class="course-card ai"><div class="course-code">AI 322</div><div class="course-title-en">Foundations of AI</div><div class="course-title-zh">AI基础</div><span class="course-credits">3cr</span><div class="desc-en">Search, planning, logic, probabilistic models, MDPs, reinforcement learning, multi-agent.</div><div class="desc-zh">搜索、规划、逻辑、概率模型、MDP、强化学习、多智能体。</div><div class="prereq"><strong>Pre:</strong> CPSC 340 or (AI 240/CPSC 330+CPSC 221+STAT)</div></div>
+<div class="course-card dl"><div class="course-code">AI 360</div><div class="course-title-en">Deep Learning</div><div class="course-title-zh">深度学习</div><span class="course-credits">3cr</span><div class="desc-en">Advanced ML: deep learning architectures, generative modeling, reinforcement learning, hands-on design.</div><div class="desc-zh">高级ML：深度学习架构、生成建模、强化学习、动手设计。</div><div class="prereq"><strong>Pre:</strong> CPSC 340 or (AI 240/CPEN 355+MATH 200+STAT)</div></div>
+<div class="course-card ai"><div class="course-code">AI 422</div><div class="course-title-en">Intelligent Systems</div><div class="course-title-zh">智能系统</div><span class="course-credits">3cr</span><div class="desc-en">Design, implementation and evaluation of intelligent computational systems. NLP, vision, expert systems.</div><div class="desc-zh">智能计算系统的设计、实现与评估。NLP、视觉、专家系统。</div><div class="prereq"><strong>Pre:</strong> AI 322 or CPSC 322</div></div>
 </div>
 </div>
 
-<div class="year-section " id="s400">
-<h2>400 Level</h2>
-<div class="course-grid">
-<div class="course-card ai"><div class="course-code">AI 422</div><div class="course-title-en">Intelligent Systems</div><div class="course-title-zh">智能系统</div><span class="course-credits">3cr</span><div class="desc-en">Design, implementation and evaluation of intelligent computational systems.</div><div class="desc-zh">智能计算系统的设计、实现与评估。</div><div class="prereq"><strong>Pre:</strong> AI 322 或 CPSC 322</div></div>
+<div class="track-section" id="ai">
+<h2>AI Track</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[100 Intro AI]-->B[240 Intro ML]
+  B-->C[322 Foundations]
+  B-->D[360 Deep Learning]
+  C-->E[422 Intelligent Systems]
+</div></div>
 </div>
+
+<div class="track-section" id="full">
+<h2>Full Sequence</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[100 Intro]-->B[240 ML]
+  B-->C[322 AI Foundations]
+  B-->D[360 Deep Learning]
+  C-->E[422 Intelligent Systems]
+  D-->E
+</div></div>
 </div>
 <hr>
-<p style="text-align:center;color:var(--text2);font-size:0.82rem;">5 courses | UBC Vancouver Academic Calendar</p></div><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-K9QJVJJ7SH');
-</script></body></html>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">5 courses · UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'mech';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]');
+    if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]');
+    if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});</script></body></html>

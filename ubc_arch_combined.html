@@ -80,52 +80,198 @@
   .track-section.visible { visibility: visible; position: static; height: auto; overflow: visible; }
 
 </style></head><body><div class="container">
-<h1 style="background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Architecture Course Map</h1><p class="subtitle">UBC Architecture · 中英双语 · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/archv" style="color:var(--accent)">UBC Academic Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">ARCH: Architecture (38 courses). All graduate-level (500+). Core design studio sequence shown.</span></div><div class="tabs tab-year" id="tabYear">
+<h1 style="background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">UBC Thesis Course Map</h1><p class="subtitle">UBC School of Architecture · Bilingual (EN/ZH) · <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/archv" style="color:var(--accent)">UBC Calendar</a></p><div class="legend"><span style="color:var(--text2);font-weight:600;">Legend:</span>
+<div class="legend-item"><div class="legend-dot" style="background:var(--studio)"></div>Design Studio</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--tech)"></div>Technology</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--struct)"></div>Structures</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--env)"></div>Environmental</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--hist)"></div>History/Theory</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--media)"></div>Design Media</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--prac)"></div>Professional</div>
+<div class="legend-item"><div class="legend-dot" style="background:var(--thesis)"></div>Thesis</div>
+</div><div class="mode-bar">
+  <div class="mode-btn active" data-mode="year">📘 By Year Level</div>
+  <div class="mode-btn" data-mode="track">🔗 By Subject Track</div>
+</div>
+<div class="tabs tab-year" id="tabYear">
 <div class="tab active" data-tab="s500">500 Level Core</div>
 <div class="tab" data-tab="s520">520-540 Level</div>
 <div class="tab" data-tab="s548">Graduate Project</div>
 </div>
+<div class="tabs tab-track" id="tabTrack" style="display:none;">
+<div class="tab tab-deps active" data-tab="studio">Design Studio Sequence</div>
+<div class="tab tab-deps" data-tab="tech">Technology & Structures</div>
+<div class="tab tab-deps" data-tab="hist">History & Theory</div>
+<div class="tab tab-deps" data-tab="full">Overview</div>
+</div>
 <div class="year-section visible" id="s500">
 <h2>500 Level Core</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[500 Studio I]-->B[501 Studio II]
+  B-->C[520 Studio III]
+  D[511 Tech I]-->E[531 Tech II]
+  F[512 Structures I]-->G[532 Structures II]
+  H[515 Media I]-->I[517 Media II]
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">ARCH 500</div><div class="course-title-en">Architectural Design Studio I</div><div class="course-title-zh">建筑设计工作室I</div><span class="course-credits">9cr</span><div class="desc-en">Core design studio.</div><div class="desc-zh">核心设计工作室。</div><div class="coreq"><strong>Co/Note:</strong> 并修: ARCH 502</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 501</div><div class="course-title-en">Architectural Design Studio II</div><div class="course-title-zh">建筑设计工作室II</div><span class="course-credits">9cr</span><div class="desc-en">Second design studio.</div><div class="desc-zh">第二设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 500</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 503</div><div class="course-title-en">Architecture and Society Through the Ages</div><div class="course-title-zh">历代建筑与社会</div><span class="course-credits">3cr</span><div class="desc-en">Historical survey of architecture and its relationship to society.</div><div class="desc-zh">建筑及其与社会关系的历史概览。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 511</div><div class="course-title-en">Architectural Technology I</div><div class="course-title-zh">建筑技术I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to architectural technology.</div><div class="desc-zh">建筑技术导论。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 512</div><div class="course-title-en">Structures I</div><div class="course-title-zh">结构I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to structural systems.</div><div class="desc-zh">结构系统导论。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 513</div><div class="course-title-en">Environmental Systems and Controls I</div><div class="course-title-zh">环境系统与控制I</div><span class="course-credits">3cr</span><div class="desc-en">Environmental systems in buildings.</div><div class="desc-zh">建筑环境系统。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 515</div><div class="course-title-en">Design Media I</div><div class="course-title-zh">设计媒介I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to design media tools.</div><div class="desc-zh">设计媒介工具导论。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 517</div><div class="course-title-en">Design Media II</div><div class="course-title-zh">设计媒介II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced design media.</div><div class="desc-zh">高级设计媒介。</div><div class="prereq"><strong>Pre:</strong> ARCH 515</div></div>
+<div class="course-card studio"><div class="course-code">ARCH 500</div><div class="course-title-en">Architectural Design Studio I</div><div class="course-title-zh">建筑设计工作室I</div><span class="course-credits">9cr</span><div class="desc-en">Core design studio.</div><div class="desc-zh">核心设计工作室。</div><div class="coreq"><strong>Co/Note:</strong> Co: ARCH 502</div></div>
+<div class="course-card studio"><div class="course-code">ARCH 501</div><div class="course-title-en">Architectural Design Studio II</div><div class="course-title-zh">建筑设计工作室II</div><span class="course-credits">9cr</span><div class="desc-en">Second design studio.</div><div class="desc-zh">第二设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 500</div></div>
+<div class="course-card hist"><div class="course-code">ARCH 503</div><div class="course-title-en">Architecture and Society Through the Ages</div><div class="course-title-zh">历代建筑与社会</div><span class="course-credits">3cr</span><div class="desc-en">Historical survey of architecture and its relationship to society.</div><div class="desc-zh">建筑及其与社会关系的历史概览。</div></div>
+<div class="course-card tech"><div class="course-code">ARCH 511</div><div class="course-title-en">Architectural Technology I</div><div class="course-title-zh">建筑技术I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to architectural technology.</div><div class="desc-zh">建筑技术导论。</div></div>
+<div class="course-card struct"><div class="course-code">ARCH 512</div><div class="course-title-en">Structures I</div><div class="course-title-zh">结构I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to structural systems.</div><div class="desc-zh">结构系统导论。</div></div>
+<div class="course-card env"><div class="course-code">ARCH 513</div><div class="course-title-en">Environmental Systems and Controls I</div><div class="course-title-zh">环境系统与控制I</div><span class="course-credits">3cr</span><div class="desc-en">Environmental systems in buildings.</div><div class="desc-zh">建筑环境系统。</div></div>
+<div class="course-card media"><div class="course-code">ARCH 515</div><div class="course-title-en">Design Media I</div><div class="course-title-zh">设计媒介I</div><span class="course-credits">3cr</span><div class="desc-en">Introduction to design media tools.</div><div class="desc-zh">设计媒介工具导论。</div></div>
+<div class="course-card media"><div class="course-code">ARCH 517</div><div class="course-title-en">Design Media II</div><div class="course-title-zh">设计媒介II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced design media.</div><div class="desc-zh">高级设计媒介。</div><div class="prereq"><strong>Pre:</strong> ARCH 515</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s520">
 <h2>520-540 Level</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[520 Studio III]-->B[521 Studio IV]
+  B-->C[540 Studio V]
+  D[531 Tech II]
+  E[532 Structures II]
+  F[533 Env Systems II]
+  G[541 Prof Practice]
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">ARCH 520</div><div class="course-title-en">Architectural Design Studio III</div><div class="course-title-zh">建筑设计工作室III</div><span class="course-credits">9cr</span><div class="desc-en">Third design studio.</div><div class="desc-zh">第三设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 501</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 521</div><div class="course-title-en">Architectural Design Studio IV</div><div class="course-title-zh">建筑设计工作室IV</div><span class="course-credits">9cr</span><div class="desc-en">Fourth design studio.</div><div class="desc-zh">第四设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 511+512+513+520</div><div class="coreq"><strong>Co/Note:</strong> 并修: ARCH 531+533</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 522</div><div class="course-title-en">Current Issues in Architecture</div><div class="course-title-zh">建筑当代议题</div><span class="course-credits">3cr</span><div class="desc-en">Contemporary debates in architecture.</div><div class="desc-zh">建筑学当代辩论。</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 523</div><div class="course-title-en">Contemporary Theories in Architecture</div><div class="course-title-zh">建筑当代理论</div><span class="course-credits">3cr</span><div class="desc-en">Theoretical frameworks in contemporary architecture.</div><div class="desc-zh">当代建筑理论框架。</div><div class="prereq"><strong>Pre:</strong> ARCH 504/505 6学分</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 531</div><div class="course-title-en">Architectural Technology II</div><div class="course-title-zh">建筑技术II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced architectural technology.</div><div class="desc-zh">高级建筑技术。</div><div class="prereq"><strong>Pre:</strong> ARCH 511</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 532</div><div class="course-title-en">Architectural Structures II</div><div class="course-title-zh">建筑结构II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced structural systems.</div><div class="desc-zh">高级结构系统。</div><div class="prereq"><strong>Pre:</strong> ARCH 512</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 533</div><div class="course-title-en">Environmental Systems and Controls II</div><div class="course-title-zh">环境系统与控制II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced environmental systems.</div><div class="desc-zh">高级环境系统。</div><div class="prereq"><strong>Pre:</strong> ARCH 513</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 540</div><div class="course-title-en">Architectural Design Studio V</div><div class="course-title-zh">建筑设计工作室V</div><span class="course-credits">9cr</span><div class="desc-en">Fifth design studio.</div><div class="desc-zh">第五设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 521</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 541</div><div class="course-title-en">Professional Practice</div><div class="course-title-zh">专业实践</div><span class="course-credits">3cr</span><div class="desc-en">Professional aspects of architecture.</div><div class="desc-zh">建筑专业方面。</div></div>
+<div class="course-card studio"><div class="course-code">ARCH 520</div><div class="course-title-en">Architectural Design Studio III</div><div class="course-title-zh">建筑设计工作室III</div><span class="course-credits">9cr</span><div class="desc-en">Third design studio.</div><div class="desc-zh">第三设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 501</div></div>
+<div class="course-card studio"><div class="course-code">ARCH 521</div><div class="course-title-en">Architectural Design Studio IV</div><div class="course-title-zh">建筑设计工作室IV</div><span class="course-credits">9cr</span><div class="desc-en">Fourth design studio.</div><div class="desc-zh">第四设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 511+512+513+520</div><div class="coreq"><strong>Co/Note:</strong> Co: ARCH 531+533</div></div>
+<div class="course-card hist"><div class="course-code">ARCH 522</div><div class="course-title-en">Current Issues in Architecture</div><div class="course-title-zh">建筑当代议题</div><span class="course-credits">3cr</span><div class="desc-en">Contemporary debates in architecture.</div><div class="desc-zh">建筑学当代辩论。</div></div>
+<div class="course-card hist"><div class="course-code">ARCH 523</div><div class="course-title-en">Contemporary Theories in Architecture</div><div class="course-title-zh">建筑当代理论</div><span class="course-credits">3cr</span><div class="desc-en">Theoretical frameworks in contemporary architecture.</div><div class="desc-zh">当代建筑理论框架。</div><div class="prereq"><strong>Pre:</strong> 6cr ARCH 504/505</div></div>
+<div class="course-card tech"><div class="course-code">ARCH 531</div><div class="course-title-en">Architectural Technology II</div><div class="course-title-zh">建筑技术II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced architectural technology.</div><div class="desc-zh">高级建筑技术。</div><div class="prereq"><strong>Pre:</strong> ARCH 511</div></div>
+<div class="course-card struct"><div class="course-code">ARCH 532</div><div class="course-title-en">Architectural Structures II</div><div class="course-title-zh">建筑结构II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced structural systems.</div><div class="desc-zh">高级结构系统。</div><div class="prereq"><strong>Pre:</strong> ARCH 512</div></div>
+<div class="course-card env"><div class="course-code">ARCH 533</div><div class="course-title-en">Environmental Systems and Controls II</div><div class="course-title-zh">环境系统与控制II</div><span class="course-credits">3cr</span><div class="desc-en">Advanced environmental systems.</div><div class="desc-zh">高级环境系统。</div><div class="prereq"><strong>Pre:</strong> ARCH 513</div></div>
+<div class="course-card studio"><div class="course-code">ARCH 540</div><div class="course-title-en">Architectural Design Studio V</div><div class="course-title-zh">建筑设计工作室V</div><span class="course-credits">9cr</span><div class="desc-en">Fifth design studio.</div><div class="desc-zh">第五设计工作室。</div><div class="prereq"><strong>Pre:</strong> ARCH 521</div></div>
+<div class="course-card prac"><div class="course-code">ARCH 541</div><div class="course-title-en">Professional Practice</div><div class="course-title-zh">专业实践</div><span class="course-credits">3cr</span><div class="desc-en">Professional aspects of architecture.</div><div class="desc-zh">建筑专业方面。</div></div>
 </div>
 </div>
 
 <div class="year-section " id="s548">
 <h2>Graduate Project</h2>
+<div class="flow-box"><h3>📊 Course Flow</h3><div class="mermaid">
+flowchart LR
+  A[548 Grad Project I]-->B[549 Grad Project II]
+  C[521 Studio IV]-->A
+</div></div>
 <div class="course-grid">
-<div class="course-card gen"><div class="course-code">ARCH 548</div><div class="course-title-en">Graduate Project Part I</div><div class="course-title-zh">研究生项目I</div><span class="course-credits">3cr</span><div class="desc-en">First part of graduate project.</div><div class="desc-zh">研究生项目第一部分。</div><div class="prereq"><strong>Pre:</strong> ARCH 521+523+531+532+533</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 549</div><div class="course-title-en">Graduate Project Part II</div><div class="course-title-zh">研究生项目II</div><span class="course-credits">9cr</span><div class="desc-en">Second part of graduate project.</div><div class="desc-zh">研究生项目第二部分。</div><div class="prereq"><strong>Pre:</strong> ARCH 548</div></div>
-<div class="course-card gen"><div class="course-code">ARCH 551</div><div class="course-title-en">Communicating Construction</div><div class="course-title-zh">施工沟通</div><span class="course-credits">3cr</span><div class="desc-en">Communicating construction processes.</div><div class="desc-zh">施工过程沟通。</div><div class="prereq"><strong>Pre:</strong> ARCH 511+512</div></div>
+<div class="course-card thesis"><div class="course-code">ARCH 548</div><div class="course-title-en">Graduate Project Part I</div><div class="course-title-zh">研究生项目I</div><span class="course-credits">3cr</span><div class="desc-en">First part of graduate project.</div><div class="desc-zh">研究生项目第一部分。</div><div class="prereq"><strong>Pre:</strong> ARCH 521+523+531+532+533</div></div>
+<div class="course-card thesis"><div class="course-code">ARCH 549</div><div class="course-title-en">Graduate Project Part II</div><div class="course-title-zh">研究生项目II</div><span class="course-credits">9cr</span><div class="desc-en">Second part of graduate project.</div><div class="desc-zh">研究生项目第二部分。</div><div class="prereq"><strong>Pre:</strong> ARCH 548</div></div>
+<div class="course-card tech"><div class="course-code">ARCH 551</div><div class="course-title-en">Communicating Construction</div><div class="course-title-zh">施工沟通</div><span class="course-credits">3cr</span><div class="desc-en">Communicating construction processes.</div><div class="desc-zh">施工过程沟通。</div><div class="prereq"><strong>Pre:</strong> ARCH 511+512</div></div>
 </div>
+</div>
+
+<div class="track-section" id="studio">
+<h2>Design Studio Sequence</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[500 Studio I]-->B[501 Studio II]
+  B-->C[520 Studio III]
+  C-->D[521 Studio IV]
+  D-->E[540 Studio V]
+  E-->F[548/549 Grad Project]
+</div></div>
+</div>
+
+<div class="track-section" id="tech">
+<h2>Technology & Structures</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[511 Tech I]-->B[531 Tech II]
+  C[512 Structures I]-->D[532 Structures II]
+  E[513 Env Systems I]-->F[533 Env Systems II]
+  G[551 Communicating Construction]
+</div></div>
+</div>
+
+<div class="track-section" id="hist">
+<h2>History & Theory</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart LR
+  A[503 Architecture & Society]-->B[522 Current Issues]
+  B-->C[523 Contemporary Theories]
+</div></div>
+</div>
+
+<div class="track-section" id="full">
+<h2>Overview</h2>
+<div class="flow-box"><div class="mermaid">
+flowchart TD
+  subgraph Core[Core Sequence]
+    A[500-501 Studio I-II]-->B[520-521 Studio III-IV]
+    B-->C[540 Studio V]-->D[548-549 Grad Project]
+  end
+  subgraph Tech[Technology]
+    E[511 Tech I]-->F[531 Tech II]
+    G[512 Structures I]-->H[532 Structures II]
+    I[513 Env I]-->J[533 Env II]
+  end
+  subgraph Theory[Theory]
+    K[503 History]-->L[522 Issues]-->M[523 Theories]
+  end
+</div></div>
 </div>
 <hr>
-<p style="text-align:center;color:var(--text2);font-size:0.82rem;">20 courses | UBC Vancouver Academic Calendar</p></div><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-K9QJVJJ7SH');
-</script></body></html>
+<p style="text-align:center;color:var(--text2);font-size:0.82rem;">20 courses · UBC Vancouver Academic Calendar</p></div><script>mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' } });
+
+var currentMode = 'year';
+var currentYearTab = 's100';
+var currentTrackTab = 'mech';
+
+function switchMode(mode) {
+  currentMode = mode;
+  if (mode === 'year') {
+    document.getElementById('tabYear').style.display = 'flex';
+    document.getElementById('tabTrack').style.display = 'none';
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentYearTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-year .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-year [data-tab="' + currentYearTab + '"]');
+    if (at) at.classList.add('active');
+  } else {
+    document.getElementById('tabTrack').style.display = 'flex';
+    document.getElementById('tabYear').style.display = 'none';
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(currentTrackTab);
+    if (t) t.classList.add('visible');
+    document.querySelectorAll('.tab-track .tab').forEach(function(tb) { tb.classList.remove('active'); });
+    var at = document.querySelector('.tab-track [data-tab="' + currentTrackTab + '"]');
+    if (at) at.classList.add('active');
+  }
+}
+
+document.querySelectorAll('.mode-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    switchMode(btn.dataset.mode);
+  });
+});
+
+document.querySelectorAll('.tab-year .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-year .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentYearTab = tab.dataset.tab;
+    document.querySelectorAll('.year-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});
+
+document.querySelectorAll('.tab-track .tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab-track .tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    currentTrackTab = tab.dataset.tab;
+    document.querySelectorAll('.track-section').forEach(function(s) { s.classList.remove('visible'); });
+    var t = document.getElementById(tab.dataset.tab);
+    if (t) t.classList.add('visible');
+  });
+});</script></body></html>
