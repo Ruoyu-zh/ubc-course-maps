@@ -15,6 +15,9 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 | 🤖 [AI (Artificial Intelligence)](ubc_ai_combined.html) | 5 courses | — |
 | 🧬 [BIOC (Biochemistry)](ubc_bioc_combined.html) | 18 courses | — |
 | 🏛️ [ARCH (Architecture)](ubc_arch_combined.html) | 20 courses | — |
+| 📐 [MATH (Mathematics)](ubc_math_combined.html) | 39 courses | 5 flowcharts |
+| ⚙️ [MECH (Mechanical Engineering)](ubc_mech_combined.html) | 29 courses | 4 flowcharts |
+| 🔧 [MANU (Manufacturing Engineering)](ubc_manu_combined.html) | 26 courses | 4 flowcharts |
 | 📅 [Course Scheduler](ubc_scheduler.html) | 2026W Term 1 | interactive timetable |
 
 ## ✨ Features
@@ -34,4 +37,4 @@ Visit **[https://ruoyu-zh.github.io/ubc-course-maps/](https://ruoyu-zh.github.io
 
 ---
 
-**400+ courses across 9 departments** + course scheduler, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
+**500+ courses across 12 departments** + course scheduler, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
