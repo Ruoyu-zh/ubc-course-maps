@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <title>UBC Scheduler | 2026W Term1 全部排法</title>
 <style>
 :root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--dn:#f85149;--ok:#3fb950}
@@ -153,6 +153,79 @@ h2 { font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
 
 /* Selection */
 ::selection { background: rgba(59,130,246,0.3); color: #fff; }
+
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .container { padding: 12px; }
+  h1 { font-size: 1.3rem; padding: 16px 0 6px; }
+  h2 { font-size: 1.1rem; }
+  .subtitle { font-size: 0.78rem; margin-bottom: 14px; }
+
+  /* Mode bar - stacked on mobile */
+  .mode-bar { flex-direction: column; border-radius: 10px; }
+  .mode-btn { padding: 14px 16px; font-size: 0.85rem; min-height: 48px; display: flex; align-items: center; justify-content: center; }
+  .mode-btn:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* Tabs - horizontally scrollable */
+  .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 6px 0 10px; gap: 6px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 8px 14px; font-size: 0.78rem; min-height: 36px; white-space: nowrap; }
+
+  /* Legend - stack vertically */
+  .legend { gap: 6px; font-size: 0.72rem; padding: 10px 12px; }
+  .legend-item { font-size: 0.72rem; }
+
+  /* Course grid - single column */
+  .course-grid { grid-template-columns: 1fr; gap: 10px; }
+  .course-card { padding: 14px; border-radius: 10px; }
+  .course-code { font-size: 1rem; }
+  .course-title-en { font-size: 0.82rem; }
+  .course-title-zh { font-size: 0.78rem; }
+  .desc-en, .desc-zh { font-size: 0.75rem; }
+  .prereq { font-size: 0.7rem; padding: 4px 8px; }
+
+  /* Flow boxes - full width */
+  .flow-box { padding: 10px; border-radius: 10px; overflow-x: auto; }
+  .flow-box .mermaid { min-width: 350px; }
+  .flow-grid { grid-template-columns: 1fr; }
+
+  /* Layout changes */
+  .layout, .grid2, .grid { grid-template-columns: 1fr; gap: 12px; }
+
+  /* Index page */
+  .cc { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 16px; }
+  .card { padding: 20px 14px; }
+  .card-title { font-size: 1rem; }
+  .card-icon { font-size: 2rem; }
+
+  /* Timetable - compact */
+  .tt-grid { font-size: 0.6rem; }
+  .tt-h { padding: 6px 2px; font-size: 0.65rem; }
+  .tt-b { font-size: 0.55rem; padding: 2px 3px; }
+
+  /* Path cards */
+  .path-card { padding: 14px; }
+
+  /* Deps pages - track tabs */
+  .tab-deps { font-size: 0.75rem; padding: 7px 12px; }
+
+  /* Buttons - larger touch targets */
+  .btn { padding: 10px 18px; font-size: 0.85rem; min-height: 44px; }
+
+  /* Schedule page */
+  .detail { grid-template-columns: 1fr; }
+
+  /* Smooth scroll for tab bars */
+  html { scroll-behavior: smooth; }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .cc { grid-template-columns: 1fr; }
+  .tab { padding: 6px 10px; font-size: 0.72rem; }
+  h1 { font-size: 1.15rem; }
+}
 
 </style>
 </head>
