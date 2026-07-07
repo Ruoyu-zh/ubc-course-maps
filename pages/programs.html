@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>Program Guides | UBC 课程规划</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.wrap{text-align:center;max-width:1100px;padding:40px 24px;width:100%}
+h1{font-size:2rem;font-weight:800;margin-bottom:6px}
+.grad{background:linear-gradient(135deg,#58a6ff,#c297ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:0.9rem;color:var(--t2);margin-bottom:40px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.85rem;margin-bottom:16px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+
+.section-title{font-size:1.1rem;font-weight:700;margin:32px 0 16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
+.section-title:first-of-type{margin-top:0}
+
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.prog-card{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:14px 12px;text-align:center;text-decoration:none;color:var(--tx);transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.prog-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.4);border-color:var(--ac)}
+.prog-card .code{font-weight:800;font-size:1rem}
+.prog-card .name{font-size:0.7rem;color:var(--t2)}
+
+.coming-soon-box{background:var(--cbg);border:2px dashed var(--bd);border-radius:14px;padding:32px;text-align:center;color:var(--t2);font-size:0.9rem}
+.coming-soon-box .icon{font-size:2.5rem;display:block;margin-bottom:8px}
+
+/* Color accents for engineering cards */
+.cpen{border-top:2px solid #8b5cf6}.elec{border-top:2px solid #f0883e}.bme{border-top:2px solid #3fb950}
+.chbe{border-top:2px solid #f97316}.civl{border-top:2px solid #58a6ff}.envl{border-top:2px solid #2ea043}
+.gelo{border-top:2px solid #a371f7}.igen{border-top:2px solid #c297ff}.mtrl{border-top:2px solid #ef4444}
+.mine{border-top:2px solid #8b5cf6}.mech{border-top:2px solid #f0883e}
+
+@media (max-width: 768px) {
+  .wrap{padding:20px 14px}
+  h1{font-size:1.4rem}
+  .prog-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .prog-card{padding:10px 8px}
+  .prog-card .code{font-size:0.85rem}
+  .prog-card .name{font-size:0.65rem}
+}
+@media (max-width: 400px) {
+  .prog-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back-link" href="../index.html">Back</a>
+<h1 class="grad">Program Guides</h1>
+<p class="sub">Select a program to view its curriculum and course plan</p>
+
+<!-- Engineering Section -->
+<div class="section-title">Engineering Programs</div>
+<div class="prog-grid">
+<a class="prog-card cpen" href="cpen_program.html"><span class="code">CPEN</span><span class="name">Computer Eng</span></a>
+<a class="prog-card elec" href="elec_program.html"><span class="code">ELEC</span><span class="name">Electrical Eng</span></a>
+<a class="prog-card bme" href="bme_program.html"><span class="code">BME</span><span class="name">Biomedical Eng</span></a>
+<a class="prog-card chbe" href="chbe_program.html"><span class="code">CHBE</span><span class="name">Chemical & Bio Eng</span></a>
+<a class="prog-card civl" href="civil_program.html"><span class="code">CIVL</span><span class="name">Civil Eng</span></a>
+<a class="prog-card envl" href="envl_program.html"><span class="code">ENVL</span><span class="name">Environmental Eng</span></a>
+<a class="prog-card gelo" href="gelo_program.html"><span class="code">GELO</span><span class="name">Geological Eng</span></a>
+<a class="prog-card igen" href="igen_program.html"><span class="code">IGEN</span><span class="name">Integrated Eng</span></a>
+<a class="prog-card mtrl" href="mtrl_program.html"><span class="code">MTRL</span><span class="name">Materials Eng</span></a>
+<a class="prog-card mine" href="mine_program.html"><span class="code">MINE</span><span class="name">Mining Eng</span></a>
+<a class="prog-card mech" href="mech_program.html"><span class="code">MECH</span><span class="name">Mechanical Eng</span></a>
+</div>
+
+<!-- Science Section -->
+<div class="section-title">Science Programs</div>
+<div class="coming-soon-box">
+<span class="icon">🔬</span>
+Coming Soon
+</div>
+
+</div>
+</body>
+</html>
