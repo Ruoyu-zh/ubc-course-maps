@@ -1,8 +1,34 @@
-# UBC Course Dependency Maps
+# UBC Course Maps
 
 Interactive course prerequisite & dependency maps for UBC Vancouver.
 
-## 📂 Courses
+## 🔗 Live Demo
+
+**[https://ruoyu-zh.github.io/ubc-course-maps/](https://ruoyu-zh.github.io/ubc-course-maps/)**
+
+---
+
+## 🎯 按专业选课 (Program Guides)
+
+11 engineering program guides with year-by-year course listings, credit summaries, and stream options:
+
+| Program | Degree | Streams |
+|---------|--------|---------|
+| 💻 [CPEN](cpen_program.html) Computer Engineering | BASc | — |
+| 🔌 [ELEC](elec_program.html) Electrical Engineering | BASc | Standard + Biomedical Option |
+| 🧬 [BME](bme_program.html) Biomedical Engineering | BASc | Standalone (SBME) |
+| ⚗️ [CHBE](chbe_program.html) Chemical & Biological Eng | BASc | Chemical + Chem & Bio |
+| 🏗️ [CIVL](civil_program.html) Civil Engineering | BASc | — |
+| 🌿 [ENVL](envl_program.html) Environmental Engineering | BASc | — |
+| ⛏️ [GELO](gelo_program.html) Geological Engineering | BASc | — |
+| 🔧 [IGEN](igen_program.html) Integrated Engineering | BASc | 8-discipline breadth |
+| 🔩 [MTRL](mtrl_program.html) Materials Engineering | BASc | — |
+| ⛰️ [MINE](mine_program.html) Mining Engineering | BASc | — |
+| ⚙️ [MECH](mech_program.html) Mechanical Engineering | BASc | 6 Options (Flex/Aero/Biomech/Energy/Mechatronics/Naval) |
+
+## 📚 按学科选课 (Course Maps)
+
+12 departments with interactive Mermaid.js prerequisite diagrams:
 
 | Department | Courses | Diagrams |
 |------------|---------|----------|
@@ -18,7 +44,18 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 | 📐 [MATH (Mathematics)](ubc_math_combined.html) | 39 courses | 5 flowcharts |
 | ⚙️ [MECH (Mechanical Engineering)](ubc_mech_combined.html) | 29 courses | 4 flowcharts |
 | 🔧 [MANU (Manufacturing Engineering)](ubc_manu_combined.html) | 26 courses | 4 flowcharts |
-| 📅 [Course Scheduler](ubc_scheduler.html) | 2026W Term 1 | interactive timetable |
+
+## 💼 Co-op 带薪实习
+
+| Page | Content |
+|------|---------|
+| 📅 [Co-op Guide](coop_info.html) | Engineering & Science Co-op — eligibility, application process, fees, tips |
+
+## 📅 Tools
+
+| Tool | Description |
+|------|-------------|
+| 📊 [Course Scheduler](ubc_scheduler.html) | 2026W Term 1 interactive timetable with time conflict detection |
 
 ## ✨ Features
 
@@ -26,15 +63,20 @@ Interactive course prerequisite & dependency maps for UBC Vancouver.
 - **Prerequisite flowcharts**: Mermaid.js diagrams showing exact course dependencies
 - **Bilingual descriptions**: Every course has both English & Chinese explanations
 - **Color-coded**: Each subject track has its own color for easy navigation
+- **Program guides**: Year-by-year course listings, credit summaries, stream comparisons
+- **Mobile responsive**: Optimized for desktop and phone
 
-## 🚀 Live Demo
+## 📊 Data Sources
 
-Visit **[https://ruoyu-zh.github.io/ubc-course-maps/](https://ruoyu-zh.github.io/ubc-course-maps/)** for the navigation page.
-
-## 📊 Data Source
-
-[UBC Vancouver Academic Calendar](https://vancouver.calendar.ubc.ca/)
+- [UBC Vancouver Academic Calendar](https://vancouver.calendar.ubc.ca/)
+- [UBC ECE Department](https://ece.ubc.ca/)
+- [UBC SBME](https://bme.ubc.ca/)
+- [UBC CHBE Department](https://chbe.ubc.ca/)
+- [UBC MECH Department](https://mech.ubc.ca/)
+- [UBC Engineering Academic Services](https://academicservices.engineering.ubc.ca/)
+- [UBC Applied Science Co-op](https://coop.apsc.ubc.ca/)
+- [UBC Science Co-op](https://sciencecoop.ubc.ca/)
 
 ---
 
-**500+ courses across 12 departments** + course scheduler, all with bilingual (EN/ZH) descriptions and interactive Mermaid.js prerequisite diagrams.
+**500+ courses across 12 departments · 11 engineering program guides · Co-op application guide · Bilingual EN/ZH · Interactive Mermaid.js diagrams**
