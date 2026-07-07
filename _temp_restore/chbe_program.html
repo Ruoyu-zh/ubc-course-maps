@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>CHBE Chemical & Biological Engineering Program | UBC 课程规划</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--grn:#3fb950;--org:#f0883e;--pur:#8b5cf6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.header{text-align:center;padding:48px 0 36px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.85rem;margin-bottom:18px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+h1{font-size:2rem;font-weight:800}
+.grad{background:linear-gradient(135deg,#f0883e,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:0.9rem;color:var(--t2);margin-top:8px}
+.summary{background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:24px 28px;margin-bottom:36px}
+.summary h2{font-size:1.1rem;margin-bottom:12px;color:var(--ac)}
+.summary p{font-size:0.88rem;color:var(--t2);line-height:1.7}
+.year-section{margin-bottom:32px}
+.year-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.year-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.y2{background:#7c3aed}.y3{background:#f0883e}.y4{background:#3fb950}
+.year-title{font-size:1.25rem;font-weight:700}
+.year-credits{font-size:0.82rem;color:var(--t2);margin-left:auto}
+.term-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.term-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.term-label{font-size:0.78rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px}
+.course-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(48,54,61,0.4);gap:10px}
+.course-row:last-child{border-bottom:none}
+.course-code-inline{font-weight:700;font-size:0.9rem;color:var(--tx);white-space:nowrap;min-width:95px}
+.course-cred{font-size:0.78rem;color:var(--t2);white-space:nowrap}
+.course-name{font-size:0.82rem;color:var(--t2)}
+.elective-tag{display:inline-block;background:rgba(240,136,62,0.12);color:#f0883e;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
+.stream-tag{display:inline-block;background:rgba(63,185,80,0.12);color:#3fb950;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.full-row{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;margin-top:16px}
+.full-row .course-row{border-bottom:1px solid rgba(48,54,61,0.3)}
+.full-row .course-row:last-child{border-bottom:none}
+.credit-bar{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:36px 0 20px}
+.credit-chip{background:var(--cbg);border:1px solid var(--bd);border-radius:24px;padding:10px 20px;text-align:center}
+.credit-chip .num{font-size:1.3rem;font-weight:800;color:var(--ac)}
+.credit-chip .lbl{font-size:0.72rem;color:var(--t2)}
+.footer{text-align:center;padding:32px 0;font-size:0.75rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:20px}
+.program-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.program-nav a{padding:8px 16px;border-radius:20px;font-size:0.8rem;text-decoration:none;font-weight:600;transition:all 0.2s;border:1px solid var(--bd);color:var(--t2)}
+.program-nav a:hover,.program-nav a.active{color:var(--tx);border-color:var(--ac);background:rgba(88,166,255,0.08)}
+.option-tabs{display:flex;gap:0;justify-content:center;margin-bottom:30px;border:1px solid var(--bd);border-radius:10px;overflow:hidden;width:fit-content;margin-left:auto;margin-right:auto}
+.option-tab{padding:10px 20px;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--t2);background:transparent;border:none;white-space:nowrap}
+.option-tab:first-child{border-right:1px solid var(--bd)}
+.option-tab.active{background:var(--ac);color:#fff}
+.option-tab:hover:not(.active){background:rgba(88,166,255,0.06)}
+.option-section{visibility:hidden;position:absolute;height:0;overflow:hidden}
+.option-section.visible{visibility:visible;position:static;height:auto;overflow:visible}
+.elective-section{margin-top:36px}
+.elective-section h2{font-size:1.15rem;margin-bottom:14px;color:var(--tx)}
+.note-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;font-size:0.82rem;color:var(--t2);line-height:1.6}
+
+@media (max-width: 768px) {
+  .wrap{padding:16px 14px}
+  h1{font-size:1.4rem}
+  .term-grid{grid-template-columns:1fr;gap:12px}
+  .year-header{flex-wrap:wrap}
+  .course-code-inline{min-width:78px;font-size:0.8rem}
+  .course-name{font-size:0.74rem}
+  .credit-bar{gap:10px}
+  .credit-chip{padding:8px 14px}
+  .credit-chip .num{font-size:1.1rem}
+  .option-tab{padding:8px 14px;font-size:0.76rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+<a class="back-link" href="index.html">← 返回首页</a>
+<div class="program-nav">
+<a href="cpen_program.html">CPEN</a>
+<a href="elec_program.html">ELEC</a>
+<a href="bme_program.html">BME</a>
+<a class="active">CHBE</a>
+<a href="civil_program.html">CIVL</a>
+<a href="envl_program.html">ENVL</a>
+<a href="gelo_program.html">GELO</a>
+<a href="igen_program.html">IGEN</a>
+<a href="mtrl_program.html">MTRL</a>
+<a href="mine_program.html">MINE</a>
+<a href="mech_program.html">MECH</a>
+</div>
+<h1 class="grad">Chemical & Biological Engineering</h1>
+<p class="sub">Bachelor of Applied Science (BASc) · Department of Chemical and Biological Engineering</p>
+</div>
+
+<div class="summary">
+<h2>📋 项目概览 Program Overview</h2>
+<p>UBC 化学与生物工程系提供两个方向的 BASc 学位：<strong>Chemical Engineering（化学工程）</strong>和 <strong>Chemical & Biological Engineering（化学与生物工程）</strong>。学生完成大一工程基础年后进入大二。两个方向在前两年课程基本相同，大三和大四根据所选方向有差异。<br><br>
+The CHBE department offers two BASc streams: Chemical Engineering and Chemical & Biological Engineering. Both share a common second year, then diverge in years 3 and 4 with stream-specific courses and capstone projects.</p>
+</div>
+
+<!-- Year 1 -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot" style="background:#58a6ff"></span>
+<span class="year-title">First Year · 工程基础年</span><span class="year-credits">Engineering Foundation</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">APSC 100</span><span class="course-cred">3 cr</span><span class="course-name">Introduction to Engineering I</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 154</span><span class="course-cred">3 cr</span><span class="course-name">Chemistry for Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 100</span><span class="course-cred">3 cr</span><span class="course-name">Differential Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 157</span><span class="course-cred">3 cr</span><span class="course-name">Physics for Engineers I</span></div>
+<div class="course-row"><span class="course-code-inline">WRDS 150</span><span class="course-cred">3 cr</span><span class="course-name">Writing and Research</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">APSC 101</span><span class="course-cred">3 cr</span><span class="course-name">Introduction to Engineering II</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 101</span><span class="course-cred">3 cr</span><span class="course-name">Integral Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 152</span><span class="course-cred">3 cr</span><span class="course-name">Linear Systems</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 158</span><span class="course-cred">3 cr</span><span class="course-name">Physics for Engineers II</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 159</span><span class="course-cred">1 cr</span><span class="course-name">Physics Lab</span></div>
+</div>
+</div>
+</div>
+
+<!-- Year 2 - shared -->
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y2"></span>
+<span class="year-title">Second Year · 大二</span><span class="year-credits">Both Streams · ~39 credits</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">CHBE 201</span><span class="course-cred">3 cr</span><span class="course-name">Integrated Technical Communication</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 220</span><span class="course-cred">4 cr</span><span class="course-name">Founding Principles in CHBE I</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 241</span><span class="course-cred">3 cr</span><span class="course-name">Material and Energy Balances</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 263</span><span class="course-cred">1 cr</span><span class="course-name">Intro to CHBE Lab Practice</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 250</span><span class="course-cred">3 cr</span><span class="course-name">Inorganic Chemistry for Engineers</span></div>
+<div class="course-row"><span class="course-code-inline">CHEM 260</span><span class="course-cred">3 cr</span><span class="course-name">Organic Chemistry for Engineers</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 253</span><span class="course-cred">3 cr</span><span class="course-name">Multivariable Calculus</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">CHBE 221</span><span class="course-cred">4 cr</span><span class="course-name">Founding Principles in CHBE II</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 230</span><span class="course-cred">3 cr</span><span class="course-name">Computational Methods</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 244</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Thermodynamics I</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 251</span><span class="course-cred">3 cr</span><span class="course-name">Transport Phenomena I</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 264</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Laboratory</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 256</span><span class="course-cred">3 cr</span><span class="course-name">Differential Equations</span></div>
+</div>
+</div>
+</div>
+
+<!-- Option Tabs for Year 3 & 4 -->
+<div class="option-tabs">
+<button class="option-tab active" onclick="switchOption('chem')">⚗️ Chemical Engineering 化学工程</button>
+<button class="option-tab" onclick="switchOption('chembio')">🧬 Chemical & Biological 化学与生物工程</button>
+</div>
+
+<!-- ===== CHEMICAL ENGINEERING ===== -->
+<div class="option-section visible" id="sec-chem">
+
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y3"></span><span class="year-title">Third Year · 大三 (Chemical)</span><span class="year-credits">~37 credits</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">CHBE 346</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Thermodynamics II</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 352</span><span class="course-cred">4 cr</span><span class="course-name">Transport Phenomena II</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 362</span><span class="course-cred">3 cr</span><span class="course-name">Process Engineering Lab</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 370</span><span class="course-cred">3 cr</span><span class="course-name">Fundamentals of Sustainable Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">STAT 251</span><span class="course-cred">3 cr</span><span class="course-name">Elementary Statistics</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Chem</span><span class="course-cred">3 cr</span><span class="course-name">APSC 278 — Engineering Materials</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">CHBE 345</span><span class="course-cred">4 cr</span><span class="course-name">Unit Operations</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 356</span><span class="course-cred">4 cr</span><span class="course-name">Process Dynamics and Control</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 376</span><span class="course-cred">4 cr</span><span class="course-name">Computer Flowsheeting & Unit Op Design</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 355</span><span class="course-cred">3 cr</span><span class="course-name">Kinetics and Reactor Design</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Chem</span><span class="course-cred">3 cr</span><span class="course-name">CHBE 366 — Chemical Engineering Lab</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Chem</span><span class="course-cred">3 cr</span><span class="course-name">APSC 262 — Technology and Society</span></div>
+</div>
+</div>
+</div>
+
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y4"></span><span class="year-title">Fourth Year · 大四 (Chemical)</span><span class="year-credits">~36 credits</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">CHBE 456</span><span class="course-cred">3 cr</span><span class="course-name">Heterogenous Catalysis & Adv. Reactor Design</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Chem</span><span class="course-cred">4 cr</span><span class="course-name">CHBE 471 — Chemical Process Engineering</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">APSC 450</span><span class="course-cred">2 cr</span><span class="course-name">Professional Engineering Practice</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 459</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Economics</span></div>
+</div>
+</div>
+<div class="full-row">
+<div class="course-row"><span class="course-code-inline">CHBE 464</span><span class="course-cred">4 cr</span><span class="course-name">Chemical and Biological Engineering Laboratory (full year)</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Chem</span><span class="course-cred">8 cr</span><span class="course-name">CHBE 454 — Chemical Process and Product Design (Capstone)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Tech Electives</span><span class="course-cred">12 cr</span><span class="course-name">Technical Electives</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">3 cr</span><span class="course-name">Complementary Studies Elective</span></div>
+</div>
+</div>
+
+<div class="credit-bar">
+<div class="credit-chip"><div class="num">28</div><div class="lbl">First Year</div></div>
+<div class="credit-chip"><div class="num">39</div><div class="lbl">Second Year</div></div>
+<div class="credit-chip"><div class="num">37</div><div class="lbl">Third Year</div></div>
+<div class="credit-chip"><div class="num">36</div><div class="lbl">Fourth Year</div></div>
+<div class="credit-chip"><div class="num">140</div><div class="lbl">Total ≈</div></div>
+</div>
+
+</div><!-- end chem -->
+
+<!-- ===== CHEMICAL & BIOLOGICAL ENGINEERING ===== -->
+<div class="option-section" id="sec-chembio">
+
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y3"></span><span class="year-title">Third Year · 大三 (Chemical & Biological)</span><span class="year-credits">~37 credits</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">CHBE 346</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Thermodynamics II</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 352</span><span class="course-cred">4 cr</span><span class="course-name">Transport Phenomena II</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 362</span><span class="course-cred">3 cr</span><span class="course-name">Process Engineering Lab</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 370</span><span class="course-cred">3 cr</span><span class="course-name">Fundamentals of Sustainable Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">STAT 251</span><span class="course-cred">3 cr</span><span class="course-name">Elementary Statistics</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Bio</span><span class="course-cred">3 cr</span><span class="course-name">APSC 262 — Technology and Society</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">CHBE 345</span><span class="course-cred">4 cr</span><span class="course-name">Unit Operations</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 356</span><span class="course-cred">4 cr</span><span class="course-name">Process Dynamics and Control</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 376</span><span class="course-cred">4 cr</span><span class="course-name">Computer Flowsheeting & Unit Op Design</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 355</span><span class="course-cred">3 cr</span><span class="course-name">Kinetics and Reactor Design</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Bio</span><span class="course-cred">3 cr</span><span class="course-name">CHBE 365 — Biological Engineering Lab</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Bio</span><span class="course-cred">3 cr</span><span class="course-name">CHBE 381 — Bioprocess Engineering I</span></div>
+</div>
+</div>
+</div>
+
+<div class="year-section">
+<div class="year-header">
+<span class="year-dot y4"></span><span class="year-title">Fourth Year · 大四 (Chemical & Biological)</span><span class="year-credits">~36 credits</span>
+</div>
+<div class="term-grid">
+<div class="term-box">
+<div class="term-label">📘 Term 1 · 秋季 Winter</div>
+<div class="course-row"><span class="course-code-inline">CHBE 456</span><span class="course-cred">3 cr</span><span class="course-name">Heterogenous Catalysis & Adv. Reactor Design</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Bio</span><span class="course-cred">4 cr</span><span class="course-name">CHBE 481 — Bioprocess Engineering II</span></div>
+</div>
+<div class="term-box">
+<div class="term-label">📙 Term 2 · 春季 Spring</div>
+<div class="course-row"><span class="course-code-inline">APSC 450</span><span class="course-cred">2 cr</span><span class="course-name">Professional Engineering Practice</span></div>
+<div class="course-row"><span class="course-code-inline">CHBE 459</span><span class="course-cred">3 cr</span><span class="course-name">CHBE Economics</span></div>
+</div>
+</div>
+<div class="full-row">
+<div class="course-row"><span class="course-code-inline">CHBE 464</span><span class="course-cred">4 cr</span><span class="course-name">Chemical and Biological Engineering Laboratory (full year)</span></div>
+<div class="course-row"><span class="course-code-inline stream-tag">Bio</span><span class="course-cred">8 cr</span><span class="course-name">CHBE 453 — Biological Process and Product Design (Capstone)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Tech Electives</span><span class="course-cred">12 cr</span><span class="course-name">Technical Electives</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Comp. Studies</span><span class="course-cred">3 cr</span><span class="course-name">Complementary Studies Elective</span></div>
+</div>
+</div>
+
+<div class="credit-bar">
+<div class="credit-chip"><div class="num">28</div><div class="lbl">First Year</div></div>
+<div class="credit-chip"><div class="num">39</div><div class="lbl">Second Year</div></div>
+<div class="credit-chip"><div class="num">37</div><div class="lbl">Third Year</div></div>
+<div class="credit-chip"><div class="num">36</div><div class="lbl">Fourth Year</div></div>
+<div class="credit-chip"><div class="num">140</div><div class="lbl">Total ≈</div></div>
+</div>
+
+</div><!-- end chembio -->
+
+<!-- Stream comparison -->
+<div class="elective-section">
+<h2>⚗️ 两个方向的关键区别 Key Differences</h2>
+<div class="term-grid">
+<div class="note-box">
+<h3 style="color:#f0883e;margin-bottom:6px;font-size:0.9rem">Chemical Engineering 化学工程</h3>
+<p><strong>Year 3 特有课程：</strong>APSC 278 (材料工程), CHBE 366 (化学工程实验), APSC 262 (技术与社会)</p>
+<p style="margin-top:6px"><strong>Year 4 Capstone：</strong>CHBE 454 — Chemical Process and Product Design (8 cr)</p>
+<p style="margin-top:6px"><strong>Year 4 核心课：</strong>CHBE 471 — Chemical Process Engineering (4 cr)</p>
+<p style="margin-top:8px;font-size:0.8rem">侧重传统化学工程：催化、反应器设计、化工流程与产品设计。</p>
+</div>
+<div class="note-box">
+<h3 style="color:#3fb950;margin-bottom:6px;font-size:0.9rem">Chemical & Biological Engineering 化学与生物工程</h3>
+<p><strong>Year 3 特有课程：</strong>APSC 262 (技术与社会), CHBE 365 (生物工程实验), CHBE 381 (生物过程工程 I)</p>
+<p style="margin-top:6px"><strong>Year 4 Capstone：</strong>CHBE 453 — Biological Process and Product Design (8 cr)</p>
+<p style="margin-top:6px"><strong>Year 4 核心课：</strong>CHBE 481 — Bioprocess Engineering II (4 cr)</p>
+<p style="margin-top:8px;font-size:0.8rem">侧重生物工程：生物过程设计、生物制造、生物反应器。</p>
+</div>
+</div>
+</div>
+
+<div class="note-box" style="margin-top:20px">
+<p style="font-size:0.82rem;color:var(--t2)">
+📌 <strong>Note:</strong> Students entering 2018W+ must complete Term 1 of third year before entering Term 2. Technical electives and complementary studies electives should follow the <a href="https://vancouver.calendar.ubc.ca/faculties-colleges-and-schools/faculty-applied-science/bachelor-applied-science/degree-requirements" style="color:var(--ac)">UBC Academic Calendar</a> requirements.
+</p>
+</div>
+
+<div class="footer">
+<p>Data source: <a href="https://chbe.ubc.ca/undergraduate/academics/course-schedule/" style="color:var(--ac)">UBC CHBE — Course Schedule</a> · <a href="https://vancouver.calendar.ubc.ca/faculties-colleges-and-schools/faculty-applied-science/bachelor-applied-science/chemical-and" style="color:var(--ac)">UBC Academic Calendar</a></p>
+</div>
+
+</div>
+
+<script>
+function switchOption(opt){
+  document.querySelectorAll('.option-tab').forEach(function(b,i){
+    b.classList.toggle('active',(opt==='chem'&&i===0)||(opt==='chembio'&&i===1));
+  });
+  document.getElementById('sec-chem').classList.toggle('visible',opt==='chem');
+  document.getElementById('sec-chembio').classList.toggle('visible',opt==='chembio');
+}
+</script>
+</body>
+</html>
