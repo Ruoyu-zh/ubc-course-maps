@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>PHYS+CPSC Combined Honours | UBC 课程规划</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#58a6ff;--grn:#3fb950;--pur:#8b5cf6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.header{text-align:center;padding:48px 0 36px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.85rem;margin-bottom:18px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+h1{font-size:2rem;font-weight:800}
+.grad{background:linear-gradient(135deg,#7c3aed,#3fb950);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:0.9rem;color:var(--t2);margin-top:8px}
+.summary{background:var(--cbg);border:1px solid var(--bd);border-radius:14px;padding:24px 28px;margin-bottom:36px}
+.summary h2{font-size:1.1rem;margin-bottom:12px;color:var(--ac)}
+.summary p{font-size:0.88rem;color:var(--t2);line-height:1.7}
+.year-section{margin-bottom:32px}
+.year-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.year-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.y1{background:#58a6ff}.y2{background:#7c3aed}.y3{background:#f0883e}.y4{background:#3fb950}
+.year-title{font-size:1.25rem;font-weight:700}
+.year-credits{font-size:0.82rem;color:var(--t2);margin-left:auto}
+.term-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.term-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.term-label{font-size:0.78rem;font-weight:700;color:var(--ac);margin-bottom:12px}
+.course-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(48,54,61,0.4);gap:10px}
+.course-row:last-child{border-bottom:none}
+.course-code-inline{font-weight:700;font-size:0.9rem;color:var(--tx);white-space:nowrap;min-width:105px}
+.course-cred{font-size:0.78rem;color:var(--t2);white-space:nowrap;min-width:35px}
+.course-name{font-size:0.82rem;color:var(--t2)}
+.req-tag{display:inline-block;background:rgba(63,185,80,0.12);color:#3fb950;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
+.elective-tag{display:inline-block;background:rgba(139,92,246,0.12);color:#8b5cf6;font-size:0.7rem;padding:2px 8px;border-radius:10px;font-weight:600}
+.credit-bar{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:36px 0 20px}
+.credit-chip{background:var(--cbg);border:1px solid var(--bd);border-radius:24px;padding:10px 20px;text-align:center}
+.credit-chip .num{font-size:1.3rem;font-weight:800;color:var(--ac)}
+.credit-chip .lbl{font-size:0.72rem;color:var(--t2)}
+.footer{text-align:center;padding:32px 0;font-size:0.75rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:20px}
+
+/* Track tabs */
+.track-tabs{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.track-tab{padding:7px 14px;border-radius:16px;font-size:0.76rem;font-weight:600;cursor:pointer;border:1px solid var(--bd);color:var(--t2);background:transparent;transition:all 0.15s}
+.track-tab.active{background:var(--ac);color:#fff;border-color:var(--ac)}
+.track-tab:hover:not(.active){background:rgba(88,166,255,0.06)}
+.track-section{display:none}
+.track-section.visible{display:block}
+
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.track-box{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:18px}
+.track-box h3{font-size:0.85rem;font-weight:700;margin-bottom:6px;color:var(--ac)}
+.track-box p,.track-box li{font-size:0.8rem;color:var(--t2);line-height:1.6}
+.track-box ul{list-style:none;padding:0}
+.track-box li{padding:3px 0}
+.track-box li:before{content:'+ ';color:var(--grn);font-weight:700}
+
+.note-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px 20px;font-size:0.82rem;color:var(--t2);line-height:1.6;margin-top:16px}
+
+@media (max-width: 768px) {
+  .wrap{padding:16px 14px}
+  h1{font-size:1.4rem}
+  .term-grid,.track-grid{grid-template-columns:1fr;gap:12px}
+  .year-header{flex-wrap:wrap}
+  .course-code-inline{min-width:85px;font-size:0.8rem}
+  .course-name{font-size:0.74rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+<a class="back-link" href="programs.html">Back to Programs</a>
+<h1 class="grad">Combined Honours in Physics &amp; Computer Science</h1>
+<p class="sub">BSc Combined Honours · Department of Physics &amp; Astronomy + Department of Computer Science</p>
+</div>
+
+<div class="summary">
+<h2>Program Overview</h2>
+<p>This program is designed for strong students with an interest in both Physics and Computer Science. Graduates are well prepared for graduate studies in either Department or can go directly into the workforce. Graduates who focus on Computational Physics are highly sought after by major North American centres for graduate research in Computational Science. A <strong>Co-op option</strong> is available.<br><br>
+适合对物理和计算机科学都有浓厚兴趣的学生。毕业生可选择进入研究生院（物理或CS方向）或直接就业。专注于计算物理的毕业生在北美计算科学研究中心非常受欢迎。可选 Co-op。</p>
+</div>
+
+<!-- Year 1 -->
+<div class="year-section">
+<div class="year-header"><span class="year-dot y1"></span><span class="year-title">First Year</span><span class="year-credits">33 credits</span></div>
+<div class="term-grid">
+<div class="term-box"><div class="term-label">Core Courses</div>
+<div class="course-row"><span class="course-code-inline">CHEM 121</span><span class="course-cred">4</span><span class="course-name">Structure and Bonding in Chemistry</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 110</span><span class="course-cred">4</span><span class="course-name">Computation, Programs and Programming</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 121</span><span class="course-cred">4</span><span class="course-name">Models of Computation</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 120</span><span class="course-cred">4</span><span class="course-name">Differential Calculus (Honours)</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 121</span><span class="course-cred">4</span><span class="course-name">Integral Calculus (Honours)</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 106</span><span class="course-cred">3</span><span class="course-name">Enriched Classical Mechanics</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 108</span><span class="course-cred">3</span><span class="course-name">Enriched Electromagnetism</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 119</span><span class="course-cred">1</span><span class="course-name">Experimental Physics Lab</span></div>
+<div class="course-row"><span class="course-code-inline">+ ENGL 112</span><span class="course-cred">3</span><span class="course-name">Communication Requirement (recommended)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Elective</span><span class="course-cred">3</span><span class="course-name">Free elective (see notes)</span></div>
+</div>
+<div class="term-box"><div class="term-label">Recommendations</div>
+<p style="font-size:0.82rem;color:var(--t2);line-height:1.6">
+- PHYS 129 (Enriched lab) is highly recommended<br>
+- Co-op students should take CPSC 210 in Year 1 or summer after<br>
+- MATH 223 can be taken in Year 1<br>
+- MATH 100/101/102/103/104 can replace MATH 120/121<br>
+- AP credits: contact department for advice
+</p>
+</div>
+</div>
+</div>
+
+<!-- Year 2 -->
+<div class="year-section">
+<div class="year-header"><span class="year-dot y2"></span><span class="year-title">Second Year</span><span class="year-credits">35 credits</span></div>
+<div class="term-grid">
+<div class="term-box"><div class="term-label">Core Courses</div>
+<div class="course-row"><span class="course-code-inline">CPSC 210</span><span class="course-cred">4</span><span class="course-name">Software Construction</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 213</span><span class="course-cred">4</span><span class="course-name">Introduction to Computer Systems</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 221</span><span class="course-cred">4</span><span class="course-name">Basic Algorithms and Data Structures</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 215</span><span class="course-cred">3</span><span class="course-name">Ordinary Differential Equations</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 217</span><span class="course-cred">4</span><span class="course-name">Multivariable Calculus</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 223</span><span class="course-cred">3</span><span class="course-name">Linear Algebra (Honours, recommended)</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 200</span><span class="course-cred">3</span><span class="course-name">Relativity and Quanta</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 219</span><span class="course-cred">3</span><span class="course-name">Experimental Physics Lab</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 229</span><span class="course-cred">1</span><span class="course-name">Advanced Experimental Physics Lab</span></div>
+<div class="course-row"><span class="course-code-inline">+ Comm</span><span class="course-cred">3</span><span class="course-name">Communication Requirement (2nd half)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Arts Elect.</span><span class="course-cred">3</span><span class="course-name">Arts Elective</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Year 3 -->
+<div class="year-section">
+<div class="year-header"><span class="year-dot y3"></span><span class="year-title">Third Year</span><span class="year-credits">32 credits</span></div>
+<div class="term-grid">
+<div class="term-box"><div class="term-label">Core Courses</div>
+<div class="course-row"><span class="course-code-inline">CPSC 302</span><span class="course-cred">3</span><span class="course-name">Numerical Methods OR CPSC 303 (choose one)</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 310</span><span class="course-cred">4</span><span class="course-name">Introduction to Software Engineering</span></div>
+<div class="course-row"><span class="course-code-inline">CPSC 320</span><span class="course-cred">3</span><span class="course-name">Intermediate Algorithm Design</span></div>
+<div class="course-row"><span class="course-code-inline">MATH 316</span><span class="course-cred">3</span><span class="course-name">Partial Differential Equations</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 203</span><span class="course-cred">4</span><span class="course-name">Thermal Physics</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 216</span><span class="course-cred">3</span><span class="course-name">Mechanics II</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 301</span><span class="course-cred">3</span><span class="course-name">Electricity and Magnetism</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS 319/309</span><span class="course-cred">3</span><span class="course-name">Advanced Lab (choose one)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Electives</span><span class="course-cred">6</span><span class="course-name">Free electives (see tracks below)</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Year 4 -->
+<div class="year-section">
+<div class="year-header"><span class="year-dot y4"></span><span class="year-title">Fourth Year</span><span class="year-credits">32 credits</span></div>
+<div class="term-grid">
+<div class="term-box"><div class="term-label">Core Courses</div>
+<div class="course-row"><span class="course-code-inline">PHYS 304</span><span class="course-cred">3</span><span class="course-name">Introduction to Quantum Mechanics</span></div>
+<div class="course-row"><span class="course-code-inline req-tag">PHYS Elect.</span><span class="course-cred">6</span><span class="course-name">4th-year PHYS electives (see list)</span></div>
+<div class="course-row"><span class="course-code-inline req-tag">CPSC 300+</span><span class="course-cred">6</span><span class="course-name">Additional CPSC courses (300-level or above)</span></div>
+<div class="course-row"><span class="course-code-inline req-tag">CPSC 400+</span><span class="course-cred">3</span><span class="course-name">CPSC lecture course (400-level or above)</span></div>
+<div class="course-row"><span class="course-code-inline">PHYS/CPSC 449</span><span class="course-cred">6</span><span class="course-name">Honours Thesis (choose department)</span></div>
+<div class="course-row"><span class="course-code-inline req-tag">Numerical</span><span class="course-cred">3</span><span class="course-name">CPSC 402/406 or MATH 405 (choose one)</span></div>
+<div class="course-row"><span class="course-code-inline elective-tag">Electives</span><span class="course-cred">5</span><span class="course-name">Free electives (see tracks below)</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="credit-bar">
+<div class="credit-chip"><div class="num">33</div><div class="lbl">Year 1</div></div>
+<div class="credit-chip"><div class="num">35</div><div class="lbl">Year 2</div></div>
+<div class="credit-chip"><div class="num">32</div><div class="lbl">Year 3</div></div>
+<div class="credit-chip"><div class="num">32</div><div class="lbl">Year 4</div></div>
+<div class="credit-chip"><div class="num">132</div><div class="lbl">Total Credits</div></div>
+</div>
+
+<!-- Elective Tracks -->
+<h2 style="text-align:center;margin:40px 0 12px;font-size:1.15rem">Elective Planning by Career Direction</h2>
+<p style="text-align:center;font-size:0.84rem;color:var(--t2);margin-bottom:16px">共 14 credits free electives across Y1-Y4. Use these + your upper-level CPSC/PHYS choices to build expertise.</p>
+
+<div class="track-tabs">
+<button class="track-tab active" onclick="switchTrack('ai')">AI / Machine Learning</button>
+<button class="track-tab" onclick="switchTrack('datasci')">Data Science</button>
+<button class="track-tab" onclick="switchTrack('comp-phys')">Computational Physics</button>
+<button class="track-tab" onclick="switchTrack('swe')">Software Engineering</button>
+<button class="track-tab" onclick="switchTrack('quantum')">Quantum Computing</button>
+<button class="track-tab" onclick="switchTrack('gradphys')">Grad School (Physics)</button>
+</div>
+
+<!-- AI/ML Track -->
+<div class="track-section visible" id="track-ai">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended CPSC Courses</h3>
+<ul>
+<li>CPSC 322 — Introduction to Artificial Intelligence (3)</li>
+<li>CPSC 330 — Applied Machine Learning (3)</li>
+<li>CPSC 340 — Machine Learning and Data Mining (3)</li>
+<li>CPSC 410 — Advanced Software Engineering (3) — for ML systems</li>
+<li>CPSC 422 — Intelligent Systems (3)</li>
+<li>CPSC 425 — Computer Vision (3)</li>
+<li>CPSC 440 — Advanced Machine Learning (3)</li>
+</ul></div>
+<div class="track-box"><h3>Supporting Courses</h3>
+<ul>
+<li>STAT 201 — Statistical Inference (3)</li>
+<li>STAT 301 — Statistical Modelling (3)</li>
+<li>MATH 307 — Applied Linear Algebra (3)</li>
+<li>PHYS 410 — Computational Physics (for physics-aware ML)</li>
+<li>PHYS 474 — Data Analysis for Physicists</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> PHYS 410 (computational focus)<br>
+<strong>Year 4 capstone:</strong> CPSC 449 (CS-focused thesis on ML topic)</p>
+</div>
+</div>
+</div>
+
+<!-- Data Science Track -->
+<div class="track-section" id="track-datasci">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended CPSC + STAT Courses</h3>
+<ul>
+<li>STAT 201 — Statistical Inference (3)</li>
+<li>STAT 301 — Statistical Modelling (3)</li>
+<li>STAT 305 — Regression Analysis (3)</li>
+<li>CPSC 304 — Database Systems (3)</li>
+<li>CPSC 310 — Introduction to Software Engineering (already required!)</li>
+<li>CPSC 340 — Machine Learning and Data Mining (3)</li>
+<li>CPSC 368 — Databases in Data Science (3)</li>
+<li>CPSC 410 — Advanced Software Engineering (3)</li>
+</ul></div>
+<div class="track-box"><h3>Supporting Courses</h3>
+<ul>
+<li>MATH 302 — Introduction to Probability (3)</li>
+<li>MATH 307 — Applied Linear Algebra (3)</li>
+<li>CPSC 440 — Advanced Machine Learning (3)</li>
+<li>PHYS 474 — Data Analysis for Physicists</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> PHYS 410 (numerical methods), PHYS 474<br>
+<strong>Year 4 capstone:</strong> CPSC 449 (data science / ML thesis)</p>
+</div>
+</div>
+</div>
+
+<!-- Computational Physics Track -->
+<div class="track-section" id="track-comp-phys">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended PHYS + MATH Courses</h3>
+<ul>
+<li>PHYS 410 — Computational Physics (3)</li>
+<li>PHYS 400 — Introduction to Elementary Particles</li>
+<li>PHYS 402 — Quantum Mechanics II (3)</li>
+<li>PHYS 403 — Statistical Mechanics (3)</li>
+<li>PHYS 407 — Intro to General Relativity (3)</li>
+<li>PHYS 473 — Condensed Matter Physics (3)</li>
+<li>MATH 307 — Applied Linear Algebra (3)</li>
+<li>MATH 401 — Complex Variables (3)</li>
+<li>MATH 405 — Numerical Methods (3) (counts as CPSC 402/406 alt)</li>
+</ul></div>
+<div class="track-box"><h3>Recommended CPSC Courses</h3>
+<ul>
+<li>CPSC 303 — Numerical Approximation (3) (take instead of CPSC 302)</li>
+<li>CPSC 349 — Web Programming (for visualizing simulations)</li>
+<li>CPSC 340 — Machine Learning (3) (for data-driven physics)</li>
+<li>CPSC 410 — Advanced Software Engineering (for HPC code design)</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> PHYS 402, PHYS 403, PHYS 410, PHYS 473<br>
+<strong>Year 4 capstone:</strong> PHYS 449 (physics thesis with computational focus)<br>
+<strong>Note:</strong> Highly employable path — computational skills + physics domain expertise.</p>
+</div>
+</div>
+</div>
+
+<!-- SWE Track -->
+<div class="track-section" id="track-swe">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended CPSC Courses</h3>
+<ul>
+<li>CPSC 304 — Database Systems (3)</li>
+<li>CPSC 310 — Intro to Software Engineering (already required!)</li>
+<li>CPSC 317 — Internet Computing (3)</li>
+<li>CPSC 319 — Software Engineering Project (3)</li>
+<li>CPSC 410 — Advanced Software Engineering (3)</li>
+<li>CPSC 411 — Compiler Construction (3)</li>
+<li>CPSC 416 — Distributed Systems (3)</li>
+<li>CPSC 444 — Human-Computer Interaction (3)</li>
+</ul></div>
+<div class="track-box"><h3>Career Path</h3>
+<ul>
+<li>Full-stack developer at tech companies</li>
+<li>Systems/infrastructure engineer</li>
+<li>Scientific software developer</li>
+<li>Technical product manager</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> PHYS 410 (computational), PHYS 310<br>
+<strong>Year 4 capstone:</strong> CPSC 449 (software engineering project thesis)</p>
+</div>
+</div>
+</div>
+
+<!-- Quantum Computing Track -->
+<div class="track-section" id="track-quantum">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended PHYS Courses</h3>
+<ul>
+<li>PHYS 402 — Quantum Mechanics II (3)</li>
+<li>PHYS 407 — General Relativity (3)</li>
+<li>PHYS 403 — Statistical Mechanics (3)</li>
+<li>PHYS 437 — Nuclear Physics (3)</li>
+<li>PHYS 447 — Advanced Quantum Mechanics</li>
+</ul></div>
+<div class="track-box"><h3>Recommended CPSC + MATH Courses</h3>
+<ul>
+<li>MATH 307 — Applied Linear Algebra (3) — essential for QC</li>
+<li>MATH 418 — Introduction to Abstract Algebra (3)</li>
+<li>MATH 443 — Group Theory (3)</li>
+<li>CPSC 322 — Intro to AI (quantum ML context)</li>
+<li>CPSC 421 — Introduction to Theory of Computing (3)</li>
+<li>MATH 405 — Numerical Methods (3)</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> PHYS 402, PHYS 447, PHYS 403<br>
+<strong>Year 4 capstone:</strong> PHYS 449 (quantum computing topic)<br>
+<strong>Note:</strong> Linear algebra is critical for QC — ensure strong MATH background.</p>
+</div>
+</div>
+</div>
+
+<!-- Grad School Physics Track -->
+<div class="track-section" id="track-gradphys">
+<div class="track-grid">
+<div class="track-box"><h3>Recommended PHYS Courses</h3>
+<ul>
+<li>PHYS 401 — Electromagnetic Theory (3)</li>
+<li>PHYS 402 — Quantum Mechanics II (3)</li>
+<li>PHYS 403 — Statistical Mechanics (3)</li>
+<li>PHYS 404 — Advanced Physics Lab (3)</li>
+<li>PHYS 407 — General Relativity (3)</li>
+<li>PHYS 410 — Computational Physics (3)</li>
+<li>PHYS 437 — Nuclear Physics (3)</li>
+<li>PHYS 473 — Condensed Matter Physics (3)</li>
+<li>500-level PHYS courses (with permission)</li>
+</ul></div>
+<div class="track-box"><h3>Supporting Courses</h3>
+<ul>
+<li>MATH 401 — Complex Variables (3)</li>
+<li>MATH 418 — Intro to Abstract Algebra (3)</li>
+<li>CPSC 303 — Numerical Approximation (3)</li>
+<li>PHYS 449 — Honours Thesis (take PHYS side)</li>
+</ul>
+<p style="font-size:0.78rem;color:var(--t2);margin-top:8px"><strong>Year 4 PHYS electives:</strong> Load up on PHYS 400-level; take 500-level if qualified<br>
+<strong>Year 4 capstone:</strong> PHYS 449 (thesis in chosen physics subfield)<br>
+<strong>Note:</strong> Build relationship with potential supervisor early. Apply for NSERC USRA summer research.</p>
+</div>
+</div>
+</div>
+
+<div class="note-box">
+<h4 style="color:var(--ac);margin-bottom:4px;font-size:0.85rem">PHYS 4th-Year Elective Options</h4>
+<p style="font-size:0.8rem">ASTR 403, 404, 406; MATH 345, 401, 402, 405, 418, 420, 450; PHYS 400, 401, 402, 403, 405, 407, 410, 437, 447, 473, 474. Qualified students may take 500-level Physics courses with permission.</p>
+</div>
+
+<div class="footer">
+<p>Data source: <a href="https://phas.ubc.ca/undergrad-combined-honours-physics-and-computing-science" style="color:var(--ac)">UBC PHAS - Combined Honours Physics &amp; CS</a> · Co-op: <a href="http://www.sciencecoop.ubc.ca/prospective/apply/physics" style="color:var(--ac)">Science Co-op</a></p>
+</div>
+
+</div>
+
+<script>
+function switchTrack(track){
+  document.querySelectorAll('.track-tab').forEach(function(b,i){
+    var keys=['ai','datasci','comp-phys','swe','quantum','gradphys'];
+    b.classList.toggle('active',keys[i]===track);
+  });
+  document.querySelectorAll('.track-section').forEach(function(s){s.classList.remove('visible');});
+  document.getElementById('track-'+track).classList.add('visible');
+}
+</script>
+</body>
+</html>
