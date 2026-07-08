@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<title>UBC VISA Course Map | 视觉艺术课程</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K9QJVJJ7SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-K9QJVJJ7SH');</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root{--bg:#0d1117;--cbg:#161b22;--bd:#30363d;--tx:#c9d1d9;--t2:#8b949e;--ac:#ec4899;--grn:#3fb950}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:'Inter','Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+.wrap{max-width:1200px;margin:0 auto;padding:24px}
+h1{font-size:1.8rem;text-align:center;font-weight:800;padding:24px 0 8px}
+.grad{background:linear-gradient(135deg,#ec4899,#c297ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{text-align:center;font-size:0.88rem;color:var(--t2);margin-bottom:20px}
+.back-link{display:inline-block;color:var(--t2);text-decoration:none;font-size:0.82rem;margin:0 0 12px;transition:color 0.2s}
+.back-link:hover{color:var(--ac)}
+.mode-bar{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden;width:fit-content;margin:0 auto 16px}
+.mode-btn{padding:10px 20px;font-size:0.85rem;font-weight:600;cursor:pointer;background:transparent;border:none;color:var(--t2)}
+.mode-btn:first-child{border-right:1px solid var(--bd)}
+.mode-btn.active{background:var(--ac);color:#fff}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:8px 0 16px}
+.tab{padding:8px 16px;border-radius:20px;font-size:0.8rem;font-weight:600;cursor:pointer;border:1px solid var(--bd);color:var(--t2);background:transparent}
+.tab.active{background:var(--ac);color:#fff;border-color:var(--ac)}
+.year-section,.track-section{visibility:hidden;position:absolute;height:0;overflow:hidden}
+.year-section.visible,.track-section.visible{visibility:visible;position:static;height:auto;overflow:visible}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin-bottom:24px}
+.course-card{background:var(--cbg);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.course-card:hover{border-color:var(--ac)}
+.course-code{font-weight:800;font-size:1rem;color:var(--ac);margin-bottom:2px}
+.course-title-en{font-size:0.8rem;color:var(--tx);margin-bottom:1px}
+.course-title-zh{font-size:0.75rem;color:var(--grn);margin-bottom:4px}
+.course-credits{font-size:0.7rem;color:var(--t2);display:inline-block;background:rgba(236,72,153,0.12);padding:1px 7px;border-radius:8px;margin-bottom:3px}
+.desc-en{font-size:0.73rem;color:var(--t2);line-height:1.5;margin-bottom:3px}
+.prereq{font-size:0.68rem;color:#f0883e;line-height:1.4}
+.flow-box{background:var(--cbg);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:20px;overflow-x:auto}
+.flow-box h3{font-size:0.9rem;color:var(--ac);margin-bottom:10px}
+.flow-box .mermaid{min-width:400px}
+.level-count{font-size:0.78rem;color:var(--t2);margin-bottom:12px;text-align:center}
+.footer{text-align:center;padding:24px 0;font-size:0.72rem;color:var(--t2);border-top:1px solid var(--bd);margin-top:24px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:12px;font-size:0.75rem;color:var(--t2)}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+@media(max-width:768px){.wrap{padding:12px}h1{font-size:1.3rem}.course-grid{grid-template-columns:1fr}.tab{padding:6px 12px;font-size:0.74rem}}
+</style></head><body>
+<div class="wrap">
+<a class="back-link" href="subjects.html">Back to Subjects</a>
+<h1 class="grad">VISA Course Map</h1>
+<p class="sub">Visual Art · 57 Courses · Department of Art History, Visual Art &amp; Theory</p>
+
+<div class="mode-bar">
+<button class="mode-btn active" onclick="switchMode('year')">By Year Level</button>
+<button class="mode-btn" onclick="switchMode('track')">By Medium 按媒介</button>
+</div>
+<div id="tab-year" class="tabs">
+<button class="tab active" onclick="switchYear('100')">100 Level · 基础 (4)</button>
+<button class="tab" onclick="switchYear('200')">200 Level · 入门 (9)</button>
+<button class="tab" onclick="switchYear('300')">300 Level · 中级 (22)</button>
+<button class="tab" onclick="switchYear('400')">400 Level · 高级 (19)</button>
+<button class="tab" onclick="switchYear('grad')">Grad · MFA (5)</button>
+</div>
+<div id="tab-track" class="tabs" style="display:none">
+<button class="tab" onclick="switchTrack('digital')">Digital 数字媒体</button>
+<button class="tab" onclick="switchTrack('drawing')">Drawing 绘画</button>
+<button class="tab" onclick="switchTrack('painting')">Painting 油画</button>
+<button class="tab" onclick="switchTrack('photo')">Photography 摄影</button>
+<button class="tab" onclick="switchTrack('print')">Print Media 版画</button>
+<button class="tab" onclick="switchTrack('sculpture')">Sculpture 雕塑</button>
+<button class="tab" onclick="switchTrack('theory')">Theory 理论/研讨</button>
+</div>
+
+<!-- 100 -->
+<div class="year-section visible" id="sec-100">
+<div class="flow-box"><h3>Foundation → Medium Specialization</h3><div class="mermaid">
+graph TD
+  S["Start"] --> A["VISA 101<br/>BFA Studio 3cr"]
+  S --> B["VISA 110<br/>Digital Media 3cr"]
+  S --> C["VISA 180<br/>Approaches to Media 3cr"]
+  S --> D["VISA 183<br/>Ideas as Practice I 3cr"]
+  B --> E["72%+ in 2 of 110/180/183<br/>→ 200-level courses"]
+  C --> E
+  D --> E
+  E --> F["Digital: 210<br/>Drawing: 220<br/>Painting: 230<br/>Photo: 240/241<br/>Print: 250<br/>Sculpture: 260"]
+</div></div>
+<p class="level-count">4 foundation courses</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">VISA 101</div><div class="course-title-en">BFA Studio Practice</div><div class="course-title-zh">BFA 工作室实践</div><span class="course-credits">3 cr</span><div class="desc-en">Introduction to a broad range of contemporary studio practice. Orientation to the BFA program.</div><div class="prereq">No prerequisite.</div></div>
+<div class="course-card"><div class="course-code">VISA 110</div><div class="course-title-en">Foundation Studio: Digital Media</div><div class="course-title-zh">基础工作室：数字媒体</div><span class="course-credits">3 cr</span><div class="desc-en">Foundation instruction in techniques and approaches to digital practice in visual art.</div><div class="prereq">No prerequisite.</div></div>
+<div class="course-card"><div class="course-code">VISA 180</div><div class="course-title-en">Foundation Studio: Approaches to Media</div><div class="course-title-zh">基础工作室：媒介入门</div><span class="course-credits">3 cr</span><div class="desc-en">Drawing, painting, and related media introduction to studio practice.</div><div class="prereq">No prerequisite.</div></div>
+<div class="course-card"><div class="course-code">VISA 183</div><div class="course-title-en">Foundation Studio: Ideas as Practice I</div><div class="course-title-zh">基础工作室：理念即实践 I</div><span class="course-credits">3 cr</span><div class="desc-en">Contemporary art practices emphasizing relationships between meanings, materials, and contexts.</div><div class="prereq">No prerequisite.</div></div>
+</div>
+</div>
+
+<!-- 200 -->
+<div class="year-section" id="sec-200">
+<div class="flow-box"><h3>200-Level: Entry into Media-Specific Practice</h3><div class="mermaid">
+graph TD
+  A["72% in 2 of VISA 110/180/183"] --> B["VISA 210<br/>Digital Arts"]
+  A --> C["VISA 220<br/>Drawing"]
+  A --> D["VISA 230<br/>Painting"]
+  A --> E["VISA 240<br/>Photography"]
+  A --> F["VISA 241<br/>Digital Photography"]
+  A --> G["VISA 250<br/>Print Media"]
+  A --> H["VISA 260<br/>Sculpture"]
+  A --> I["VISA 270<br/>Special Studies"]
+  D["VISA 183 + 72%"] --> J["VISA 280<br/>Ideas as Practice II"]
+</div></div>
+<p class="level-count">10 courses at 200-level</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">VISA 210</div><div class="course-title-en">Digital Arts</div><div class="course-title-zh">数字艺术</div><span class="course-credits">3 cr</span><div class="desc-en">Examines current art practices and digital technologies with theoretical focus. Also open to BMS students with VISA 110.</div><div class="prereq">72%+ in two of VISA 110/180/183; or BMS + VISA 110.</div></div>
+<div class="course-card"><div class="course-code">VISA 220</div><div class="course-title-en">Drawing</div><div class="course-title-zh">素描</div><span class="course-credits">3 cr</span><div class="desc-en">Development of skills in drawing including life drawing. Technical and conceptual foundations.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 230</div><div class="course-title-en">Painting</div><div class="course-title-zh">油画</div><span class="course-credits">3 cr</span><div class="desc-en">Techniques, paint vocabulary, and historical/contemporary issues in painting.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 240</div><div class="course-title-en">Photography</div><div class="course-title-zh">摄影</div><span class="course-credits">3 cr</span><div class="desc-en">Introduction to photography techniques and image-making. Emphasizes camera, film, and darkroom.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 241</div><div class="course-title-en">Digital Photography</div><div class="course-title-zh">数字摄影</div><span class="course-credits">3 cr</span><div class="desc-en">Digital image creation emphasizing camera use, file management, and print production. Also open to BMS students.</div><div class="prereq">72%+ in two of VISA 110/180/183; or BMS + VISA 110.</div></div>
+<div class="course-card"><div class="course-code">VISA 250</div><div class="course-title-en">Print Media</div><div class="course-title-zh">版画</div><span class="course-credits">3 cr</span><div class="desc-en">Visual print culture and hand-drawn intaglio, relief, screen/stencil printing processes.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 260</div><div class="course-title-en">Sculpture</div><div class="course-title-zh">雕塑</div><span class="course-credits">3 cr</span><div class="desc-en">Contemporary sculpture practice and theory. Three-dimensional art-making fundamentals.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 270</div><div class="course-title-en">Special Studies</div><div class="course-title-zh">专题研究</div><span class="course-credits">3 cr</span><div class="desc-en">Introduction to various aspects of contemporary studio practice. Variable topics.</div><div class="prereq">72%+ in two of VISA 110/180/183.</div></div>
+<div class="course-card"><div class="course-code">VISA 280</div><div class="course-title-en">Contemporary Art: Ideas as Practice II</div><div class="course-title-zh">当代艺术：理念即实践 II</div><span class="course-credits">3 cr</span><div class="desc-en">Development and history of contemporary art practice. Builds on VISA 183.</div><div class="prereq">72%+ in VISA 183.</div></div>
+</div>
+</div>
+
+<!-- 300 -->
+<div class="year-section" id="sec-300">
+<p class="level-count">22 courses at 300-level</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">VISA 310</div><div class="course-title-en">Intermediate Digital Arts I</div><div class="course-title-zh">中级数字艺术 I</div><span class="course-credits">3 cr</span><div class="desc-en">Interactive digital media and culture through critical contemporary art.</div><div class="prereq">VISA 210/287 or FINA 287.</div></div>
+<div class="course-card"><div class="course-code">VISA 311</div><div class="course-title-en">Intermediate Digital Arts II</div><div class="course-title-zh">中级数字艺术 II</div><span class="course-credits">3 cr</span><div class="desc-en">Digital media and visual culture through contemporary video art.</div><div class="prereq">VISA 240 or 241.</div></div>
+<div class="course-card"><div class="course-code">VISA 312</div><div class="course-title-en">Expanded Visual Media</div><div class="course-title-zh">扩展视觉媒体</div><span class="course-credits">3 cr</span><div class="desc-en">Pre- and/or post-production strategies, techniques, and processes for time-based media effects.</div><div class="prereq">VISA 241/210 or FIPR 133/233; or BMS with 3rd-year standing.</div></div>
+<div class="course-card"><div class="course-code">VISA 320</div><div class="course-title-en">Intermediate Drawing I</div><div class="course-title-zh">中级素描 I</div><span class="course-credits">3 cr</span><div class="desc-en">Drawing as a discipline in contemporary art; technical and conceptual development.</div><div class="prereq">VISA 220/281 or FINA 281.</div></div>
+<div class="course-card"><div class="course-code">VISA 321</div><div class="course-title-en">Intermediate Drawing II</div><div class="course-title-zh">中级素描 II</div><span class="course-credits">3 cr</span><div class="desc-en">Drawing in context of contemporary art and theory; self-directed projects.</div><div class="prereq">VISA 220/281 or FINA 281.</div></div>
+<div class="course-card"><div class="course-code">VISA 330</div><div class="course-title-en">Intermediate Painting I</div><div class="course-title-zh">中级油画 I</div><span class="course-credits">3 cr</span><div class="desc-en">Techniques and personal style development in relation to ideas.</div><div class="prereq">VISA 230/282 or FINA 282.</div></div>
+<div class="course-card"><div class="course-code">VISA 331</div><div class="course-title-en">Intermediate Painting II</div><div class="course-title-zh">中级油画 II</div><span class="course-credits">3 cr</span><div class="desc-en">Further investigation of painting in the context of contemporary art.</div><div class="prereq">VISA 230/282 or FINA 282.</div></div>
+<div class="course-card"><div class="course-code">VISA 340</div><div class="course-title-en">Intermediate Photography I</div><div class="course-title-zh">中级摄影 I</div><span class="course-credits">3 cr</span><div class="desc-en">Approaches to photography and meaning in contemporary art.</div><div class="prereq">VISA 240 or 241.</div></div>
+<div class="course-card"><div class="course-code">VISA 341</div><div class="course-title-en">Intermediate Photography II</div><div class="course-title-zh">中级摄影 II</div><span class="course-credits">3 cr</span><div class="desc-en">Constructed image with medium/large format cameras and studio lighting.</div><div class="prereq">VISA 240 or 241.</div></div>
+<div class="course-card"><div class="course-code">VISA 350</div><div class="course-title-en">Intermediate Print Media I</div><div class="course-title-zh">中级版画 I</div><span class="course-credits">3 cr</span><div class="desc-en">Intaglio/relief print combined with digital, photographic, and drawing technologies.</div><div class="prereq">VISA 250 or VISA 283/284/290.</div></div>
+<div class="course-card"><div class="course-code">VISA 351</div><div class="course-title-en">Intermediate Print Media II</div><div class="course-title-zh">中级版画 II</div><span class="course-credits">3 cr</span><div class="desc-en">Screen printing and other applications combined with digital/photographic technologies.</div><div class="prereq">VISA 250 or VISA 283/284/290.</div></div>
+<div class="course-card"><div class="course-code">VISA 352</div><div class="course-title-en">Intermediate Print Media III</div><div class="course-title-zh">中级版画 III</div><span class="course-credits">3 cr</span><div class="desc-en">Lithographic printing; drawing and print media interface in contemporary art.</div><div class="prereq">VISA 220/250 or VISA 281/283/284/290.</div></div>
+<div class="course-card"><div class="course-code">VISA 360</div><div class="course-title-en">Intermediate Sculpture I</div><div class="course-title-zh">中级雕塑 I</div><span class="course-credits">3 cr</span><div class="desc-en">Contemporary sculpture practices and use of scale; emphasis on public sculpture.</div><div class="prereq">VISA 260/285/286 or FINA 285/286.</div></div>
+<div class="course-card"><div class="course-code">VISA 361</div><div class="course-title-en">Intermediate Sculpture II</div><div class="course-title-zh">中级雕塑 II</div><span class="course-credits">3 cr</span><div class="desc-en">Development of personal concerns in three-dimensional work.</div><div class="prereq">VISA 260/285/286 or FINA 285/286.</div></div>
+<div class="course-card"><div class="course-code">VISA 370</div><div class="course-title-en">Special Studies I</div><div class="course-title-zh">专题研究 I</div><span class="course-credits">3-6 cr</span><div class="desc-en">Intermediate tutorial; not offered every year. Independent study format.</div><div class="prereq">6 credits of 200-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 371</div><div class="course-title-en">Special Studies II</div><div class="course-title-zh">专题研究 II</div><span class="course-credits">3-6 cr</span><div class="desc-en">Intermediate tutorial; not offered every year. Independent study format.</div><div class="prereq">6 credits of 200-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 375</div><div class="course-title-en">Artists in Society</div><div class="course-title-zh">社会中的艺术家</div><span class="course-credits">3 cr</span><div class="desc-en">Exploring artistic practice through community-engaged partnerships and critical study.</div><div class="prereq">3rd-year standing in VISA or ARTH.</div></div>
+<div class="course-card"><div class="course-code">VISA 376</div><div class="course-title-en">Artist Books as Form and Idea</div><div class="course-title-zh">艺术家书：形式与理念</div><span class="course-credits">3 cr</span><div class="desc-en">Approaches to book creation from the perspective of contemporary art.</div><div class="prereq">3 credits of 200-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 380</div><div class="course-title-en">Studio Theory</div><div class="course-title-zh">工作室理论</div><span class="course-credits">3 cr</span><div class="desc-en">Seminar in problems in contemporary art practice and related theory.</div><div class="prereq">Preference to VISA students.</div></div>
+<div class="course-card"><div class="course-code">VISA 381</div><div class="course-title-en">Studio Seminar</div><div class="course-title-zh">工作室研讨</div><span class="course-credits">3 cr</span><div class="desc-en">Seminar in problems in contemporary art practice and related theory.</div><div class="prereq">VISA 380.</div></div>
+<div class="course-card"><div class="course-code">VISA 390</div><div class="course-title-en">Performance Art</div><div class="course-title-zh">行为艺术</div><span class="course-credits">3 cr</span><div class="desc-en">Seminar-based studio focusing on performance and actions in contemporary art.</div><div class="prereq">6 credits of 200-level VISA with 72%+ average.</div></div>
+</div>
+</div>
+
+<!-- 400 -->
+<div class="year-section" id="sec-400">
+<div class="flow-box"><h3>400-Level: Advanced Practice & Capstone</h3><div class="mermaid">
+graph LR
+  A["300-level VISA"] --> B["VISA 401<br/>Open Studio"]
+  A --> C["410 Digital I/II"]
+  A --> D["430 Draw+Paint I/II"]
+  A --> E["440/441 Photo I/II"]
+  A --> F["450/451 Print+Sculpt"]
+  A --> G["469 Interdisciplinary"]
+  G2["VISA 380"] --> H["480/481<br/>Advanced Seminar"]
+  H2["VISA 380+480"] --> I["490/491<br/>Advanced Tutorial"]
+</div></div>
+<p class="level-count">19 courses at 400-level</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">VISA 401</div><div class="course-title-en">Advanced Open Studio</div><div class="course-title-zh">高级开放工作室</div><span class="course-credits">3-18 cr</span><div class="desc-en">Research-based studio with thematic or disciplinary focus. Intensive capstone work.</div><div class="prereq">Three of VISA 310-361, 370, 375, 390.</div></div>
+<div class="course-card"><div class="course-code">VISA 410</div><div class="course-title-en">Advanced Digital Arts I</div><div class="course-title-zh">高级数字艺术 I</div><span class="course-credits">3 cr</span><div class="desc-en">3D applications, spatial, interactive, and time-based installations.</div><div class="prereq">VISA 310/311 + 3cr of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 411</div><div class="course-title-en">Advanced Digital Arts II: Video</div><div class="course-title-zh">高级数字艺术 II：影像</div><span class="course-credits">3 cr</span><div class="desc-en">Contemporary practices in video media through individual projects and directed study.</div><div class="prereq">VISA 310/311 + 3cr of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 430</div><div class="course-title-en">Advanced Drawing and Painting I</div><div class="course-title-zh">高级素描与油画 I</div><span class="course-credits">3 cr</span><div class="desc-en">Interdisciplinary studio practice with emphasis on drawing, painting, and related media.</div><div class="prereq">Two of VISA 320/321/330/331.</div></div>
+<div class="course-card"><div class="course-code">VISA 431</div><div class="course-title-en">Advanced Drawing and Painting II</div><div class="course-title-zh">高级素描与油画 II</div><span class="course-credits">3 cr</span><div class="desc-en">Further interdisciplinary studio practice; drawing, painting, and related media.</div><div class="prereq">Two of VISA 320/321/330/331.</div></div>
+<div class="course-card"><div class="course-code">VISA 440</div><div class="course-title-en">Advanced Photography I</div><div class="course-title-zh">高级摄影 I</div><span class="course-credits">3 cr</span><div class="desc-en">Photography practice in the context of contemporary art. Self-directed work.</div><div class="prereq">Two of VISA 340/341/310.</div></div>
+<div class="course-card"><div class="course-code">VISA 441</div><div class="course-title-en">Advanced Photography II</div><div class="course-title-zh">高级摄影 II</div><span class="course-credits">3 cr</span><div class="desc-en">Production of self-directed projects investigating photography as art.</div><div class="prereq">Two of VISA 340/341/440.</div></div>
+<div class="course-card"><div class="course-code">VISA 450</div><div class="course-title-en">Advanced Print Media and Sculpture I</div><div class="course-title-zh">高级版画与雕塑 I</div><span class="course-credits">3 cr</span><div class="desc-en">Studies in contemporary trends; advanced 2D and 3D experimental work.</div><div class="prereq">VISA 350/351/360/361 + 3cr of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 451</div><div class="course-title-en">Advanced Print Media and Sculpture II</div><div class="course-title-zh">高级版画与雕塑 II</div><span class="course-credits">3 cr</span><div class="desc-en">Further studies in advanced 2D/3D experimental approaches.</div><div class="prereq">VISA 350/351/360/361 + 3cr of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 469</div><div class="course-title-en">Interdisciplinary Projects</div><div class="course-title-zh">跨学科项目</div><span class="course-credits">3-6 cr</span><div class="desc-en">Group projects with students majoring in other creative arts. 🔥 跨学科创意合作.</div><div class="prereq">Instructor permission.</div></div>
+<div class="course-card"><div class="course-code">VISA 470</div><div class="course-title-en">Advanced Special Studies I</div><div class="course-title-zh">高级专题研究 I</div><span class="course-credits">3-6 cr</span><div class="desc-en">Advanced work in contemporary and historical aspects of studio practice.</div><div class="prereq">6 credits of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 471</div><div class="course-title-en">Advanced Special Studies II</div><div class="course-title-zh">高级专题研究 II</div><span class="course-credits">3-6 cr</span><div class="desc-en">Advanced work; not offered every year. Independent study.</div><div class="prereq">6 credits of 300-level VISA.</div></div>
+<div class="course-card"><div class="course-code">VISA 475</div><div class="course-title-en">Exhibition Theory and Practice</div><div class="course-title-zh">展览理论与实践</div><span class="course-credits">3 cr</span><div class="desc-en">Curatorial practices and exhibition organization. Restricted to 4th-year VISA/ARTH.</div><div class="prereq">4th-year VISA or ARTH major; or instructor permission.</div></div>
+<div class="course-card"><div class="course-code">VISA 479</div><div class="course-title-en">Performance Actions and Approaches</div><div class="course-title-zh">行为艺术实践与方法</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced performance art practices and research methodologies.</div><div class="prereq">No prerequisite listed.</div></div>
+<div class="course-card"><div class="course-code">VISA 480</div><div class="course-title-en">Advanced Seminar I</div><div class="course-title-zh">高级研讨 I</div><span class="course-credits">3 cr</span><div class="desc-en">Readings in art theory and criticism. Critical analysis of contemporary art discourse.</div><div class="prereq">VISA 380.</div></div>
+<div class="course-card"><div class="course-code">VISA 481</div><div class="course-title-en">Advanced Seminar II</div><div class="course-title-zh">高级研讨 II</div><span class="course-credits">3 cr</span><div class="desc-en">Further readings in art theory and criticism.</div><div class="prereq">VISA 480.</div></div>
+<div class="course-card"><div class="course-code">VISA 490</div><div class="course-title-en">Advanced Tutorial in Studio I</div><div class="course-title-zh">高级工作室导师课 I</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced work with individual faculty supervision. Independent project-based.</div><div class="prereq">6cr 300-level VISA + 3cr 400-level VISA + instructor permission.</div></div>
+<div class="course-card"><div class="course-code">VISA 491</div><div class="course-title-en">Advanced Tutorial in Studio II</div><div class="course-title-zh">高级工作室导师课 II</div><span class="course-credits">3 cr</span><div class="desc-en">Advanced independent work with individual faculty supervision.</div><div class="prereq">6cr 300-level VISA + 3cr 400-level VISA + instructor permission.</div></div>
+</div>
+</div>
+
+<!-- Grad -->
+<div class="year-section" id="sec-grad">
+<p class="level-count">5 MFA-level courses</p>
+<div class="course-grid">
+<div class="course-card"><div class="course-code">VISA 580</div><div class="course-title-en">Major Essay</div><div class="course-title-zh">主论文</div><span class="course-credits">0 cr</span><div class="desc-en">MFA only. Written component of MFA degree.</div><div class="prereq">MFA program.</div></div>
+<div class="course-card"><div class="course-code">VISA 581</div><div class="course-title-en">MFA Studio V</div><div class="course-title-zh">MFA 工作室 V</div><span class="course-credits">12 cr</span><div class="desc-en">MFA studio practice, first term.</div><div class="prereq">MFA program.</div></div>
+<div class="course-card"><div class="course-code">VISA 582</div><div class="course-title-en">MFA Studio VI</div><div class="course-title-zh">MFA 工作室 VI</div><span class="course-credits">12 cr</span><div class="desc-en">MFA studio practice, second term.</div><div class="prereq">MFA program.</div></div>
+<div class="course-card"><div class="course-code">VISA 583</div><div class="course-title-en">MFA Research Seminar</div><div class="course-title-zh">MFA 研究研讨</div><span class="course-credits">3-6 cr</span><div class="desc-en">MFA research seminar. Theory and practice integration.</div><div class="prereq">MFA program.</div></div>
+<div class="course-card"><div class="course-code">VISA 590</div><div class="course-title-en">Directed Studies in Visual Art</div><div class="course-title-zh">视觉艺术定向研究</div><span class="course-credits">3-6 cr</span><div class="desc-en">Tutorial work arranged by permission with individual faculty. Not available to MFA students.</div><div class="prereq">Instructor permission.</div></div>
+</div>
+</div>
+
+<!-- TRACK VIEWS -->
+<div class="track-section" id="track-digital">
+<div class="flow-box"><h3>Digital Media Track</h3><div class="mermaid">graph LR
+  A["VISA 110"] --> B["VISA 210<br/>Digital Arts"]
+  B --> C["VISA 310<br/>Inter Digi I"]
+  B --> D["VISA 312<br/>Expanded Media"]
+  C --> E["VISA 311<br/>Inter Digi II"]
+  C --> F["VISA 410<br/>Adv Digital I"]
+  F --> G["VISA 411<br/>Adv Digital II: Video"]
+</div></div>
+</div>
+<div class="track-section" id="track-drawing"><div class="flow-box"><h3>Drawing Track</h3><div class="mermaid">graph LR
+  A["VISA 180"] --> B["VISA 220<br/>Drawing"]; B --> C["VISA 320<br/>Inter Draw I"]; B --> D["VISA 321<br/>Inter Draw II"]; C --> E["VISA 430<br/>Adv Draw+Paint I"]; E --> F["VISA 431<br/>Adv Draw+Paint II"]
+</div></div></div>
+<div class="track-section" id="track-painting"><div class="flow-box"><h3>Painting Track</h3><div class="mermaid">graph LR
+  A["VISA 180"] --> B["VISA 230<br/>Painting"]; B --> C["VISA 330<br/>Inter Paint I"]; B --> D["VISA 331<br/>Inter Paint II"]; C --> E["VISA 430<br/>Adv Draw+Paint I"]; E --> F["VISA 431<br/>Adv Draw+Paint II"]
+</div></div></div>
+<div class="track-section" id="track-photo"><div class="flow-box"><h3>Photography Track</h3><div class="mermaid">graph LR
+  A["VISA 110"] --> B["VISA 240<br/>Photo"]; A --> C["VISA 241<br/>Digi Photo"]; B --> D["VISA 340<br/>Inter Photo I"]; C --> D; D --> E["VISA 341<br/>Inter Photo II"]; D --> F["VISA 440<br/>Adv Photo I"]; F --> G["VISA 441<br/>Adv Photo II"]
+</div></div></div>
+<div class="track-section" id="track-print"><div class="flow-box"><h3>Print Media Track</h3><div class="mermaid">graph LR
+  A["VISA 180"] --> B["VISA 250<br/>Print Media"]; B --> C["VISA 350<br/>Inter Print I"]; B --> D["VISA 351<br/>Inter Print II"]; B --> E["VISA 352<br/>Inter Print III"]; C --> F["VISA 450<br/>Adv Print+Sculp I"]; F --> G["VISA 451<br/>Adv Print+Sculp II"]
+</div></div></div>
+<div class="track-section" id="track-sculpture"><div class="flow-box"><h3>Sculpture Track</h3><div class="mermaid">graph LR
+  A["VISA 180"] --> B["VISA 260<br/>Sculpture"]; B --> C["VISA 360<br/>Inter Sculp I"]; B --> D["VISA 361<br/>Inter Sculp II"]; C --> E["VISA 450<br/>Adv Print+Sculp I"]; E --> F["VISA 451<br/>Adv Print+Sculp II"]
+</div></div></div>
+<div class="track-section" id="track-theory"><div class="flow-box"><h3>Theory / Seminar Track</h3><div class="mermaid">graph LR
+  A["VISA 183"] --> B["VISA 280<br/>Ideas as Practice II"]; B --> C["VISA 380<br/>Studio Theory"]; C --> D["VISA 381<br/>Studio Seminar"]; C --> E["VISA 480<br/>Adv Seminar I"]; E --> F["VISA 481<br/>Adv Seminar II"]; B --> G["VISA 375<br/>Artists in Society"]
+</div></div></div>
+
+<div class="legend">
+<span class="legend-item"><span class="legend-dot" style="background:#ec4899"></span> Foundation</span>
+<span class="legend-item"><span class="legend-dot" style="background:#58a6ff"></span> Digital 数字</span>
+<span class="legend-item"><span class="legend-dot" style="background:#3fb950"></span> Drawing 素描</span>
+<span class="legend-item"><span class="legend-dot" style="background:#f0883e"></span> Painting 油画</span>
+<span class="legend-item"><span class="legend-dot" style="background:#c297ff"></span> Photo 摄影</span>
+<span class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> Print 版画</span>
+<span class="legend-item"><span class="legend-dot" style="background:#a371f7"></span> Sculpture 雕塑</span>
+</div>
+<div class="footer"><p>Data: <a href="https://vancouver.calendar.ubc.ca/course-descriptions/subject/visav" style="color:var(--ac)">UBC Calendar - VISA</a> · 57 courses · All courses listed</p></div>
+</div>
+<script>
+mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{useMaxWidth:true,htmlLabels:true,curve:'basis'}});
+var currentMode='year',currentYearTab='100';
+function switchMode(m){
+  currentMode=m;
+  document.querySelectorAll('.mode-btn')[0].classList.toggle('active',m==='year');
+  document.querySelectorAll('.mode-btn')[1].classList.toggle('active',m==='track');
+  document.getElementById('tab-year').style.display=m==='year'?'flex':'none';
+  document.getElementById('tab-track').style.display=m==='track'?'flex':'none';
+  document.querySelectorAll('.year-section,.track-section').forEach(function(s){s.classList.remove('visible');});
+  if(m==='year'){switchYear(currentYearTab);}else{switchTrack('digital');}
+}
+function switchYear(t){currentYearTab=t;
+  document.querySelectorAll('#tab-year .tab').forEach(function(b){b.classList.remove('active');});
+  event.target.classList.add('active');
+  document.querySelectorAll('.year-section').forEach(function(s){s.classList.remove('visible');});
+  document.getElementById('sec-'+t).classList.add('visible');
+}
+function switchTrack(t){
+  document.querySelectorAll('#tab-track .tab').forEach(function(b){b.classList.remove('active');});
+  event.target.classList.add('active');
+  document.querySelectorAll('.track-section').forEach(function(s){s.classList.remove('visible');});
+  document.getElementById('track-'+t).classList.add('visible');
+}
+</script></body></html>
